@@ -1,8 +1,9 @@
 package com.tbell.gigfinder.models;
 
-import sun.util.calendar.CalendarDate;
+
 
 import javax.persistence.*;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "user_comment")
@@ -12,7 +13,12 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String message;
-    private CalendarDate messageDate;
+    @Column(name = "message_date")
+    private Calendar messageDate;
+
+    @ManyToOne
+    @JoinColumn(name = "user_data_id")
+    private User user;
 
 
     public Comment() {}
@@ -33,11 +39,13 @@ public class Comment {
         this.message = message;
     }
 
-    public CalendarDate getMessageDate() {
+    public Calendar getMessageDate() {
         return messageDate;
     }
 
-    public void setMessageDate(CalendarDate messageDate) {
+    public void setMessageDate(Calendar messageDate) {
         this.messageDate = messageDate;
     }
+
+
 }

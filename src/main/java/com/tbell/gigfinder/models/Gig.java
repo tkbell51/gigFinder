@@ -1,21 +1,36 @@
 package com.tbell.gigfinder.models;
 
-import sun.util.calendar.CalendarDate;
+
 
 import javax.persistence.*;
+import java.util.Calendar;
 
 @Entity
-@Table(name = "user_gig")
+@Table(name = "company_gig")
 public class Gig {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "gig_location")
     private String gigLocation;
+
+    @Column(name = "gig_type")
     private String gigType;
-    private CalendarDate gigStart;
-    private CalendarDate gigEnd;
+
+    @Column(name = "gig_start")
+    private Calendar gigStart;
+
+    @Column(name = "gig_end")
+    private Calendar gigEnd;
+
+    @Column(name = "gig_description")
     private String gigDescription;
+
+    @ManyToOne
+    @JoinColumn(name = "company_profile_id")
+    private CompanyProfile companyProfile;
 
     public Gig() {}
 
@@ -45,19 +60,19 @@ public class Gig {
         this.gigType = gigType;
     }
 
-    public CalendarDate getGigStart() {
+    public Calendar getGigStart() {
         return gigStart;
     }
 
-    public void setGigStart(CalendarDate gigStart) {
+    public void setGigStart(Calendar gigStart) {
         this.gigStart = gigStart;
     }
 
-    public CalendarDate getGigEnd() {
+    public Calendar getGigEnd() {
         return gigEnd;
     }
 
-    public void setGigEnd(CalendarDate gigEnd) {
+    public void setGigEnd(Calendar gigEnd) {
         this.gigEnd = gigEnd;
     }
 
@@ -67,5 +82,13 @@ public class Gig {
 
     public void setGigDescription(String gigDescription) {
         this.gigDescription = gigDescription;
+    }
+
+    public CompanyProfile getCompanyProfile() {
+        return companyProfile;
+    }
+
+    public void setCompanyProfile(CompanyProfile companyProfile) {
+        this.companyProfile = companyProfile;
     }
 }

@@ -1,8 +1,10 @@
 package com.tbell.gigfinder.models;
 
-import sun.util.calendar.CalendarDate;
+
 
 import javax.persistence.*;
+import java.util.Calendar;
+import java.util.List;
 
 @Entity
 @Table(name = "user_musician")
@@ -11,19 +13,43 @@ public class MusicianProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "musician_email")
     private String musicianEmail;
+
+    @Column(name = "musician_phone_number")
     private String musicianPhoneNumber;
-    private CalendarDate birthDate;
+
+    @Column(name = "birth_date")
+    private Calendar birthDate;
+
+    @Column(name = "musician_instruments")
     private String musicianInstruments;
+
+    @Column(name = "musician_location")
     private String location;
+
+    @Column(name = "musician_bio")
     private String bio;
+
+    @OneToMany(mappedBy = "musicianProfile", cascade = CascadeType.ALL)
+    private List<MediaContent> mediaContents;
+
+    @OneToOne
+    @JoinColumn(name = "user_data_id")
+    private User user;
 
 
     public MusicianProfile() {}
 
-    public MusicianProfile(String firstName, String lastName, String musicianEmail, String musicianPhoneNumber, CalendarDate birthDate, String musicianInstruments, String location, String bio) {
+    public MusicianProfile(User user, String firstName, String lastName, String musicianEmail, String musicianPhoneNumber, Calendar birthDate, String musicianInstruments, String location, String bio) {
+        this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;
         this.musicianEmail = musicianEmail;
@@ -75,11 +101,11 @@ public class MusicianProfile {
         this.musicianPhoneNumber = musicianPhoneNumber;
     }
 
-    public CalendarDate getBirthDate() {
+    public Calendar getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(CalendarDate birthDate) {
+    public void setBirthDate(Calendar birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -105,5 +131,21 @@ public class MusicianProfile {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<MediaContent> getMediaContents() {
+        return mediaContents;
+    }
+
+    public void setMediaContents(List<MediaContent> mediaContents) {
+        this.mediaContents = mediaContents;
     }
 }
