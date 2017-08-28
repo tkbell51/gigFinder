@@ -38,6 +38,9 @@ public class MusicianProfile {
     @Column(name = "musician_bio")
     private String bio;
 
+    @Column(name = "musician_pic")
+    private String picImage;
+
     @OneToMany(mappedBy = "musicianProfile", cascade = CascadeType.ALL)
     private List<MediaContent> mediaContents;
 
@@ -147,5 +150,13 @@ public class MusicianProfile {
 
     public void setMediaContents(List<MediaContent> mediaContents) {
         this.mediaContents = mediaContents;
+    }
+
+    public String getPicImage() {
+        return picImage;
+    }
+
+    public void setPicImage(String picImage) {
+        this.picImage = picImage;
     }
 }

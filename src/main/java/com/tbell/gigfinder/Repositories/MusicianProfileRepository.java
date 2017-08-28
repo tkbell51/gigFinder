@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MusicianProfileRepository extends CrudRepository<MusicianProfile, Long> {
-
+    MusicianProfile findById(long id);
 
 }

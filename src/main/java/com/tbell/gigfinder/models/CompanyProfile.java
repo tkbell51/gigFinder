@@ -26,6 +26,9 @@ public class CompanyProfile {
     @Column(name = "company_email")
     private String email;
 
+    @Column(name = "company_pic")
+    private String companyPic;
+
     @OneToMany(mappedBy = "companyProfile", cascade = CascadeType.ALL)
     private List<Gig> gigs;
 
@@ -106,5 +109,13 @@ public class CompanyProfile {
 
     public void setGigs(List<Gig> gigs) {
         this.gigs = gigs;
+    }
+
+    public String getCompanyPic() {
+        return companyPic;
+    }
+
+    public void setCompanyPic(String companyPic) {
+        this.companyPic = companyPic;
     }
 }
