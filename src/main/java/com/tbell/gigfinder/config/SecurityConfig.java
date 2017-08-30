@@ -60,6 +60,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/signup/**").permitAll()
                 .antMatchers("/gigfinder/**").hasRole("USER")
+                .antMatchers("/gigfinder/company/**").hasRole("COMPANY")
+                .antMatchers("/gigfinder/musician/**").hasRole("MUSICIAN")
+                .antMatchers("/gigfinder/band/**").hasRole("BAND")
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -73,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private AuthenticationSuccessHandler loginSuccessHandler() {
-        return (request, response, authentication) -> response.sendRedirect("/movie");
+        return (request, response, authentication) -> response.sendRedirect("/gigfinder");
     }
 
     private AuthenticationFailureHandler loginFailureHandler() {
