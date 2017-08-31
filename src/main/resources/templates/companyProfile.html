@@ -3,11 +3,17 @@
 <head th:include="includes :: indexHead"></head>
 <body>
 <div th:include="navbar :: nav"></div>
+
 <main class="container">
-    <h1 class="">Is this working</h1>
-    <a class="waves-effect waves-light btn modal-trigger" href="#signupModal">Sign In</a>
+<h1>Company Profile</h1>
+    <div class="divider"></div>
+    <div>
+        <div class="hoverable" th:each="gig :: ${gig}">
+            <h4 th:text="${gig.gigDescription}"></h4>
+        </div>
+    </div>
 </main>
-<div th:include="modals :: signupModal"></div>
+
 <span th:include="includes :: js"></span>
 </body>
 </html>

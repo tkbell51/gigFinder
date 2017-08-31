@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="includes :: indexHead"></head>
+<body>
+<div th:include="navbar :: nav"></div>
+
+<main>
+    <form th:action="@{/dashboard/company/createprofile/}" method="post" th:object="${companyProfile}">
+        <input type="text" th:field="${companyName}"/>
+        <input type="text" th:field="${companyContactFirstName}"/>
+        <input type="text" th:field="${companyContactLastName}"/>
+        <input type="text" th:field="${phoneNumber}"/>
+        <input type="email" th:field="${email}"/>
+        <input type="text" th:field="${companyPic}"/>
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>File</span>
+                <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+                <input th:field="${companyPic}" class="file-path validate" type="text">
+            </div>
+        </div>
+        <button class="waves-effect waves-light btn" type="submit" >Save</button>
+
+    </form>
+</main>
+
+<span th:include="includes :: js"></span>
+</body>
+</html>

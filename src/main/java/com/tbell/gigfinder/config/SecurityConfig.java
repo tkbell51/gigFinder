@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
-    private String usersQuery = "select username, password, active from user_data where username=?";
+    private String usersQuery = "select username, user_password, active from user_data where username=?";
     private String rolesQuery = "select u.username, r.name from user_data u inner join role r on(u.role_id=r.id) where u.username=?";
 
     @Override
@@ -56,13 +56,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/gigfinder").permitAll()
+                .antMatchers("/home/**").permitAll()
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/signup/**").permitAll()
-                .antMatchers("/gigfinder/**").hasRole("USER")
-                .antMatchers("/gigfinder/company/**").hasRole("COMPANY")
-                .antMatchers("/gigfinder/musician/**").hasRole("MUSICIAN")
-                .antMatchers("/gigfinder/band/**").hasRole("BAND")
+                .antMatchers("/dashboard/company/**").hasRole("COMPANY")
+                .antMatchers("/dashboard/musician/**").hasRole("MUSICIAN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -76,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private AuthenticationSuccessHandler loginSuccessHandler() {
-        return (request, response, authentication) -> response.sendRedirect("/gigfinder");
+        return (request, response, authentication) -> response.sendRedirect("/dashboard/**");
     }
 
     private AuthenticationFailureHandler loginFailureHandler() {

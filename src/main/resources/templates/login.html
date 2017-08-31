@@ -11,7 +11,11 @@
         <input type="password" th:field="*{password}" placeholder="Password"/>
         <button class="waves-effect waves-light btn" type="submit" >Login</button>
     </form>
-    <a class="btn" th:href="@{/signup}">Sign UP</a>
+    <a class="waves-effect waves-light btn modal-trigger" href="#signupModal">Sign In</a>
+
 </div>
+<div th:include="modals :: signupModal"></div>
+
+<span th:include="includes :: js"></span>
 </body>
 </html>

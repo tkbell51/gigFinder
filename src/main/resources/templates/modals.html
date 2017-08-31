@@ -3,5 +3,36 @@
 <head th:include="includes :: indexHead"></head>
 <body>
 
+<div th:fragment="signupModal">
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+           <h4>Sign Up</h4>
+                <div id="signup" class="col s12">
+                    <div style="color: red;" th:text="${error}"></div>
+
+                    <form th:action="@{/signup}" th:object="${user}" method="post">
+                        <input type="text" th:field="*{username}" placeholder="Username"/>
+                        <input type="password" th:field="*{password}" placeholder="Password"/>
+                        <input type="email" th:field="*{user_email}" placeholder="Email"/>
+                        <input type="text" th:field="*{user_phonenumber}" placeholder="Phone Number"/>
+                        <select class="mdb-select" th:field="*{role}" id="">
+                            <option value="company">Company</option>
+
+                            <option value="musician">Musican</option>
+
+                        </select>
+                        <button class="waves-effect waves-light btn" type="submit" >Signup</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+<span th:include="includes :: js"></span>
 </body>
 </html>

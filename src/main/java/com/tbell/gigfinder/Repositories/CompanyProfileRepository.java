@@ -12,4 +12,5 @@ import java.util.List;
 public interface CompanyProfileRepository extends CrudRepository<CompanyProfile, Long> {
     List<Comment>findAllByUser(User user);
 
+    CompanyProfile findByUser(User user);
 }

@@ -26,6 +26,8 @@ public class LoginController {
     @Autowired
     RoleRepository roleRepo;
 
+
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, HttpServletRequest request) {
         model.addAttribute("user", new User());
@@ -37,11 +39,6 @@ public class LoginController {
         } catch (Exception ex) {
         }
         return "login";
-    }
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signupForm(Model model){
-        model.addAttribute("user", new User());
-        return "signup";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -56,6 +53,7 @@ public class LoginController {
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         user.setPassword(encryptedPassword);
         user.setUser_email(email);
+        user.setUser_phonenumber(phoneNumber);
         user.setSignup_date(new Date(System.currentTimeMillis()));
         user.setActive(true);
         switch (role) {
@@ -63,14 +61,12 @@ public class LoginController {
                 Role companyRole = roleRepo.findByName("ROLE_COMPANY");
                 user.setRole(companyRole);
                 break;
-            case "band":
-                Role bandRole = roleRepo.findByName("ROLE_BAND");
-                user.setRole(bandRole);
-                break;
+
             case "musician":
                 Role musicianRole = roleRepo.findByName("ROLE_MUSICIAN");
                 user.setRole(musicianRole);
                 break;
+
             case "user":
                 Role userRole = roleRepo.findByName("ROLE_USER");
                 user.setRole(userRole);

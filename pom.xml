@@ -48,11 +48,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>bootstrap-material-design</artifactId>
-            <version>4.0.2</version>
-        </dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>materialize</artifactId>
+			<version>0.100.2</version>
+		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
