@@ -5,13 +5,34 @@
 <div th:include="navbar :: nav"></div>
 
 <main>
-    <form th:action="@{/dashboard/company/create-gig/}" method="post" th:object="${newGig}">
-        <input type="text" th:field="${gigLocation}"/>
-        <input type="text" class="datepicker" th:field="${gigStart}"/>
-        <input type="text" class="datepicker" th:field="${gigEnd}"/>
+    <form th:action="@{/dashboard/company/create-gig/}" method="post" th:object="${gig}">
+        <div class="row">
+            <div class="input-field col s12">
+                <label for="location">Location</label>
+                <input id="location" type="text" th:field="*{gigLocation}" class="autocomplete"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <label for="start">Start</label>
+                <input id="start" type="date" class="datepicker" th:field="*{gigStart}"/>
+            </div>
+            <div class="input-field col s6">
+                <label for="end">End</label>
+                <input id="end" type="date" class="datepicker" th:field="*{gigEnd}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12"><label for="type">Gig Type</label>
+                <input id="type" type="text"  th:field="*{gigType}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12"><label for="description">Description</label>
+                <input id="description" type="text" th:field="*{gigDescription}"/>
 
-        <input type="text" th:field="${gigType}"/>
-        <input type="text" th:field="${gigDescription}"/>
+            </div>
+        </div>
         <button class="waves-effect waves-light btn" type="submit" >Create Gig</button>
 
     </form>

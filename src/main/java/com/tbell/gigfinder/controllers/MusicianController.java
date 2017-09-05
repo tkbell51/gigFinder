@@ -4,6 +4,7 @@ import com.tbell.gigfinder.Repositories.MediaContentRepository;
 import com.tbell.gigfinder.Repositories.MusicianProfileRepository;
 import com.tbell.gigfinder.Repositories.RoleRepository;
 import com.tbell.gigfinder.Repositories.UserRepository;
+import com.tbell.gigfinder.googleAPI.GoogleGeoUtils;
 import com.tbell.gigfinder.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,57 +40,25 @@ public class MusicianController {
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
         Iterable<MediaContent> mediaContents = mediaRepo.findByMusicianProfile(musicianProfile);
-        model.addAttribute("mediaContent", mediaContents);
+        model.addAttribute("media", mediaContents);
+        model.addAttribute("mediaContent", new MediaContent());
         return "musicianProfile";
     }
 
-    @RequestMapping(value = "/dashboard/musician/createprofile/", method = RequestMethod.GET)
-    public String createMusicianProfile(Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
-        model.addAttribute("user", user);
-        return "createMusician";
-    }
 
-    @RequestMapping(value = "/dashboard/musician/createprofile/", method = RequestMethod.POST)
-    public String companyProfileCreate(@RequestParam("firstName")String firstName,
-                                       @RequestParam("lastName")String lastName,
-                                       @RequestParam("musicianPhoneNumber")String phoneNumber,
-                                       @RequestParam("musicianEmail")String musicianEmail,
-                                       @RequestParam("birthDate")Calendar birthDate,
-                                       @RequestParam("musicianInstruments")String instruments,
-                                       @RequestParam("location") String location,
-                                       @RequestParam("bio")String bio,
-                                       @RequestParam("picImage") String picImage,
-                                       Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
-        model.addAttribute("user", user);
-        MusicianProfile musicianProfile  = new MusicianProfile(user, firstName, lastName, musicianEmail,
-                phoneNumber, birthDate, instruments, location, bio);
-                musicianProfile.setPicImage(picImage);
-        musicRepo.save(musicianProfile);
-        return "redirect:/dashboard/musician/profile";
 
-    }
-
-    @RequestMapping(value = "/dashboard/musician/add-media/", method = RequestMethod.GET)
-    public String addMedia (Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
-        model.addAttribute("user", user);
-        return "addMedia";
-    }
 
     @RequestMapping(value = "/dashboard/musician/add-media", method = RequestMethod.POST)
-    public String createGig (@RequestParam("mediaURL")String mediaURL,
+    public String createGig (@RequestParam("media_url")String mediaURL,
+                             @RequestParam("title")String title,
                              Model model, Principal principal){
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
-        MediaContent mediaContent = new MediaContent(mediaURL, new Date(System.currentTimeMillis()));
+        MediaContent mediaContent = new MediaContent(mediaURL, new Date(System.currentTimeMillis()), title);
+        mediaContent.setMusicianProfile(musicianProfile);
         mediaRepo.save(mediaContent);
         return "redirect:/dashboard/musician/profile";
     }

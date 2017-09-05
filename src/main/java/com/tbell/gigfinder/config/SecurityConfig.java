@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import javax.sql.DataSource;
 
+
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -58,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/home/**").permitAll()
                 .antMatchers("/login/**").permitAll()
-                .antMatchers("/signup/**").permitAll()
+                .antMatchers("/signup/").permitAll()
                 .antMatchers("/dashboard/company/**").hasRole("COMPANY")
                 .antMatchers("/dashboard/musician/**").hasRole("MUSICIAN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
@@ -75,7 +76,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private AuthenticationSuccessHandler loginSuccessHandler() {
-        return (request, response, authentication) -> response.sendRedirect("/dashboard/**");
+        if(rolesQuery.contains("ROLE_COMPANY")) {
+            return (request, response, authentication) -> response.sendRedirect("/dashboard/company/profile");
+        } else if(rolesQuery.contains("ROLE_MUSICIAN")){
+            return (request, response, authentication) -> response.sendRedirect("/dashboard/musician/profile");
+        } else {
+            return (request, response, authentication) -> response.sendRedirect("/");
+        }
+
     }
 
     private AuthenticationFailureHandler loginFailureHandler() {

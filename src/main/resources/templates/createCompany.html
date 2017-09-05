@@ -5,22 +5,62 @@
 <div th:include="navbar :: nav"></div>
 
 <main>
-    <form th:action="@{/dashboard/company/createprofile/}" method="post" th:object="${companyProfile}">
-        <input type="text" th:field="${companyName}"/>
-        <input type="text" th:field="${companyContactFirstName}"/>
-        <input type="text" th:field="${companyContactLastName}"/>
-        <input type="text" th:field="${phoneNumber}"/>
-        <input type="email" th:field="${email}"/>
-        <input type="text" th:field="${companyPic}"/>
-        <div class="file-field input-field">
-            <div class="btn">
-                <span>File</span>
-                <input type="file">
+    <form th:action="@{/signup/company/}" method="post" >
+        <div th:object="${user}">
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="username">Username</label>
+                    <input id="username" type="text" th:field="*{username}"/>
+                </div>
             </div>
-            <div class="file-path-wrapper">
-                <input th:field="${companyPic}" class="file-path validate" type="text">
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" th:field="*{password}"/>
+
+                </div>
             </div>
         </div>
+        <div th:object="${companyProfile}">
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="name">Company Name</label>
+                    <input id="name" type="text" th:field="*{companyName}"/>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <label for="firstName">Contact First Name</label>
+                    <input id="firstName" type="text" th:field="*{companyContactFirstName}"/>
+                </div>
+                <div class="input-field col s6">
+                    <label for="lastName">Contact Last Name</label>
+                    <input id="lastName" type="text" th:field="*{companyContactLastName}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <label for="pNumber">Contact Phone Number</label>
+                    <input id="pNumber" type="text" th:field="*{phoneNumber}" th:value="${user_phoneNumber}"/>
+                </div>
+                <div class="input-field col s6">
+                    <label for="email"> Contact Email</label>
+                    <input id="email" type="email" th:field="*{email}" th:value="${user_email}"/>
+                </div>
+            </div>
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>File</span>
+                    <input type="file"/>
+                </div>
+                <div class="file-path-wrapper">
+                    <input th:field="*{companyPic}" class="file-path validate" type="text"/>
+                </div>
+            </div>
+        </div>
+
         <button class="waves-effect waves-light btn" type="submit" >Save</button>
 
     </form>

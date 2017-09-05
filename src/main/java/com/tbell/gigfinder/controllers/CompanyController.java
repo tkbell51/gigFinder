@@ -49,44 +49,21 @@ public class CompanyController {
         return "companyProfile";
     }
 
-    @RequestMapping(value = "/dashboard/company/createprofile/", method = RequestMethod.GET)
-    public String createCompanyProfile(Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
-        model.addAttribute("user", user);
-        return "createCompany";
-    }
-
-    @RequestMapping(value = "/dashboard/company/createprofile/", method = RequestMethod.POST)
-    public String companyProfileCreate(@RequestParam("companyContactFirstName")String firstName,
-                                       @RequestParam("companyContactLastName")String lastName,
-                                       @RequestParam("phoneNumber")String phoneNumber,
-                                       @RequestParam("email")String email,
-                                       @RequestParam("companuPic")String companyPic,
-                                       @RequestParam("companyName")String companyName,
-                                       Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
-        model.addAttribute("user", user);
-        CompanyProfile companyProfile = new CompanyProfile(user, companyName, firstName, lastName, phoneNumber, email);
-        compRepo.save(companyProfile);
-        return "redirect:/dashboard/company/profile";
-
-    }
 
     @RequestMapping(value = "/dashboard/company/create-gig/", method = RequestMethod.GET)
     public String createGig (Model model, Principal principal){
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
+        model.addAttribute("gig", new Gig());
         return "createGig";
     }
 
-    @RequestMapping(value = "/dashboard/company/create-gig", method = RequestMethod.POST)
+    @RequestMapping(value = "/dashboard/company/create-gig/", method = RequestMethod.POST)
     public String createGig (@RequestParam("gigLocation")String location,
                              @RequestParam("gigType")String type,
-                             @RequestParam("gigStart") Calendar start,
-                             @RequestParam("gigEnd")Calendar end,
+                             @RequestParam("gigStart") String start,
+                             @RequestParam("gigEnd")String end,
                              @RequestParam("gigDescription") String description,
                              Model model, Principal principal){
         String username = principal.getName();
@@ -95,6 +72,7 @@ public class CompanyController {
         CompanyProfile compUser = compRepo.findByUser(user);
         model.addAttribute("compUser", compUser);
         Gig newGig = new Gig();
+        newGig.setGigLocation(location);
         newGig.setGigDescription(description);
         newGig.setGigType(type);
         newGig.setGigStart(start);
@@ -103,4 +81,6 @@ public class CompanyController {
         gigRepo.save(newGig);
         return "redirect:/dashboard/company/profile";
     }
+
+
 }

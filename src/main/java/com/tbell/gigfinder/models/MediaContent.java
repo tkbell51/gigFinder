@@ -2,7 +2,6 @@ package com.tbell.gigfinder.models;
 
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -12,18 +11,22 @@ public class MediaContent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String mediaURL;
+
+    @Column(name = "media_url")
+    private String media_url;
     private Date addedDate;
+    private String title;
 
     @ManyToOne
-    @JoinColumn(name = "musician_profile_id")
+    @JoinColumn(name = "user_musician_id")
     private MusicianProfile musicianProfile;
 
     public MediaContent() {}
 
-    public MediaContent(String mediaURL, Date addedDate) {
-        this.mediaURL = mediaURL;
+    public MediaContent(String media_url, Date addedDate, String title) {
+        this.media_url = media_url;
         this.addedDate = addedDate;
+        this.title = title;
     }
 
     public long getId() {
@@ -34,12 +37,12 @@ public class MediaContent {
         this.id = id;
     }
 
-    public String getMediaURL() {
-        return mediaURL;
+    public String getMedia_url() {
+        return media_url;
     }
 
-    public void setMediaURL(String mediaURL) {
-        this.mediaURL = mediaURL;
+    public void setMedia_url(String media_url) {
+        this.media_url = media_url;
     }
 
     public Date getAddedDate() {
@@ -56,5 +59,13 @@ public class MediaContent {
 
     public void setMusicianProfile(MusicianProfile musicianProfile) {
         this.musicianProfile = musicianProfile;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

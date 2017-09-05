@@ -2,6 +2,8 @@ package com.tbell.gigfinder.models;
 
 
 
+import org.springframework.data.geo.Point;
+
 import javax.persistence.*;
 import java.util.Calendar;
 
@@ -16,14 +18,15 @@ public class Gig {
     @Column(name = "gig_location")
     private String gigLocation;
 
+
     @Column(name = "gig_type")
     private String gigType;
 
     @Column(name = "gig_start")
-    private Calendar gigStart;
+    private String gigStart;
 
     @Column(name = "gig_end")
-    private Calendar gigEnd;
+    private String gigEnd;
 
     @Column(name = "gig_description")
     private String gigDescription;
@@ -60,19 +63,19 @@ public class Gig {
         this.gigType = gigType;
     }
 
-    public Calendar getGigStart() {
+    public String getGigStart() {
         return gigStart;
     }
 
-    public void setGigStart(Calendar gigStart) {
+    public void setGigStart(String gigStart) {
         this.gigStart = gigStart;
     }
 
-    public Calendar getGigEnd() {
+    public String getGigEnd() {
         return gigEnd;
     }
 
-    public void setGigEnd(Calendar gigEnd) {
+    public void setGigEnd(String gigEnd) {
         this.gigEnd = gigEnd;
     }
 

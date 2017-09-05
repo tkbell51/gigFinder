@@ -27,7 +27,7 @@ public class MusicianProfile {
     private String musicianPhoneNumber;
 
     @Column(name = "birth_date")
-    private Calendar birthDate;
+    private String birthDate;
 
     @Column(name = "musician_instruments")
     private String musicianInstruments;
@@ -51,7 +51,7 @@ public class MusicianProfile {
 
     public MusicianProfile() {}
 
-    public MusicianProfile(User user, String firstName, String lastName, String musicianEmail, String musicianPhoneNumber, Calendar birthDate, String musicianInstruments, String location, String bio) {
+    public MusicianProfile(User user, String firstName, String lastName, String musicianEmail, String musicianPhoneNumber, String birthDate, String musicianInstruments, String location, String bio) {
         this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -104,11 +104,11 @@ public class MusicianProfile {
         this.musicianPhoneNumber = musicianPhoneNumber;
     }
 
-    public Calendar getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Calendar birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 

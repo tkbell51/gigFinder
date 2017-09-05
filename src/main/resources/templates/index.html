@@ -6,6 +6,8 @@
 <main class="container">
     <h1 class="">Is this working</h1>
     <a class="waves-effect waves-light btn modal-trigger" href="#signupModal">Sign In</a>
+
+    <div th:include="buttons :: buttons"></div>
 </main>
 <div th:include="modals :: signupModal"></div>
 <span th:include="includes :: js"></span>

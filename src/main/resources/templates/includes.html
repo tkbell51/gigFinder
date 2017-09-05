@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="indexHead">
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title>gigFinder</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link rel="stylesheet" th:href="@{/webjars/materialize/0.100.2/dist/css/materialize.min.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/styles.css}"/>
@@ -22,13 +22,37 @@
       });
       $('.datepicker').pickadate({
           selectMonths: true, // Creates a dropdown to control month
-          selectYears: 15, // Creates a dropdown of 15 years to control year,
+          selectYears: 199, // Creates a dropdown of 15 years to control year,
           today: 'Today',
           clear: 'Clear',
           close: 'Ok',
-          closeOnSelect: false // Close upon selecting a date,
+          closeOnSelect: false// Close upon selecting a date,
+      });
+      $('input.autocomplete').autocomplete({
+          data: {
+              "Apple": null,
+              "Microsoft": null,
+              "Google": 'https://placehold.it/250x250'
+          },
+          limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+          onAutocomplete: function(val) {
+              // Callback function when value is autcompleted.
+          },
+          minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
       });
 </script>
+
+   <script>
+function myMap() {
+    var mapProp= {
+        center:new google.maps.LatLng(51.508742,-0.120850),
+        zoom:5,
+    };
+    var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSPtsW2disfrS4H7Y4AYqQjAcml9dgGXc&callback=myMap"></script>
 </span>
 </body>
 </html>

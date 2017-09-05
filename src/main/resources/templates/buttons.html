@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="includes :: indexHead"></head>
+<body>
+<div th:include="navbar :: nav"></div>
+<div th:fragment="buttons">
+    <div>
+        <div class="row">
+            <div class="col s12">
+                <h1>login</h1>
+                <a class="waves-effect waves-light btn" href="/login">Sign In</a>
+
+            </div>
+            <div class="col s12">
+                <h1>home</h1>
+                <a href="/" class="waves-effect waves-light btn">Home</a>
+                <a href="/home/find-bands" class="waves-effect waves-light btn">Find Bands</a>
+                <a href="/home/find-gigs" class="waves-effect waves-light btn">Find Gigs</a>
+            </div>
+            <div class="col s12">
+                <h1>company</h1>
+                <a href="/dashboard/company/profile" class="waves-effect waves-light btn">C Profile</a>
+                <a href="/dashboard/company/createprofile/" class="waves-effect waves-light btn">Create Profile</a>
+                <a href="/dashboard/company/create-gig/" class="waves-effect waves-light btn">Create Gig</a>
+
+            </div>
+            <div class="col">
+                <h1>musician</h1>
+                <a href="/dashboard/musician/profile" class="waves-effect waves-light btn">M Profile</a>
+                <a href="/dashboard/musician/createprofile " class="waves-effect waves-light btn">Create M Profile</a>
+
+            </div>
+        </div>
+    </div>
+
+
+    <a href="/"></a>
+</div>
+
+<span th:include="includes :: js"></span>
+
+</body>
+</html>

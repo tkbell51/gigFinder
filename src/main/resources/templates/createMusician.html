@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="includes :: indexHead"></head>
+<body>
+<div th:include="navbar :: nav"></div>
+<main class="container">
+    <form th:action="@{/signup/musician/}" method="post"  >
+        <div th:object="${user}">
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="username">Username</label>
+                    <input id="username" type="text" th:field="*{username}" placeholder="Username"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" th:field="*{password}" placeholder="Password"/>
+
+                </div>
+            </div>
+        </div>
+        <div th:object="${musicianProfile}">
+            <div class="row">
+                <div class="input-field col s6">
+                    <label for="firstName">First Name</label>
+                    <input id="firstName" type="text" th:field="*{firstName}"/>
+                </div>
+                <div class="input-field col s6">
+                    <label for="lastName">Last Name</label>
+                    <input id="lastName" type="text" th:field="*{lastName}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <label for="pNumber">Phone Number</label>
+                    <input id="pNumber" type="text" th:field="*{musicianPhoneNumber}" th:value="${user_phonenumber}"/>
+                </div>
+                <div class="input-field col s6">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" th:field="*{musicianEmail}" th:value="${user_email}"/>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="instruments">Musical Instruments</label>
+                    <input id="instruments" type="text" th:field="*{musicianInstruments}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="location">Location</label>
+                    <input id="location" type="text" th:field="*{location}" class="autocomplete"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="bio">Bio</label>
+                    <input id="bio" type="text" th:field="*{bio}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="birthDate">BirthDate</label>
+                    <input id="birthDate" type="date" class="datepicker" th:field="*{birthDate}"/>
+                </div>
+            </div>
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>File</span>
+                    <input type="file"/>
+                </div>
+                <div class="file-path-wrapper">
+                    <input th:field="*{picImage}" class="file-path validate" type="text"/>
+                </div>
+            </div>
+        </div>
+
+        <button class="waves-effect waves-light btn" type="submit" >Save</button>
+
+    </form>
+</main>
+<span th:include="includes :: js"></span>
+
+</body>
+</html>
