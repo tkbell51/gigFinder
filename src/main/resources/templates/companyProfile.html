@@ -10,14 +10,16 @@
     <div>
         <div class="hoverable" th:each="gig : ${gig}">
             <div class="container">
+                <a th:href="'/home/gig/' + @{${gig.id}}">
                 <h4 th:text="${gig.gigDescription}"></h4>
                 <p th:text="'Start: ' + ${gig.gigStart}"></p>
                 <p th:text="'End: ' + ${gig.gigEnd}"></p>
                 <p th:text="${gig.gigType}"></p>
                 <p th:text="${gig.gigLocation}"></p>
-                <div id="googleMap" style="width:100%;height:400px;"></div>
+                    <img th:src="${url}" alt=""/>
+                    <!--<div id="googleMap" style="width:100%;height:400px;"></div>-->
+                </a>
             </div>
-
         </div>
     </div>
 </main>

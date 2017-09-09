@@ -4,7 +4,9 @@
 <body>
 <div th:include="navbar :: nav"></div>
 <main>
+<h1 th:text="${gig.gigDescription}"></h1>
 
+    <img th:src="${url}" alt="map"/>
 </main>
 <span th:include="includes :: js"></span>
 

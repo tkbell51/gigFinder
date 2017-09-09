@@ -4,7 +4,6 @@ import com.tbell.gigfinder.Repositories.MediaContentRepository;
 import com.tbell.gigfinder.Repositories.MusicianProfileRepository;
 import com.tbell.gigfinder.Repositories.RoleRepository;
 import com.tbell.gigfinder.Repositories.UserRepository;
-import com.tbell.gigfinder.googleAPI.GoogleGeoUtils;
 import com.tbell.gigfinder.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
-import java.util.Calendar;
 import java.util.Date;
 
 @Controller

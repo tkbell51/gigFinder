@@ -1,9 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
 <body>
 <div th:include="navbar :: nav"></div>
+<main class="container">
+    <div class="hoverable" th:each="gig : ${gig}">
+        <div class="container">
+            <a th:href="'/home/gig/' + @{${gig.id}}">
+                <h4 th:text="${gig.gigDescription}"></h4>
+                <p th:text="'Start: ' + ${gig.gigStart}"></p>
+                <p th:text="'End: ' + ${gig.gigEnd}"></p>
+                <p th:text="${gig.gigType}"></p>
+                <p th:text="${gig.gigLocation}"></p>
+            </a>
+        </div>
+    </div>
+</main>
 
 <span th:include="includes :: js"></span>
 </body>
