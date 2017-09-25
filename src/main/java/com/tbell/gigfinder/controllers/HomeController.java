@@ -53,6 +53,7 @@ public class HomeController {
             model.addAttribute("error", message);
             request.getSession().removeAttribute("error");
         } catch (Exception ex) {
+
         }
         return "index";
     }
@@ -79,32 +80,5 @@ public class HomeController {
         return "findGigs";
     }
 
-    @RequestMapping(value = "/home/gig/{gigId}", method = RequestMethod.GET)
-    public String gigDetails(@PathVariable("gigId")long gigId,
-                             Model model) throws InterruptedException,  IOException {
-        Gig gig = gigRepo.findOne(gigId);
-        model.addAttribute("gig", gig);
 
-        ClientKey clientKey = new ClientKey();
-
-
-        GeoCodingInterface geocodingInterface = Feign.builder()
-                .decoder(new GsonDecoder())
-                .target(GeoCodingInterface.class, "https://maps.googleapis.com");
-        GeoCodingResponse response = geocodingInterface.geoCodingResponse(gig.getGigLocation(),
-                clientKey.getAPI_KEY());
-        double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
-        double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
-        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=12&size=200x100&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getAPI_KEY();
-        model.addAttribute("url", oneMarkerUrl);
-        System.out.println("-----------------------------------------------");
-        System.out.println(gig.getGigDescription());
-        System.out.println(response.getResults().get(0).getGeometry().getLocation().getLat());
-        System.out.println(response.getResults().get(0).getGeometry().getLocation().getLng());
-        System.out.println("LOCATION: " + lat + "," + lng);
-        System.out.println(oneMarkerUrl);
-
-        System.out.println("-------------------------------------------------");
-        return "gigDetails";
-    }
 }

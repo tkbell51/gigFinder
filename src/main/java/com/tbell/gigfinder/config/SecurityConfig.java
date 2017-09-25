@@ -10,11 +10,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.sql.DataSource;
+import java.util.Collection;
 
 
 @Configuration
@@ -50,7 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/assets/**");
+        web.ignoring().antMatchers("/assets/css/styles.css");
+        web.ignoring().antMatchers("/assets/js/main.js");
+        web.ignoring().antMatchers("/assets/images/**");
+
+
     }
 
     @Override
@@ -59,9 +65,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/home/**").permitAll()
                 .antMatchers("/login/**").permitAll()
-                .antMatchers("/signup/").permitAll()
-                .antMatchers("/dashboard/company/**").hasRole("COMPANY")
-                .antMatchers("/dashboard/musician/**").hasRole("MUSICIAN")
+                .antMatchers("/signup/**").permitAll()
+                .antMatchers("/company/**").hasRole("COMPANY")
+                .antMatchers("/musician/**").hasRole("MUSICIAN")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .and()
                 .formLogin()
@@ -71,18 +77,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll()
-                .logoutSuccessUrl("/login");
+                .logoutSuccessUrl("/");
 
     }
 
     private AuthenticationSuccessHandler loginSuccessHandler() {
-        if(rolesQuery.contains("ROLE_COMPANY")) {
-            return (request, response, authentication) -> response.sendRedirect("/dashboard/company/profile");
-        } else if(rolesQuery.contains("ROLE_MUSICIAN")){
-            return (request, response, authentication) -> response.sendRedirect("/dashboard/musician/profile");
-        } else {
-            return (request, response, authentication) -> response.sendRedirect("/");
-        }
+            return (request, response, authentication) -> {
+                Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+                for (GrantedAuthority grantedAuthority : authorities) {
+                    if (grantedAuthority.getAuthority().equals("ROLE_COMPANY")) {
+                        response.sendRedirect("/company/my-profile");
+                        return;
+                    } else if (grantedAuthority.getAuthority().equals("ROLE_MUSICIAN")) {
+                        response.sendRedirect("/musician/my-profile");
+                        return;
+                    } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")){
+                        response.sendRedirect("/admin");
+                        return;
+                }
+            }
+    };
 
     }
 

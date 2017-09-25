@@ -4,7 +4,7 @@
 <head th:include="includes :: indexHead"></head>
 <body>
 <div th:fragment="nav">
-    <header>
+    <header class="navbar-fixed">
         <ul id="dropdown1" class="dropdown-content">
             <li><a href="#!">one</a></li>
             <li><a href="#!">two</a></li>
@@ -18,7 +18,12 @@
                 <ul class="right hide-on-med-and-down">
                     <li><a th:href="@{/home/find-gigs}">Find a Gig</a></li>
                     <li><a th:href="@{/home/find-bands}">Find a Band</a></li>
-                    <li><a href="/login">Sign In</a></li>
+                    <li><a class="modal-trigger orange accent-4" href="#signupModal">Sign In</a></li>
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+                        <input class="btn" type="submit" value="LOGOUT"/>
+                        </form>
+                    </li>
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
                 </ul>

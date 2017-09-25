@@ -3,26 +3,88 @@
 <head th:include="includes :: indexHead"></head>
 <body>
 <div th:include="navbar :: nav"></div>
-<main class="container">
-    <form th:action="@{/dashboard/musician/add-media}" method="post" th:object="${mediaContent}">
-        <div class="row">
-            <div class="input-field col s12">
-                <label for="title">Title</label>
-                <input type="text" id="title" th:field="*{title}"/>
+<section class="profile">
+    <h1 class="name" th:text="${musicianProfile.firstName} +' '+ ${musicianProfile.lastName}"></h1>
+</section>
+<main class="musicProfile">
+    <div class="row">
+        <div class="col s3">
+            <table>
+                <tr>
+                    <td><i class="orange-text text-accent-4 material-icons">account_circle</i></td>
+                    <td th:text="${user.username}"></td>
+                </tr>
+                <tr>
+                    <td><i class="orange-text text-accent-4 material-icons">email</i></td>
+                    <td th:text="${musicianProfile.musicianEmail}"></td>
+                </tr>
+                <tr>
+                    <td><i class="orange-text text-accent-4 material-icons">cake</i></td>
+                    <td th:text="${musicianProfile.birthDate}"></td>
+                </tr>
+                <tr>
+                    <td><i class="orange-text text-accent-4 material-icons">location_on</i></td>
+                    <td th:text="${musicianProfile.location}"></td>
+                </tr>
+                <tr>
+                    <td><i class="orange-text text-accent-4 material-icons">bookmark</i></td>
+                    <td th:text="${musicianProfile.bio}"></td>
+                </tr>
+            </table>
+            <a class="waves-effect waves-light btn modal-trigger" href="#musicUpdate">Update</a>
+        </div>
+        <div class="col s6">
+            <form th:action="@{/musician/add-media}" method="post" th:object="${mediaContent}">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" id="title" th:field="*{title}" placeholder="Title of music"/>
+                        <label for="title">Title</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="url" type="text" th:field="*{media_url}" placeholder="Youtube URL of your music"/>
+                        <label for="url">Add Music</label>
+                    </div>
+                </div>
+                <button class="btn orange accent-4" type="submit">Add Media</button>
+            </form>
+            <div th:each="media : ${media}">
+                <h5>
+                    <i class="orange-text text-accent-4 material-icons">music_note</i>
+
+                    <a  th:href="@{${media.media_url}}" target="_blank"  th:text="${media.title}"></a>
+                </h5>
+                <div class="divider"></div>
             </div>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <label for="url">add Music</label>
-                <input id="url" type="text" th:field="*{media_url}"/>
+        <div class="col s3">
+            <h5>Gigs in the Area</h5>
+
+            <div class="card" th:each="gig : ${gig}">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col s4">
+                                <img class="localGigs" th:src="${gig.gigArt}" alt=""/>
+                            </div>
+                            <div class="col s8">
+                                <p th:text="'When: '+${gig.gigStart}"></p>
+                                <p th:text="'Type: '+${gig.gigType}"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-action">
+                        <a class="btn" th:href="'/musician/gig/' + @{${gig.id}}">More Info</a>
+
+                    </div>
             </div>
+
         </div>
-        <button type="submit">Add Media</button>
-    </form>
-    <div th:each="media : ${media}">
-    <h3 th:text="${media.title}"></h3>
     </div>
+
 </main>
+<div th:include="footer :: footer"></div>
+<div th:include="modals :: musicianUpdate"></div>
 
 <span th:include="includes :: js"></span>
 

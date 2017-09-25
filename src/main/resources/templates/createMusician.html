@@ -8,8 +8,8 @@
         <div th:object="${user}">
             <div class="row">
                 <div class="input-field col s12">
-                    <label for="username">Username</label>
                     <input id="username" type="text" th:field="*{username}" placeholder="Username"/>
+                    <label for="username">Username</label>
                 </div>
             </div>
             <div class="row">
@@ -34,20 +34,53 @@
             <div class="row">
                 <div class="input-field col s6">
                     <label for="pNumber">Phone Number</label>
-                    <input id="pNumber" type="text" th:field="*{musicianPhoneNumber}" th:value="${user_phonenumber}"/>
+                    <input id="pNumber" type="text" th:field="*{musicianPhoneNumber}"/>
                 </div>
                 <div class="input-field col s6">
                     <label for="email">Email</label>
-                    <input id="email" type="email" th:field="*{musicianEmail}" th:value="${user_email}"/>
+                    <input id="email" type="email" th:field="*{musicianEmail}"/>
                 </div>
 
             </div>
-            <div class="row">
+
                 <div class="input-field col s12">
-                    <label for="instruments">Musical Instruments</label>
-                    <input id="instruments" type="text" th:field="*{musicianInstruments}"/>
+                    <select multiple="multiple" th:field="*{musicianInstruments}">
+                        <option value="" disabled="disabled" selected="selected">Choose Musical Instruments</option>
+                        <option value="singer">Singer</option>
+                        <option value="accordion">Accordion</option>
+                        <option value="acoustic guitar">Acoustic Guitar</option>
+                        <option value="bagpipes">Bagpipes</option>
+                        <option value="banjo">Banjo</option>
+                        <option value="bass guitar">Bass Guitar</option>
+                        <option value="bassoon">Bassoon</option>
+                        <option value="bongo">Bongo</option>
+                        <option value="cello">Cello</option>
+                        <option value="clarinet">Clarinet</option>
+                        <option value="didgeridoo">Didgeridoo</option>
+                        <option value="drum">Drums</option>
+                        <option value="electric guitar">Electric Guitar</option>
+                        <option value="flute">Flute</option>
+                        <option value="french horn">French Horn</option>
+                        <option value="harmonica">Harmonica</option>
+                        <option value="Harp">Harp</option>
+                        <option value="keyboard">Keyboard</option>
+                        <option value="mandolin">Mandolin</option>
+                        <option value="marimba">Marimba</option>
+                        <option value="oboe">Oboe</option>
+                        <option value="organ">Organ</option>
+                        <option value="piano">Piano</option>
+                        <option value="saxophone">Saxophone</option>
+                        <option value="trombone">Trombone</option>
+                        <option value="trumpet">Trumpet</option>
+                        <option value="tuba">Tuba</option>
+                        <option value="ukulele">Ukulele</option>
+                        <option value="violoa">Viola</option>
+                        <option value="violin">Violin</option>
+
+                    </select>
+
                 </div>
-            </div>
+
             <div class="row">
                 <div class="input-field col s12">
                     <label for="location">Location</label>
@@ -81,6 +114,7 @@
 
     </form>
 </main>
+<div th:include="footer :: footer"></div>
 <span th:include="includes :: js"></span>
 
 </body>

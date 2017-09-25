@@ -1,17 +1,21 @@
 package com.tbell.gigfinder.controllers;
 
-import com.tbell.gigfinder.Repositories.MediaContentRepository;
-import com.tbell.gigfinder.Repositories.MusicianProfileRepository;
-import com.tbell.gigfinder.Repositories.RoleRepository;
-import com.tbell.gigfinder.Repositories.UserRepository;
+import com.tbell.gigfinder.Repositories.*;
+import com.tbell.gigfinder.config.ClientKey;
+import com.tbell.gigfinder.googleAPI.GeoCodingInterface;
+import com.tbell.gigfinder.googleAPI.GeoCodingResponse;
 import com.tbell.gigfinder.models.*;
+import feign.Feign;
+import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
 
@@ -30,7 +34,10 @@ public class MusicianController {
     @Autowired
     MediaContentRepository mediaRepo;
 
-    @RequestMapping(value = "/dashboard/musician/profile", method = RequestMethod.GET)
+    @Autowired
+    GigRepository gigRepo;
+
+    @RequestMapping(value = "/musician/my-profile", method = RequestMethod.GET)
     public String musicianProfile(Model model, Principal principal){
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
@@ -40,13 +47,12 @@ public class MusicianController {
         Iterable<MediaContent> mediaContents = mediaRepo.findByMusicianProfile(musicianProfile);
         model.addAttribute("media", mediaContents);
         model.addAttribute("mediaContent", new MediaContent());
+        Iterable<Gig>localGigs = gigRepo.findByGigLocation(musicianProfile.getLocation());
+        model.addAttribute("gig", localGigs);
         return "musicianProfile";
     }
 
-
-
-
-    @RequestMapping(value = "/dashboard/musician/add-media", method = RequestMethod.POST)
+    @RequestMapping(value = "/musician/add-media", method = RequestMethod.POST)
     public String createGig (@RequestParam("media_url")String mediaURL,
                              @RequestParam("title")String title,
                              Model model, Principal principal){
@@ -58,6 +64,35 @@ public class MusicianController {
         MediaContent mediaContent = new MediaContent(mediaURL, new Date(System.currentTimeMillis()), title);
         mediaContent.setMusicianProfile(musicianProfile);
         mediaRepo.save(mediaContent);
-        return "redirect:/dashboard/musician/profile";
+        return "redirect:/musician/my-profile";
+    }
+
+    @RequestMapping(value = "/musician/gig/{gigId}", method = RequestMethod.GET)
+    public String gigDetails(@PathVariable("gigId")long gigId,
+                             Model model) throws InterruptedException, IOException {
+        Gig gig = gigRepo.findOne(gigId);
+        model.addAttribute("gig", gig);
+
+        ClientKey clientKey = new ClientKey();
+
+
+        GeoCodingInterface geocodingInterface = Feign.builder()
+                .decoder(new GsonDecoder())
+                .target(GeoCodingInterface.class, "https://maps.googleapis.com");
+        GeoCodingResponse response = geocodingInterface.geoCodingResponse(gig.getGigLocation(),
+                clientKey.getAPI_KEY());
+        double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
+        double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
+        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=12&size=500x250&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getAPI_KEY();
+        model.addAttribute("url", oneMarkerUrl);
+        System.out.println("-----------------------------------------------");
+        System.out.println(gig.getGigDescription());
+        System.out.println(response.getResults().get(0).getGeometry().getLocation().getLat());
+        System.out.println(response.getResults().get(0).getGeometry().getLocation().getLng());
+        System.out.println("LOCATION: " + lat + "," + lng);
+        System.out.println(oneMarkerUrl);
+
+        System.out.println("-------------------------------------------------");
+        return "gigDetails";
     }
 }

@@ -6,19 +6,117 @@
 <div th:fragment="signupModal">
     <div id="signupModal" class="modal">
         <div class="modal-content">
-           <h4>Sign Up</h4>
-                <div id="signup" class="col s12">
+            <div class="container">
+                <h1>LOGIN</h1>
+                <div style="color: red;" th:text="${error}"></div>
 
-
-                    <div class="row">
-                        <a href="/signup/company/" class="btn">Book Musician</a>
-                        <a href="/signup/musician/" class="btn">I am a Musician</a>
-                    </div>
-                </div>
+                <form th:action="@{/login}" th:object="${user}" method="post">
+                    <input type="text" th:field="*{username}" placeholder="Username"/>
+                    <input type="password" th:field="*{password}" placeholder="Password"/>
+                    <button class="waves-effect waves-light btn" type="submit" >Login</button>
+                </form>
+            </div>
             </div>
         </div>
 
     </div>
+<div th:fragment="musicianUpdate">
+    <div id="musicUpdate" class="modal">
+        <div class="modal-content">
+            <form th:action="'/musician/' + @{${musicianProfile.id}} + '/update-profile/'" th:object="${musicianProfile}">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="firstName">First Name</label>
+                        <input id="firstName" type="text" th:field="*{firstName}"/>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="lastName">Last Name</label>
+                        <input id="lastName" type="text" th:field="*{lastName}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="pNumber">Phone Number</label>
+                        <input id="pNumber" type="text" th:field="*{musicianPhoneNumber}"/>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="email">Email</label>
+                        <input id="email" type="email" th:field="*{musicianEmail}"/>
+                    </div>
+                </div>
+                <div class="input-field col s12">
+                    <select multiple="multiple" th:field="*{musicianInstruments}">
+                        <option value="" disabled="disabled" selected="selected">Choose Musical Instruments</option>
+                        <option value="singer">Singer</option>
+                        <option value="accordion">Accordion</option>
+                        <option value="acoustic guitar">Acoustic Guitar</option>
+                        <option value="bagpipes">Bagpipes</option>
+                        <option value="banjo">Banjo</option>
+                        <option value="bass guitar">Bass Guitar</option>
+                        <option value="bassoon">Bassoon</option>
+                        <option value="bongo">Bongo</option>
+                        <option value="cello">Cello</option>
+                        <option value="clarinet">Clarinet</option>
+                        <option value="didgeridoo">Didgeridoo</option>
+                        <option value="drum">Drums</option>
+                        <option value="electric guitar">Electric Guitar</option>
+                        <option value="flute">Flute</option>
+                        <option value="french horn">French Horn</option>
+                        <option value="harmonica">Harmonica</option>
+                        <option value="Harp">Harp</option>
+                        <option value="keyboard">Keyboard</option>
+                        <option value="mandolin">Mandolin</option>
+                        <option value="marimba">Marimba</option>
+                        <option value="oboe">Oboe</option>
+                        <option value="organ">Organ</option>
+                        <option value="piano">Piano</option>
+                        <option value="saxophone">Saxophone</option>
+                        <option value="trombone">Trombone</option>
+                        <option value="trumpet">Trumpet</option>
+                        <option value="tuba">Tuba</option>
+                        <option value="ukulele">Ukulele</option>
+                        <option value="violoa">Viola</option>
+                        <option value="violin">Violin</option>
+
+                    </select>
+
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="location">Location</label>
+                        <input id="location" type="text" th:field="*{location}" class="autocomplete"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="bio">Bio</label>
+                        <input id="bio" type="text" th:field="*{bio}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="birthDate">BirthDate</label>
+                        <input id="birthDate" type="date" class="datepicker" th:field="*{birthDate}"/>
+                    </div>
+                </div>
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file"/>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input th:field="*{picImage}" class="file-path validate" type="text"/>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" type="submit">Update</button>
+        </div>
+    </div>
+</div>
 
 
 

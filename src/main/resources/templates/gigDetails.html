@@ -5,9 +5,14 @@
 <div th:include="navbar :: nav"></div>
 <main>
 <h1 th:text="${gig.gigDescription}"></h1>
-
+    <h3 th:text="${gig.gigType}"></h3>
+    <h3 th:text="${gig.gigStart}"></h3>
+    <h3 th:text="${gig.gigEnd}"></h3>
+    <h3 th:text="${gig.gigLocation}"></h3>
     <img th:src="${url}" alt="map"/>
 </main>
+<div th:include="footer :: footer"></div>
+
 <span th:include="includes :: js"></span>
 
 </body>

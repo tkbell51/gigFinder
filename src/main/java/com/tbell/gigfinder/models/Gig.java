@@ -31,6 +31,9 @@ public class Gig {
     @Column(name = "gig_description")
     private String gigDescription;
 
+    @Column(name = "gig_art")
+    private String gigArt;
+
     @ManyToOne
     @JoinColumn(name = "company_profile_id")
     private CompanyProfile companyProfile;
@@ -86,6 +89,15 @@ public class Gig {
     public void setGigDescription(String gigDescription) {
         this.gigDescription = gigDescription;
     }
+
+    public String getGigArt() {
+        return gigArt;
+    }
+
+    public void setGigArt(String gigArt) {
+        this.gigArt = gigArt;
+    }
+
 
     public CompanyProfile getCompanyProfile() {
         return companyProfile;

@@ -45,11 +45,9 @@ public class LoginController {
     public String login(Model model, HttpServletRequest request) {
         model.addAttribute("user", new User());
         try {
-
             Object message = request.getSession().getAttribute("error");
             model.addAttribute("error", message);
             request.getSession().removeAttribute("error");
-
         } catch (Exception ex) {
         }
         return "login";
@@ -134,4 +132,5 @@ public class LoginController {
         return "redirect:/login";
 
     }
+    
 }
