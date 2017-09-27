@@ -23,7 +23,7 @@
 <div th:fragment="musicianUpdate">
     <div id="musicUpdate" class="modal">
         <div class="modal-content">
-            <form th:action="'/musician/' + @{${musicianProfile.id}} + '/update-profile/'" th:object="${musicianProfile}">
+            <form th:action="'/musician/' + @{${musicianProfile.id}} + '/update-profile/'" th:object="${musicianProfile}" method="post">
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="firstName">First Name</label>
@@ -100,26 +100,140 @@
                         <input id="birthDate" type="date" class="datepicker" th:field="*{birthDate}"/>
                     </div>
                 </div>
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>File</span>
-                        <input type="file"/>
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input th:field="*{picImage}" class="file-path validate" type="text"/>
-                    </div>
-                </div>
-
+                <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
             </form>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" type="submit">Update</button>
+
         </div>
     </div>
 </div>
+<div th:fragment="mediaUpdate">
+    <div id="mediaUpdate"  class="modal">
+        <div class="modal-content">
+            <form th:action="'/company/media/' + @{${media.id}} + '/update/'" method="post" th:object="${mediaContent}">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" id="title" th:field="*{title}" placeholder="Title of music"/>
+                        <label for="title">Title</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="url" type="text" th:field="*{media_url}" placeholder="Youtube URL of your music"/>
+                        <label for="url">Add Music</label>
+                    </div>
+                </div>
+                <button class="btn orange accent-4" type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:fragment="companyProfileUpdate">
+    <div id="companyUpdate" class="modal">
+        <div class="modal-content">
+    <form th:action="'/company/' + @{${companyProfile.id}} + '/update-profile/'" th:object="${companyProfile}" method="post">
+        <div class="row">
+            <div class="input-field col s12">
+                <label for="name">Company Name</label>
+                <input id="name" type="text" th:field="*{companyName}"/>
+            </div>
 
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <label for="firstName">Contact First Name</label>
+                <input id="firstName" type="text" th:field="*{companyContactFirstName}"/>
+            </div>
+            <div class="input-field col s6">
+                <label for="lastName">Contact Last Name</label>
+                <input id="lastName" type="text" th:field="*{companyContactLastName}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <label for="pNumber">Contact Phone Number</label>
+                <input id="pNumber" type="text" th:field="*{phoneNumber}" />
+            </div>
+            <div class="input-field col s6">
+                <label for="email"> Contact Email</label>
+                <input id="email" type="email" th:field="*{email}" />
+            </div>
+        </div>
+        <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
 
+    </form>
+        </div>
+    </div>
+</div>
+<div th:fragment="gigUpdate">
+    <div id="gigUpdate" class="modal">
+        <div class="modal-content">
+            <form th:action="'/company/gig/' +@{${gig.id}} + '/update'" method="post" th:object="${gig}">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="location">Street</label>
+                        <input id="location" type="text" name="locationStreet" class="autocomplete"/>
+                    </div>
 
+                    <div class="input-field col s6">
+                        <input id="city" type="text" name="locationCity"/>
+                        <label for="city">City</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <select name="locationState" id="state">
+                            <option value="" disabled="disabled" selected="selected">State</option>
+                            <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]], [[${states.abbreviation}]]</option>
+                        </select>
+                    </div>
+
+                    <div class="input-field col s3">
+                        <input id="zip" type="text" name="locationZip" maxlength="5" minlength="5"/>
+                        <label for="zip">Zip Code</label>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <label for="start">Start</label>
+                        <input id="start" type="date" class="datepicker" th:field="*{gigStart}"/>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="end">End</label>
+                        <input id="end" type="date" class="datepicker" th:field="*{gigEnd}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="type">Gig Type</label>
+                        <input id="type" type="text"  th:field="*{gigType}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="description">Description</label>
+                        <input id="description" type="text" th:field="*{gigDescription}"/>
+
+                    </div>
+                </div>
+                <button class="waves-effect waves-light btn" type="submit" >Update Gig</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+<div th:fragment="mediaDelete">
+    <div id="mediaDelete" class="modal">
+        <div class="modal-content">
+            <p>Are you sure?</p>
+            <form th:action="'/musician/media/' + @{${media.id}} + '/delete'" method="post">
+
+                <button class="waves-effect waves-light btn" type="submit" >Yes</button>
+
+            </form>
+            <button class="waves-effect waves-light btn" type="button" >No</button>
+
+        </div>
+    </div>
+</div>
 
 
 <span th:include="includes :: js"></span>

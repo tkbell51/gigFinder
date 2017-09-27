@@ -2,30 +2,52 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: nav"></div>
+<div th:include="navbar :: navUser"></div>
 
-<main class="container">
-    <h1>Company Profile</h1>
+<main th:inline="text">
+    <section class="profile">
+        <h1 class="name" th:text="${companyProfile.companyContactFirstName} +' '+ ${companyProfile.companyContactLastName}"></h1>
+    </section>
+    <div class="musicProfile">
+        <div class="row">
+            <div class="col s3">
+                <p><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
+                <p><i class="orange-text text-accent-4 material-icons">business_center</i> [[${companyProfile.companyName}]]</p>
+                <p><i class="orange-text text-accent-4 material-icons">email</i> [[${companyProfile.email}]]</p>
+                <p><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${companyProfile.phoneNumber}]]</p>
+                <a class="waves-effect waves-light btn modal-trigger" href="#companyUpdate">Update</a>
+
+            </div>
+        </div>
     <div class="divider"></div>
     <div>
-        <div class="hoverable" th:each="gig : ${gig}">
-            <div class="container">
-                <a th:href="'/home/gig/' + @{${gig.id}}">
-                    <h4 th:text="${gig.gigDescription}"></h4>
-                    <p th:text="'Start: ' + ${gig.gigStart}"></p>
-                    <p th:text="'End: ' + ${gig.gigEnd}"></p>
-                    <p th:text="${gig.gigType}"></p>
-                    <p th:text="${gig.gigLocation}"></p>
+        <a th:href="@{/company/create-gig/}" class="btn">Create Gig</a>
+        <div class="row">
+        <div th:each="gig : ${gig}">
 
-                </a>
-
+                <div class="col s4 m4">
+                    <div class="card small blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title" th:text="${gig.gigDescription}"></span>
+                            <p>Time: [[${gig.gigStart}]] - [[${gig.gigEnd}]]</p>
+                            <p th:text="${gig.gigType}"></p>
+                            <p th:text="${gig.gigLocation}"></p>
+                        </div>
+                        <div class="card-action">
+                            <div class="row">
+                                <a class="btn" th:href="'/company/gig/' + @{${gig.id}}">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
     </div>
+        </div>
 </main>
 <div th:include="footer :: footer"></div>
-
+<div th:include="modals :: companyProfileUpdate"></div>
 <span th:include="includes :: js"></span>
 </body>
 </html>

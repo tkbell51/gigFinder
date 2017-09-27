@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: nav"></div>
+<div th:include="navbar :: navHome"></div>
 
 <main>
     <form th:action="@{/signup/company/}" method="post" >
@@ -43,22 +43,14 @@
             <div class="row">
                 <div class="input-field col s6">
                     <label for="pNumber">Contact Phone Number</label>
-                    <input id="pNumber" type="text" th:field="*{phoneNumber}" th:value="${user_phoneNumber}"/>
+                    <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
                 </div>
                 <div class="input-field col s6">
                     <label for="email"> Contact Email</label>
-                    <input id="email" type="email" th:field="*{email}" th:value="${user_email}"/>
+                    <input id="email" type="email" th:field="*{email}"/>
                 </div>
             </div>
-            <div class="file-field input-field">
-                <div class="btn">
-                    <span>File</span>
-                    <input type="file"/>
-                </div>
-                <div class="file-path-wrapper">
-                    <input th:field="*{companyPic}" class="file-path validate" type="text"/>
-                </div>
-            </div>
+
         </div>
 
         <button class="waves-effect waves-light btn" type="submit" >Save</button>

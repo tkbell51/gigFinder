@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="includes :: indexHead"></head>
+<body>
+<div th:include="navbar :: navUser"></div>
+<main th:inline="text">
+    <div class="row">
+        <div class="col s6">
+            <h1 th:text="${gig.gigDescription}"></h1>
+            <h3 th:text="${gig.gigType}"></h3>
+            <h3>
+                <i class="orange-text text-accent-4 material-icons">access_time</i>
+                [[${gig.gigStart}]] - [[${gig.gigEnd}]]
+            </h3>
+            <h3 th:text="${gig.gigLocation}"></h3>
+            <a class="waves-effect waves-light btn modal-trigger" href="#gigUpdate">Update</a>
+            <a th:href="'https://www.google.com/maps/place/'+ @{${gig.gigLocation}}" target="_blank" class="btn">Directions</a>
+            <a th:href="'/company/gig/delete'"><i class="orange-text text-accent-4 material-icons">delete</i></a>
+        </div>
+        <div class="col s6">
+            <img th:src="${url}" alt="map"/>
+
+        </div>
+    </div>
+
+
+
+</main>
+<div th:include="footer :: footer"></div>
+<div th:include="modals :: gigUpdate"></div>
+<span th:include="includes :: js"></span>
+
+</body>
+</html>

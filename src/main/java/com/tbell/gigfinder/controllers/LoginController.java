@@ -4,6 +4,8 @@ import com.tbell.gigfinder.Repositories.CompanyProfileRepository;
 import com.tbell.gigfinder.Repositories.MusicianProfileRepository;
 import com.tbell.gigfinder.Repositories.RoleRepository;
 import com.tbell.gigfinder.Repositories.UserRepository;
+import com.tbell.gigfinder.enums.Instruments;
+import com.tbell.gigfinder.enums.State;
 import com.tbell.gigfinder.models.CompanyProfile;
 import com.tbell.gigfinder.models.MusicianProfile;
 import com.tbell.gigfinder.models.Role;
@@ -17,10 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.security.Principal;
-import java.util.Calendar;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -69,7 +70,6 @@ public class LoginController {
                                        @RequestParam("companyContactLastName")String lastName,
                                        @RequestParam("phoneNumber")String phoneNumber,
                                        @RequestParam("email")String email,
-                                       @RequestParam("companyPic")String companyPic,
                                        @RequestParam("companyName")String companyName,
                                        Model model){
         User user = new User();
@@ -89,7 +89,6 @@ public class LoginController {
         companyProfile.setCompanyContactLastName(lastName);
         companyProfile.setPhoneNumber(phoneNumber);
         companyProfile.setEmail(email);
-        companyProfile.setCompanyPic(companyPic);
         compRepo.save(companyProfile);
         return "redirect:/login";
     }
@@ -98,7 +97,10 @@ public class LoginController {
     public String createMusicianProfile(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("musicianProfile", new MusicianProfile());
-
+        List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
+        model.addAttribute("instruments", instrumentEnums);
+        List<State> stateEnum = Arrays.asList(State.values());
+        model.addAttribute("states", stateEnum);
         return "createMusician";
     }
 
@@ -111,9 +113,9 @@ public class LoginController {
                                        @RequestParam("musicianEmail")String musicianEmail,
                                        @RequestParam("birthDate")String birthDate,
                                        @RequestParam("musicianInstruments")String instruments,
-                                       @RequestParam("location") String location,
+                                       @RequestParam("musicianState") String state,
+                                       @RequestParam("musicianCity")String city,
                                        @RequestParam("bio")String bio,
-                                       @RequestParam("picImage") String picImage,
                                        Model model){
         User user = new User();
         user.setUsername(username);
@@ -124,10 +126,9 @@ public class LoginController {
         Role musicianRole = roleRepo.findByName("ROLE_MUSICIAN");
         user.setRole(musicianRole);
         userRepo.save(user);
-
+        String location = city + ", " + state;
         MusicianProfile musicianProfile  = new MusicianProfile(user, firstName, lastName, musicianEmail,
                 phoneNumber, birthDate, instruments, location, bio);
-        musicianProfile.setPicImage(picImage);
         musicRepo.save(musicianProfile);
         return "redirect:/login";
 

@@ -2,8 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: nav"></div>
+<div th:include="navbar :: navHome"></div>
+<main class="container">
+    <div class="row">
+        <div th:each="musician : ${musicians}">
+
+
+            <div class="col s12 m4">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="images/sample-1.jpg"/>
+                        <a th:href="'/home/find-bands/' + @{${musician.id}}" class="btn-floating  halfway-fab waves-effect waves-light"><i class="material-icons">person</i></a>
+                    </div>
+                    <div class="card-content center-align">
+                        <span class="card-title" th:text="${musician.firstName} +' '+ ${musician.lastName}"></span>
+                        <p class="circle" th:text="${musician.musicianInstruments}"></p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
 <div th:include="footer :: footer"></div>
+<div th:include="modals :: signupModal"></div>
 
 <span th:include="includes :: js"></span>
 </body>

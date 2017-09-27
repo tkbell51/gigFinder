@@ -2,11 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: nav"></div>
-<main>
+<div th:include="navbar :: navHome"></div>
+<main th:inline="text">
 <h1 th:text="${gig.gigDescription}"></h1>
     <h3 th:text="${gig.gigType}"></h3>
-    <h3 th:text="${gig.gigStart}"></h3>
+    <i class="orange-text text-accent-4 material-icons">account_circle</i>
+
+    <h3>
+        <i class="orange-text text-accent-4 material-icons">account_circle</i>
+        [[${gig.gigStart}]] - [[${gig.gigEnd}]]
+    </h3>
     <h3 th:text="${gig.gigEnd}"></h3>
     <h3 th:text="${gig.gigLocation}"></h3>
     <img th:src="${url}" alt="map"/>

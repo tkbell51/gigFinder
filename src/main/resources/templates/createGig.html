@@ -2,16 +2,40 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: nav"></div>
+<div th:include="navbar :: navUser"></div>
 
-<main>
-    <form th:action="@{/dashboard/company/create-gig/}" method="post" th:object="${gig}">
+<main class="container" th:inline="text">
+    <form th:action="@{/company/create-gig/}" method="post" th:object="${gig}">
         <div class="row">
             <div class="input-field col s12">
-                <label for="location">Location</label>
-                <input id="location" type="text" th:field="*{gigLocation}" class="autocomplete"/>
+                <label for="location">Street</label>
+                <input id="location" type="text" name="locationStreet" class="autocomplete"/>
             </div>
+
+            <div class="input-field col s6">
+                <input id="city" type="text" name="locationCity"/>
+                <label for="city">City</label>
+            </div>
+            <div class="input-field col s3">
+                <select name="locationState" id="state">
+                    <option value="" disabled="disabled" selected="selected">State</option>
+                    <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
+                </select>
+            </div>
+
+            <div class="input-field col s3">
+                <input type="text" name="locationZip" maxlength="5" minlength="5"/>
+                <label for="">Zip Code</label>
+            </div>
+
         </div>
+
+            <div class="input-field col s12">
+                <select th:field="*{gigType}" id="type">
+                    <option th:each="gigType : ${gigTypes}" th:value="${gigType.type}">[[${gigType.type}]]</option>
+                </select>
+                <label for="type">Type of Gigs</label>
+            </div>
         <div class="row">
             <div class="input-field col s6">
                 <label for="start">Start</label>
@@ -22,24 +46,12 @@
                 <input id="end" type="date" class="datepicker" th:field="*{gigEnd}"/>
             </div>
         </div>
+
         <div class="row">
-            <div class="input-field col s12"><label for="type">Gig Type</label>
-                <input id="type" type="text"  th:field="*{gigType}"/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12"><label for="description">Description</label>
+            <div class="input-field col s12">
+                <label for="description">Description</label>
                 <input id="description" type="text" th:field="*{gigDescription}"/>
 
-            </div>
-        </div>
-        <div class="file-field input-field">
-            <div class="btn">
-                <span>File</span>
-                <input type="file"/>
-            </div>
-            <div class="file-path-wrapper">
-                <input th:field="*{gigArt}" class="file-path validate" type="text"/>
             </div>
         </div>
         <button class="waves-effect waves-light btn" type="submit" >Create Gig</button>

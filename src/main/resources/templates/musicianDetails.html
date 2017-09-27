@@ -2,10 +2,36 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: nav"></div>
-<span th:include="includes :: js"></span>
+<div th:include="navbar :: navHome"></div>
+<main th:inline="text" class="container">
+<section class="head deep-purple darken-4">
+    <div class="row">
+        <div class="col s2">
+            <img th:src="${musicianProfile.picImage}" th:alt="${musicianProfile.user.username}"/>
+        </div>
+        <div class="col s2">
+            <h5 class="black white-text">@[[${musicianProfile.user.username}]]</h5>
+            <p class="black white-text">[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]]</p>
+            <p class="black white-text">[[${musicianProfile.location}]]</p>
+        </div>
+    </div>
+</section>
+    <section class="center-align">
+        <p>[[${musicianProfile.bio}]]</p>
+    </section>
+<section>
+    <div th:each="media : ${media}">
+        <div class="row">
+            <i class="orange-text text-accent-4 material-icons">music_note</i>
+            <a  th:href="@{${media.media_url}}" target="_blank"  th:text="${media.title}"></a>
 
+        </div>
+        <div class="divider"></div>
+    </div>
+</section>
+</main>
 <div th:include="footer :: footer"></div>
+<div th:include="modals :: signupModal"></div>
 
 <span th:include="includes :: js"></span>
 </body>

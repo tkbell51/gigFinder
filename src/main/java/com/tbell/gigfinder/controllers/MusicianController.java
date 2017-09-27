@@ -4,6 +4,8 @@ import com.tbell.gigfinder.Repositories.*;
 import com.tbell.gigfinder.config.ClientKey;
 import com.tbell.gigfinder.googleAPI.GeoCodingInterface;
 import com.tbell.gigfinder.googleAPI.GeoCodingResponse;
+import com.tbell.gigfinder.enums.Instruments;
+import com.tbell.gigfinder.enums.State;
 import com.tbell.gigfinder.models.*;
 import feign.Feign;
 import feign.gson.GsonDecoder;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class MusicianController {
@@ -42,14 +46,45 @@ public class MusicianController {
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
+
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
+
         Iterable<MediaContent> mediaContents = mediaRepo.findByMusicianProfile(musicianProfile);
         model.addAttribute("media", mediaContents);
+
         model.addAttribute("mediaContent", new MediaContent());
         Iterable<Gig>localGigs = gigRepo.findByGigLocation(musicianProfile.getLocation());
         model.addAttribute("gig", localGigs);
+        List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
+        model.addAttribute("instruments", instrumentEnums);
+        List<State> stateEnum = Arrays.asList(State.values());
+        model.addAttribute("states", stateEnum);
         return "musicianProfile";
+    }
+
+    @RequestMapping(value = "/musician/{musicianProfileId}/update-profile")
+    public String musicianProfileUpdate(@PathVariable("musicianProfileId")long id,
+                                        @RequestParam("firstName")String firstName,
+                                        @RequestParam("lastName")String lastName,
+                                        @RequestParam("musicianPhoneNumber")String phoneNumber,
+                                        @RequestParam("musicianEmail")String musicianEmail,
+                                        @RequestParam("birthDate")String birthDate,
+                                        @RequestParam("musicianInstruments")String instruments,
+                                        @RequestParam("location") String location,
+                                        @RequestParam("bio")String bio,
+                                        Model model) throws Exception {
+        MusicianProfile musicianProfile = musicRepo.findById(id);
+        musicianProfile.setFirstName(firstName);
+        musicianProfile.setLastName(lastName);
+        musicianProfile.setMusicianPhoneNumber(phoneNumber);
+        musicianProfile.setMusicianEmail(musicianEmail);
+        musicianProfile.setBirthDate(birthDate);
+        musicianProfile.setMusicianInstruments(instruments);
+        musicianProfile.setLocation(location);
+        musicianProfile.setBio(bio);
+        musicRepo.save(musicianProfile);
+        return "redirect:/musician/my-profile";
     }
 
     @RequestMapping(value = "/musician/add-media", method = RequestMethod.POST)
@@ -64,6 +99,25 @@ public class MusicianController {
         MediaContent mediaContent = new MediaContent(mediaURL, new Date(System.currentTimeMillis()), title);
         mediaContent.setMusicianProfile(musicianProfile);
         mediaRepo.save(mediaContent);
+        return "redirect:/musician/my-profile";
+    }
+
+    @RequestMapping(value = "/musician/media/{mediaId}/update", method = RequestMethod.POST)
+    public String updateMedia (@PathVariable("mediaId") long id,
+                               @RequestParam("media_url")String mediaURL,
+                               @RequestParam("title")String title,
+                               Model model){
+        MediaContent mediaContent = mediaRepo.findOne(id);
+        mediaContent.setMedia_url(mediaURL);
+        mediaContent.setTitle(title);
+        mediaContent.setAddedDate(new Date(System.currentTimeMillis()));
+        mediaRepo.save(mediaContent);
+        return "redirect:/musician/my-profile";
+    }
+
+    @RequestMapping(value = "/musician/media/{mediaId}/delete", method = RequestMethod.POST)
+    public String deleteMedia (@PathVariable("mediaId")long id){
+        musicRepo.delete(id);
         return "redirect:/musician/my-profile";
     }
 
@@ -83,7 +137,7 @@ public class MusicianController {
                 clientKey.getAPI_KEY());
         double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
         double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
-        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=12&size=500x250&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getAPI_KEY();
+        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=500x250&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getAPI_KEY();
         model.addAttribute("url", oneMarkerUrl);
         System.out.println("-----------------------------------------------");
         System.out.println(gig.getGigDescription());
@@ -95,4 +149,6 @@ public class MusicianController {
         System.out.println("-------------------------------------------------");
         return "gigDetails";
     }
+
+
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: nav"></div>
+<div th:include="navbar :: navHome"></div>
 <main class="container">
     <div class="" th:each="gig : ${gig}">
         <div class="section ">
@@ -35,6 +35,7 @@
     </div>
 </main>
 <div th:include="footer :: footer"></div>
+<div th:include="modals :: signupModal"></div>
 
 <span th:include="includes :: js"></span>
 </body>

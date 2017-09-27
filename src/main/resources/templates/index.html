@@ -2,16 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: nav"></div>
+<div th:include="navbar :: navHome"></div>
 <main>
     <section class="top valign-wrapper section scrollspy" id="top">
         <div class="container">
             <div class="choice center-align">
                 <h1 class="brand-logo white-text" id="logo">gigFinder</h1>
                 <div class="row">
-                    <div class="col s6">
+                    <div class="col s4">
                         <div class="card medium sticky-action hoverable">
-                            <div class="card-image waves-effect waves-block waves-light">
+                            <div class="card-image waves-effect waves-block waves- light">
                                 <img class="activator" th:src="@{../assets/images/pexels-guitar.jpeg}"/>
                             </div>
                             <div class="card-content musicCard">
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col s6">
+                    <div class="col s4">
                         <div class="card medium sticky-action hoverable">
                             <div class="card-image waves-effect waves-block waves-light">
                                 <img class="activator" th:src="@{../assets/images/smallVenue.jpg}"/>
@@ -55,7 +55,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="loginForm col s2 offset-s1">
+                        <h1>LOGIN</h1>
+                        <div style="color: red;" th:text="${error}"></div>
 
+                        <form th:action="@{/login}" th:object="${user}" method="post">
+                            <input type="text" th:field="*{username}" placeholder="Username"/>
+                            <input type="password" th:field="*{password}" placeholder="Password"/>
+                            <button class="waves-effect waves-light btn" type="submit" >Login</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 

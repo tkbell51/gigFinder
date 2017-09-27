@@ -2,35 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: nav"></div>
+<div th:include="navbar :: navUser"></div>
 <section class="profile">
     <h1 class="name" th:text="${musicianProfile.firstName} +' '+ ${musicianProfile.lastName}"></h1>
 </section>
-<main class="musicProfile">
+<main th:inline="text" class="musicProfile">
     <div class="row">
         <div class="col s3">
-            <table>
-                <tr>
-                    <td><i class="orange-text text-accent-4 material-icons">account_circle</i></td>
-                    <td th:text="${user.username}"></td>
-                </tr>
-                <tr>
-                    <td><i class="orange-text text-accent-4 material-icons">email</i></td>
-                    <td th:text="${musicianProfile.musicianEmail}"></td>
-                </tr>
-                <tr>
-                    <td><i class="orange-text text-accent-4 material-icons">cake</i></td>
-                    <td th:text="${musicianProfile.birthDate}"></td>
-                </tr>
-                <tr>
-                    <td><i class="orange-text text-accent-4 material-icons">location_on</i></td>
-                    <td th:text="${musicianProfile.location}"></td>
-                </tr>
-                <tr>
-                    <td><i class="orange-text text-accent-4 material-icons">bookmark</i></td>
-                    <td th:text="${musicianProfile.bio}"></td>
-                </tr>
-            </table>
+            <p><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
+            <p><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianProfile.musicianEmail}]] </p>
+            <p><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianProfile.musicianPhoneNumber}]]</p>
+            <p><i class="orange-text text-accent-4 material-icons">cake</i> [[${musicianProfile.birthDate}]]</p>
+            <p><i class="orange-text text-accent-4 material-icons">location_on</i> [[${musicianProfile.location}]]</p>
+            <p><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
+            <p><i class="orange-text text-accent-4 material-icons">bookmark</i> [[${musicianProfile.bio}]]</p>
+
             <a class="waves-effect waves-light btn modal-trigger" href="#musicUpdate">Update</a>
         </div>
         <div class="col s6">
@@ -50,11 +36,22 @@
                 <button class="btn orange accent-4" type="submit">Add Media</button>
             </form>
             <div th:each="media : ${media}">
-                <h5>
+                <div class="row">
                     <i class="orange-text text-accent-4 material-icons">music_note</i>
-
                     <a  th:href="@{${media.media_url}}" target="_blank"  th:text="${media.title}"></a>
+                    <a class="waves-effect waves-light modal-trigger" href="#mediaUpdate">
+                        <i class="orange-text text-accent-4 material-icons">edit</i>
+                    </a>
+                    <a class="waves-effect waves-light modal-trigger" href="#mediaDelete">
+                        <i class="orange-text text-accent-4 material-icons">delete</i>
+                    </a>
+                    <div th:include="modals :: mediaUpdate"></div>
+                    <div th:include="modals :: mediaDelete"></div>
+                </div>
+                <h5>
+
                 </h5>
+
                 <div class="divider"></div>
             </div>
         </div>
