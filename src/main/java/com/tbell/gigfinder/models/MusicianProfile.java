@@ -5,6 +5,7 @@ package com.tbell.gigfinder.models;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_musician")
@@ -47,6 +48,9 @@ public class MusicianProfile {
     @OneToOne
     @JoinColumn(name = "user_data_id")
     private User user;
+
+    @OneToMany(mappedBy = "user_musician")
+    private Set<MusicianAppyGig> musicianAppyGigs;
 
 
     public MusicianProfile() {}
@@ -158,5 +162,13 @@ public class MusicianProfile {
 
     public void setPicImage(String picImage) {
         this.picImage = picImage;
+    }
+
+    public Set<MusicianAppyGig> getMusicianAppyGigs() {
+        return musicianAppyGigs;
+    }
+
+    public void setMusicianAppyGigs(Set<MusicianAppyGig> musicianAppyGigs) {
+        this.musicianAppyGigs = musicianAppyGigs;
     }
 }

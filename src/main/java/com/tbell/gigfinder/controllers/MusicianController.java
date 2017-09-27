@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class MusicianController {
@@ -150,5 +148,18 @@ public class MusicianController {
         return "gigDetails";
     }
 
+
+    @RequestMapping(value = "/musician/gig/{gigId}/apply", method = RequestMethod.POST)
+    public String gigApply (@PathVariable("gig")long gigId,
+                            Principal principal){
+        String username = principal.getName();
+        User user = userRepo.findByUsername(username);
+        MusicianProfile musicianProfile = musicRepo.findByUser(user);
+
+        Gig gigApply = gigRepo.findById(gigId);
+
+        MusicianApplyGig
+
+    }
 
 }

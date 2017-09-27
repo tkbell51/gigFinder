@@ -20,7 +20,11 @@ public class Comment {
     @JoinColumn(name = "user_data_id")
     private User user;
 
-
+    @ManyToOne
+    @JoinColumn(name = "company_gig_id")
+    private Gig gig;
+    
+    
     public Comment() {}
 
     public long getId() {
@@ -47,5 +51,19 @@ public class Comment {
         this.messageDate = messageDate;
     }
 
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Gig getGig() {
+        return gig;
+    }
+
+    public void setGig(Gig gig) {
+        this.gig = gig;
+    }
 }

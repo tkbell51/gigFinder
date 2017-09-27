@@ -6,6 +6,8 @@ import org.springframework.data.geo.Point;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "company_gig")
@@ -37,6 +39,12 @@ public class Gig {
     @ManyToOne
     @JoinColumn(name = "company_profile_id")
     private CompanyProfile companyProfile;
+
+    @OneToMany(mappedBy = "gig", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "gig", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<MusicianApplyGig> musicianApplyGigs;
 
     public Gig() {}
 
@@ -105,5 +113,21 @@ public class Gig {
 
     public void setCompanyProfile(CompanyProfile companyProfile) {
         this.companyProfile = companyProfile;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Set<MusicianApplyGig> getMusicianApplyGigs() {
+        return musicianApplyGigs;
+    }
+
+    public void setMusicianApplyGigs(Set<MusicianApplyGig> musicianApplyGigs) {
+        this.musicianApplyGigs = musicianApplyGigs;
     }
 }
