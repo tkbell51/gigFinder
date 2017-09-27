@@ -63,7 +63,7 @@ public class MusicianController {
         return "musicianProfile";
     }
 
-    @RequestMapping(value = "/musician/{musicianProfileId}/update-profile")
+    @RequestMapping(value = "/musician/{musicianProfileId}/update-profile", method = RequestMethod.POST)
     public String musicianProfileUpdate(@PathVariable("musicianProfileId")long id,
                                         @RequestParam("firstName")String firstName,
                                         @RequestParam("lastName")String lastName,
@@ -117,7 +117,7 @@ public class MusicianController {
 
     @RequestMapping(value = "/musician/media/{mediaId}/delete", method = RequestMethod.POST)
     public String deleteMedia (@PathVariable("mediaId")long id){
-        musicRepo.delete(id);
+        mediaRepo.delete(id);
         return "redirect:/musician/my-profile";
     }
 

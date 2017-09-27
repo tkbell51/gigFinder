@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="includes :: indexHead"></head>
+<body>
+<div th:include="navbar :: navUser"></div>
+<main th:inline="text" class="container">
+
+<h1>Welcome, [[${user.username}]]</h1>
+    <div class="row">
+        <div class="col s6">
+            <div class="section">
+                <ul class="collection with-header">
+                    <li class="collection-header"><h1>Musicians</h1></li>
+                    <div th:each="musician : ${musician}">
+                        <li class="collection-item">
+                            <div>
+                                <a th:href="'/admin/profile/'+ @{${musician.id}}"  class="collection-item">[[${musician.user.username}]] - [[${musician.firstName}]] [[${musician.lastName}]]</a>
+                                <a class="waves-effect waves-light modal-trigger secondary-content" href="#profileDelete">
+                                    <i class="orange-text text-accent-4 material-icons">delete</i>
+                                </a>
+                                <div th:include="modals :: profileDelete"></div>
+                            </div>
+                        </li>
+                    </div>
+                </ul>
+
+            </div>
+        </div>
+        <div class="col s6">
+            <div class="section">
+                <ul class="collection with-header">
+                    <li class="collection-header"><h1>Book Musicians</h1></li>
+                    <div th:each="comp : ${comp}">
+                        <li class="collection-item">
+                            <div>
+                                <a th:href="'/admin/profile/'+ @{${comp.id}}"  class="collection-item">[[${comp.user.username}]] - [[${comp.companyName}]]</a>
+                                <a class="waves-effect waves-light modal-trigger secondary-content" href="#profileCompDelete">
+                                    <i class="orange-text text-accent-4 material-icons">delete</i>
+                                </a>
+                                <div th:include="modals :: profileCompDelete"></div>
+                            </div>
+                        </li>
+                    </div>
+                </ul>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+</main>
+<span th:include="includes :: js"></span>
+
+</body>
+</html>

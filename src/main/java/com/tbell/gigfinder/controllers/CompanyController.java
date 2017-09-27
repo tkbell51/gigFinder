@@ -62,7 +62,7 @@ public class CompanyController {
                                        @RequestParam("email")String email,
                                        @RequestParam("companyName")String companyName,
                                        Model model) {
-        CompanyProfile companyProfile = new CompanyProfile();
+        CompanyProfile companyProfile = compRepo.findById(id);
         companyProfile.setCompanyName(companyName);
         companyProfile.setCompanyContactFirstName(firstName);
         companyProfile.setCompanyContactLastName(lastName);
@@ -164,7 +164,7 @@ public class CompanyController {
         model.addAttribute("user", user);
         CompanyProfile compUser = compRepo.findByUser(user);
         model.addAttribute("compUser", compUser);
-        Gig newGig = new Gig();
+        Gig newGig = gigRepo.findById(id);
         newGig.setGigLocation(location);
         newGig.setGigDescription(description);
         newGig.setGigType(type);

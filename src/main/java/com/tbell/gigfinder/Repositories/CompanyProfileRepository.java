@@ -13,4 +13,6 @@ public interface CompanyProfileRepository extends CrudRepository<CompanyProfile,
     List<Comment>findAllByUser(User user);
 
     CompanyProfile findByUser(User user);
+
+    CompanyProfile findById(long id);
 }
