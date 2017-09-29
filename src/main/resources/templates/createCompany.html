@@ -5,7 +5,7 @@
 <body>
 <div th:include="navbar :: navHome"></div>
 
-<main>
+<main class="container">
     <form th:action="@{/signup/company/}" method="post" enctype="multipart/form-data">
         <div th:object="${user}">
             <div class="row">

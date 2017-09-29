@@ -40,8 +40,6 @@ public class Gig {
     @JoinColumn(name = "company_profile_id")
     private CompanyProfile companyProfile;
 
-    @OneToMany(mappedBy = "gig", cascade = CascadeType.ALL)
-    private List<Comment> comments;
 
     @OneToMany(mappedBy = "gig", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<MusicianApplyGig> musicianApplyGigs;
@@ -115,13 +113,7 @@ public class Gig {
         this.companyProfile = companyProfile;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
 
     public Set<MusicianApplyGig> getMusicianApplyGigs() {
         return musicianApplyGigs;

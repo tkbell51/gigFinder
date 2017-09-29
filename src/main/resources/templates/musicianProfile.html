@@ -2,42 +2,47 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
-<body>
+<body th:inline="text" >
 <div th:include="navbar :: navHome"></div>
-<section class="profile">
-    <nav>
-        <a class="btn-floating" href="/musician/search/"><i class=" text-accent-4 material-icons">search</i></a>
+<section>
+    <nav class=" blue darken-2 center-align">
+        <a class="btn waves-effect waves-light" href="/musician/search/">Search</a>
+        <a class="waves-effect waves-light btn modal-trigger" href="#addMusicContent">Add Music</a>
+
     </nav>
-    <h1 class="name" th:text="${musicianProfile.firstName} +' '+ ${musicianProfile.lastName}"></h1>
+</section>
+<section class=" blue darken-2 profile">
+    <div class="row">
+        <div class=" col l2"><img class="circle responsive-img" th:src="@{../assets/images/pexels-guitar.jpeg}" alt=""/></div>
+        <div class="col l2">
+            <h5 class="black white-text name"  th:text="${musicianProfile.firstName} +' '+ ${musicianProfile.lastName}"></h5>
+            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
+            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">location_on</i> [[${musicianProfile.location}]]</p>
+        </div>
+        <div class="col l2">
+            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianProfile.musicianEmail}]] </p>
+            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianProfile.musicianPhoneNumber}]]</p>
+            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">cake</i> [[${musicianProfile.birthDate}]]</p>
+        </div>
+        <div class="col l2">
+            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
+        </div>
+
+    </div>
 </section>
 <main th:inline="text" class="musicianProfile">
     <div class="row">
         <div class="col s3">
-            <p><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
-            <p><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianProfile.musicianEmail}]] </p>
-            <p><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianProfile.musicianPhoneNumber}]]</p>
-            <p><i class="orange-text text-accent-4 material-icons">cake</i> [[${musicianProfile.birthDate}]]</p>
-            <p><i class="orange-text text-accent-4 material-icons">location_on</i> [[${musicianProfile.location}]]</p>
-            <p><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
+
+
+
+
             <p><i class="orange-text text-accent-4 material-icons">bookmark</i> [[${musicianProfile.bio}]]</p>
 
         </div>
         <div class="col s6">
-            <form th:action="@{/musician/add-media}" method="post" th:object="${mediaContent}">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input type="text" id="title" th:field="*{title}" placeholder="Title of music"/>
-                        <label for="title">Title</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="url" type="text" th:field="*{media_url}" placeholder="Youtube URL of your music"/>
-                        <label for="url">Add Music</label>
-                    </div>
-                </div>
-                <button class="btn orange accent-4" type="submit">Add Media</button>
-            </form>
+
+            <h1>My Music</h1>
             <div th:each="media : ${media}">
                 <div class="row">
                     <i class="orange-text text-accent-4 material-icons">music_note</i>
@@ -85,7 +90,7 @@
 </main>
 <div th:include="footer :: footer"></div>
 <div th:include="modals :: musicianUpdate"></div>
-
+<div th:include="modals :: createMedia"></div>
 <span th:include="includes :: js"></span>
 
 </body>

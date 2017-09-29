@@ -2,15 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
-<body class="login">
-<div class="container">
-    <div class="row">
-        <div class="col s8">
+<body class=" valign-wrapper login">
+<div class="container ">
+    <div class="row ">
+        <div class="col l5 ">
             <div class="card-panel">
-                <h1 class="brand-logo" id="logo">gigFinder</h1>
+                <h1 class="brand-logo center-align" id="logo">gigFinder</h1>
                 <div class="card medium">
                     <div class="card-content">
-                        <h1>LOGIN</h1>
+                        <h1 class="center-align">LOGIN</h1>
                         <div style="color: red;" th:text="${error}"></div>
 
                         <form th:action="@{/login}" th:object="${user}" method="post">

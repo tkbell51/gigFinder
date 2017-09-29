@@ -4,32 +4,48 @@
 <head th:include="includes :: indexHead"></head>
 <body>
 <div th:include="navbar :: navHome"></div>
-<nav>
-    <a class="btn-floating" href="/company/search/"><i class=" text-accent-4 material-icons">search</i></a>
+<nav class=" blue darken-2 center-align">
+    <a class="btn waves-effect waves-light" href="/company/search/">Search</a>
+    <a th:href="@{/company/create-gig/}" class="waves-effect waves-light btn">Create Gig</a>
+
 </nav>
-<main th:inline="text">
-    <section class="profile">
-        <h1 class="name" th:text="${companyProfile.companyContactFirstName} +' '+ ${companyProfile.companyContactLastName}"></h1>
+<main class="" th:inline="text">
+    <section class=" blue darken-2 profile">
+        <div class="row">
+            <div class=" col l2"><img class="circle responsive-img" th:src="@{../assets/images/pexels-guitar.jpeg}" alt=""/></div>
+            <div class="col l2">
+                <h5 class="name white-text black" th:text="${companyProfile.companyContactFirstName} +' '+ ${companyProfile.companyContactLastName}"></h5>
+
+            </div>
+            <div class="col l2">
+                <p class="black white-text"><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
+                <p class="black white-text"><i class="orange-text text-accent-4 material-icons">business_center</i> [[${companyProfile.companyName}]]</p>
+            </div>
+            <div class="col l2">
+                <p class="black white-text"><i class="orange-text text-accent-4 material-icons">email</i> [[${companyProfile.email}]]</p>
+                <p class="black white-text"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${companyProfile.phoneNumber}]]</p>
+            </div>
+
+        </div>
     </section>
     <div class="musicProfile">
         <div class="row">
             <div class="col s3">
-                <p><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
-                <p><i class="orange-text text-accent-4 material-icons">business_center</i> [[${companyProfile.companyName}]]</p>
-                <p><i class="orange-text text-accent-4 material-icons">email</i> [[${companyProfile.email}]]</p>
-                <p><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${companyProfile.phoneNumber}]]</p>
+
+
 
             </div>
         </div>
     <div class="divider"></div>
     <div>
-        <a th:href="@{/company/create-gig/}" class="btn">Create Gig</a>
         <div class="row">
-            <p >[[${noGig}]]</p>
-        <div th:each="gig : ${gig}">
 
+        <div th:each="gig : ${gig}">
+            <div th:if="${gig == null}">
+                <h1>No Gigs</h1>
+            </div>
                 <div class="col s4 m4">
-                    <div class="card small blue-grey darken-1">
+                    <div class="card small  blue darken-2">
                         <div class="card-content white-text">
                             <span class="card-title">[[${gig.gigDescription}]]</span>
 
@@ -42,7 +58,7 @@
                         </div>
                         <div class="card-action">
                             <div class="row">
-                                <a class="btn" th:href="'/company/gig/' + @{${gig.id}}">Details</a>
+                                <a class="waves-effect waves-light btn" th:href="'/company/gig/' + @{${gig.id}}">Details</a>
                             </div>
                         </div>
                     </div>

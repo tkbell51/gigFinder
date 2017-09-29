@@ -88,6 +88,27 @@
         </div>
     </div>
 </div>
+<div th:fragment="createMedia">
+    <div id="addMusicContent"  class="modal">
+        <div class="modal-content">
+            <form th:action="@{/musician/add-media}" method="post" th:object="${mediaContent}">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" id="title" th:field="*{title}" placeholder="Title of music"/>
+                        <label for="title">Title</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="url" type="text" th:field="*{media_url}" placeholder="Youtube URL of your music"/>
+                        <label for="url">Add Music</label>
+                    </div>
+                </div>
+                <button class="btn orange accent-4" type="submit">Add Media</button>
+            </form>
+        </div>
+    </div>
+</div>
 <div th:fragment="mediaUpdate">
     <div id="mediaUpdate"  class="modal">
         <div class="modal-content">
@@ -224,16 +245,53 @@
         </div>
     </div>
 </div>
-<div th:fragment="mediaDelete">
-    <div id="mediaDelete" class="modal">
+<div th:fragment="gigDelete">
+    <div id="gigDelete" class="modal">
         <div class="modal-content">
-            <div class="row"><p>Are you sure?</p>
-                <form th:action="'/musician/media/' + @{${media.id}} + '/delete'" method="post">
 
-                    <input class="waves-effect waves-light btn" type="submit" >Yes</input>
+            <div class="row">
+                <div class="col">
+                    <p>Are you sure?</p>
 
-                </form>
-                <button class="waves-effect waves-light btn" type="button" >No</button>
+                </div>
+                <div class="col">
+                    <form th:action="'/company/gig/' + @{${gig.id}} + '/delete'" method="post">
+
+                        <input class="waves-effect waves-light btn" type="submit" value="Yes"/>
+
+                    </form>
+                </div>
+                <div class="col">
+                    <button class="waves-effect waves-light btn modal-close" type="close" >No</button>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div th:fragment="mediaDelete">
+    <div id="mediaDelete" class="modal ">
+        <div class="modal-content">
+            <div class="center-align row">
+                <div class="col">
+                    <p>Are you sure?</p>
+
+                </div>
+                <div class="col">
+                    <form th:action="'/musician/media/' + @{${media.id}} + '/delete'" method="post">
+
+                        <input class="waves-effect waves-light btn" type="submit" value="Yes"/>
+
+                    </form>
+                </div>
+                <div class="col">
+                    <button class="waves-effect waves-light btn modal-close" type="button" >No</button>
+
+                </div>
+
             </div>
 
 
@@ -245,10 +303,12 @@
         <div class="modal-content">
             <div class="row">
                 <p>Are you sure?</p>
-                <form th:action="'/admin/' + @{${musician.user.id}} + '/delete'" method="post">
-                    <input class="waves-effect waves-light btn" type="submit">Yes</input>
-                </form>
-                <button class="waves-effect waves-light btn" type="button" >No</button>
+                    <form th:action="'/admin/' + @{${musician.user.id}} + '/delete'" method="post">
+                        <input class="waves-effect waves-light btn" type="submit" value="Yes"/>
+                    </form>
+                    <button class="waves-effect waves-light btn modal-close" type="button" >No</button>
+
+
             </div>
 
         </div>
@@ -259,10 +319,11 @@
         <div class="modal-content">
             <div class="row">
                 <p>Are you sure?</p>
+
                 <form th:action="'/admin/' + @{${comp.user.id}} + '/delete'" method="post">
-                    <input class="waves-effect waves-light btn" type="submit">Yes</input>
+                    <input class="waves-effect waves-light btn" type="submit" th:value="Yes"> </input>
                 </form>
-                <button class="waves-effect waves-light btn" type="button" >No</button>
+                <button class="waves-effect waves-light btn modal-close" type="button" >No</button>
             </div>
 
         </div>

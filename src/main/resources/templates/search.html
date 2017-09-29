@@ -100,48 +100,51 @@
     </form>
 </div>
 <div class="divider"></div>
-<h1>Search Results</h1>
-<div sec:authorize="hasRole('ROLE_COMPANY')">
-    <div row th:each="musician : ${musician}">
-        <div class="col s12 m6">
-            <div class="card">
-                <div class="card-image">
-                    <img src="images/sample-1.jpg"/>
+<section class="searchResult container">
+    <h1>Search Results</h1>
+    <div sec:authorize="hasRole('ROLE_COMPANY')">
+        <div class="row" th:each="musician : ${musician}">
+            <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="images/sample-1.jpg"/>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">[[${musician.firstName}]] [[${musician.lastName}]]</span>
+                        <p>[[${musician.musicianInstruments}]]</p>
+                        <div class="card-action">
+                            <a th:href="'/home/find-bands/' + @{${musician.id}}">Go To Page</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <span class="card-title">[[${musician.firstName}]] [[${musician.lastName}]]</span>
-                    <p>[[${musician.musicianInstruments}]]</p>
+            </div>
+        </div>
+    </div>
+    <div sec:authorize="hasRole('ROLE_MUSICIAN')">
+        <div class="row">
+            <div th:each="gig : ${gig}" class="col s4">
+                <div class="card small  blue darken-2">
+                    <div class="card-content white-text">
+                        <span class="card-title">[[${gig.gigDescription}]]</span>
+
+                        <p>Time: [[${gig.gigStart}]] - [[${gig.gigEnd}]]</p>
+                        <p >[[${gig.gigType}]]</p>
+                        <p >[[${gig.gigLocation}]]</p>
+
+                    </div>
                     <div class="card-action">
-                        <a th:href="'/home/find-bands/' + @{${musician.id}}">Go To Page</a>
+                        <div class="row">
+                            <a class="btn" th:href="'/musician/gig/' + @{${gig.id}}">Apply</a>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
-</div>
-<div sec:authorize="hasRole('ROLE_MUSICIAN')">
-    <div class="row">
-        <div th:each="gig : ${gig}" class="col s4">
-            <div class="card small blue-grey darken-1">
-                <div class="card-content white-text">
-                    <span class="card-title">[[${gig.gigDescription}]]</span>
+</section>
 
-                    <p>Time: [[${gig.gigStart}]] - [[${gig.gigEnd}]]</p>
-                    <p >[[${gig.gigType}]]</p>
-                    <p >[[${gig.gigLocation}]]</p>
-
-                </div>
-                <div class="card-action">
-                    <div class="row">
-                        <a class="btn" th:href="'/musician/gig/' + @{${gig.id}}">Apply</a>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
 
 <div th:include="footer :: footer"></div>
 <span th:include="includes :: js"></span>

@@ -156,7 +156,7 @@ public class CompanyController {
                 clientKey.getAPI_KEY());
         double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
         double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
-        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=500x1000&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getAPI_KEY();
+        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=500x1100&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getAPI_KEY();
         model.addAttribute("url", oneMarkerUrl);
         System.out.println("-----------------------------------------------");
         System.out.println(gig.getGigDescription());
@@ -166,7 +166,7 @@ public class CompanyController {
         System.out.println(oneMarkerUrl);
 
         System.out.println("-------------------------------------------------");
-        return "companyGigDetails";
+        return "gigDetails";
     }
 
     @RequestMapping(value = "/company/gig/{gigId}/update", method = RequestMethod.POST)
