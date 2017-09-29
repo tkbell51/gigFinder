@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
 <body>
 <div th:include="navbar :: navHome"></div>
@@ -15,6 +16,10 @@
     <h3 th:text="${gig.gigEnd}"></h3>
     <h3 th:text="${gig.gigLocation}"></h3>
     <img th:src="${url}" alt="map"/>
+    <h4>[[${gig.id}]]</h4>
+    <form th:action="'/musician/gig/'+ @{${gig.id}} + '/apply'" method="post">
+        <input type="submit" class="btn" value="Apply for Gig"/>
+    </form>
 </main>
 <div th:include="footer :: footer"></div>
 

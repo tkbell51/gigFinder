@@ -14,4 +14,11 @@ public interface GigRepository extends CrudRepository<Gig, Long> {
     Iterable<Gig> findByGigLocation(String location);
 
     Gig findById(long id);
+
+
+    Iterable<Gig> findByGigLocationIgnoreCase(String location);
+
+    Iterable<Gig> findByGigTypeIgnoreCase(String type);
+
+    Iterable<Gig> findByGigStartIgnoreCase(String gigStart);
 }

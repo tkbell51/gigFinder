@@ -39,6 +39,9 @@ public class MusicianController {
     @Autowired
     GigRepository gigRepo;
 
+    @Autowired
+    MusicianApplyGigRepository applyRepo;
+
     @RequestMapping(value = "/musician/my-profile", method = RequestMethod.GET)
     public String musicianProfile(Model model, Principal principal){
         String username = principal.getName();
@@ -104,7 +107,10 @@ public class MusicianController {
     public String updateMedia (@PathVariable("mediaId") long id,
                                @RequestParam("media_url")String mediaURL,
                                @RequestParam("title")String title,
-                               Model model){
+                               Model model, Principal principal){
+        String username = principal.getName();
+        User user = userRepo.findByUsername(username);
+        model.addAttribute("user", user);
         MediaContent mediaContent = mediaRepo.findOne(id);
         mediaContent.setMedia_url(mediaURL);
         mediaContent.setTitle(title);
@@ -114,14 +120,22 @@ public class MusicianController {
     }
 
     @RequestMapping(value = "/musician/media/{mediaId}/delete", method = RequestMethod.POST)
-    public String deleteMedia (@PathVariable("mediaId")long id){
+    public String deleteMedia (@PathVariable("mediaId")long id,
+                               Model model, Principal principal){
+        String username = principal.getName();
+        User user = userRepo.findByUsername(username);
+        model.addAttribute("user", user);
         mediaRepo.delete(id);
         return "redirect:/musician/my-profile";
     }
 
     @RequestMapping(value = "/musician/gig/{gigId}", method = RequestMethod.GET)
     public String gigDetails(@PathVariable("gigId")long gigId,
-                             Model model) throws InterruptedException, IOException {
+                             Model model, Principal principal) throws InterruptedException, IOException {
+
+            String username = principal.getName();
+            User user = userRepo.findByUsername(username);
+            model.addAttribute("user", user);
         Gig gig = gigRepo.findOne(gigId);
         model.addAttribute("gig", gig);
 
@@ -150,7 +164,7 @@ public class MusicianController {
 
 
     @RequestMapping(value = "/musician/gig/{gigId}/apply", method = RequestMethod.POST)
-    public String gigApply (@PathVariable("gig")long gigId,
+    public String gigApply (@PathVariable("gigId")long gigId,
                             Principal principal){
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
@@ -158,8 +172,11 @@ public class MusicianController {
 
         Gig gigApply = gigRepo.findById(gigId);
 
-        MusicianApplyGig
+        MusicianApplyGig musicianApplyGig = new MusicianApplyGig(gigApply, musicianProfile, new Date(System.currentTimeMillis()));
 
+        applyRepo.save(musicianApplyGig);
+
+        return "redirect:/musician/my-profile";
     }
 
 }

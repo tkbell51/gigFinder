@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="includes :: indexHead"></head>
+<body th:inline="text">
+<div th:include="navbar :: navHome"></div>
+
+<div sec:authorize="hasRole('ROLE_MUSICIAN')" class="container gigSearch">
+    <h1 class="center-align">Search for Gigs</h1>
+
+    <form th:action="@{/searchGigLocation}" method="post">
+
+            <div class="section row">
+                <div class="input-field col s10">
+                    <input type="text" placeholder="Search by Location" name="location" id="giglocation"/>
+                    <label for="giglocation">Location</label>
+                </div>
+                <div class="col s2">
+                    <button class="btn orange accent-4" type="submit">Search</button>
+
+                </div>
+            </div>
+    </form>
+    <form th:action="@{/searchGigType}" method="post">
+        <div class="section row">
+            <div class="input-field col s10">
+                <select name="type" id="type">
+                    <option value="" disabled="disabled" selected="selected">Search by Gig Type</option>
+
+                    <option th:each="gigType : ${gigTypes}" th:value="${gigType.type}">[[${gigType.type}]]</option>
+                </select>
+                <label for="type">Type of Gigs</label>
+            </div>
+            <div class="col s2">
+                <button class="btn orange accent-4" type="submit">Search</button>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<div sec:authorize="hasRole('ROLE_COMPANY')" class="container companySearch">
+    <h1 class="center-align">Search for Musicians</h1>
+
+    <form th:action="@{/searchName}" method="post">
+        <div class=" section row">
+            <div class="input-field col s5">
+                <input placeholder="Search First Name" id="first_name" type="text" name="firstName" class="validate"/>
+                <label for="first_name">First Name</label>
+            </div>
+            <div class="input-field col s5">
+                <input placeholder="Search Last Name" id="last_name" type="text" name="lastName" class="validate"/>
+                <label for="last_name">Last Name</label>
+            </div>
+            <div class="col s2">
+                <button class="btn orange accent-4 " type="submit">Search</button>
+
+            </div>
+
+        </div>
+    </form>
+    <form th:action="@{/searchUsername}" method="post">
+        <div class="section row">
+            <div class="input-field col s10 ">
+                <input type="text" placeholder="Search by Username" name="musicianUsername" id="username"/>
+                <label for="username">Username</label>
+            </div>
+            <div class="col s2 ">
+                <button class="btn orange accent-4" type="submit">Search</button>
+
+            </div>
+        </div>
+    </form>
+    <form th:action="@{/searchInstrument}" method="post">
+        <div class="section row">
+            <div class="input-field col s10">
+                <select multiple="multiple" name="instrument">
+                    <option value="" disabled="disabled" selected="selected">Search by Musical Instruments</option>
+                    <option th:inline="text" th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
+                </select>
+            </div>
+            <div class="col s2">
+                <button class="btn orange accent-4" type="submit">Search</button>
+
+            </div>
+        </div>
+    </form>
+    <form th:action="@{/searchLocation}" method="post">
+        <div class="section row">
+            <div class="input-field col s10">
+                <input type="text" placeholder="Search by Location" name="location" id="location"/>
+                <label for="location">Location</label>
+            </div>
+            <div class="col s2">
+                <button class="btn orange accent-4" type="submit">Search</button>
+
+            </div>
+        </div>
+    </form>
+</div>
+<div class="divider"></div>
+<h1>Search Results</h1>
+<div sec:authorize="hasRole('ROLE_COMPANY')">
+    <div row th:each="musician : ${musician}">
+        <div class="col s12 m6">
+            <div class="card">
+                <div class="card-image">
+                    <img src="images/sample-1.jpg"/>
+                </div>
+                <div class="card-content">
+                    <span class="card-title">[[${musician.firstName}]] [[${musician.lastName}]]</span>
+                    <p>[[${musician.musicianInstruments}]]</p>
+                    <div class="card-action">
+                        <a th:href="'/home/find-bands/' + @{${musician.id}}">Go To Page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div sec:authorize="hasRole('ROLE_MUSICIAN')">
+    <div class="row">
+        <div th:each="gig : ${gig}" class="col s4">
+            <div class="card small blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">[[${gig.gigDescription}]]</span>
+
+                    <p>Time: [[${gig.gigStart}]] - [[${gig.gigEnd}]]</p>
+                    <p >[[${gig.gigType}]]</p>
+                    <p >[[${gig.gigLocation}]]</p>
+
+                </div>
+                <div class="card-action">
+                    <div class="row">
+                        <a class="btn" th:href="'/musician/gig/' + @{${gig.id}}">Apply</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:include="footer :: footer"></div>
+<span th:include="includes :: js"></span>
+</body>
+</html>

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: navUser"></div>
+<div th:include="navbar :: navHome"></div>
 <main th:inline="text" class="container">
 
 <h1>Welcome, [[${user.username}]]</h1>

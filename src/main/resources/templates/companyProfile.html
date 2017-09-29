@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: navUser"></div>
-
+<div th:include="navbar :: navHome"></div>
+<nav>
+    <a class="btn-floating" href="/company/search/"><i class=" text-accent-4 material-icons">search</i></a>
+</nav>
 <main th:inline="text">
     <section class="profile">
         <h1 class="name" th:text="${companyProfile.companyContactFirstName} +' '+ ${companyProfile.companyContactLastName}"></h1>
@@ -15,7 +18,6 @@
                 <p><i class="orange-text text-accent-4 material-icons">business_center</i> [[${companyProfile.companyName}]]</p>
                 <p><i class="orange-text text-accent-4 material-icons">email</i> [[${companyProfile.email}]]</p>
                 <p><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${companyProfile.phoneNumber}]]</p>
-                <a class="waves-effect waves-light btn modal-trigger" href="#companyUpdate">Update</a>
 
             </div>
         </div>
@@ -23,15 +25,20 @@
     <div>
         <a th:href="@{/company/create-gig/}" class="btn">Create Gig</a>
         <div class="row">
+            <p >[[${noGig}]]</p>
         <div th:each="gig : ${gig}">
 
                 <div class="col s4 m4">
                     <div class="card small blue-grey darken-1">
                         <div class="card-content white-text">
-                            <span class="card-title" th:text="${gig.gigDescription}"></span>
+                            <span class="card-title">[[${gig.gigDescription}]]</span>
+
                             <p>Time: [[${gig.gigStart}]] - [[${gig.gigEnd}]]</p>
-                            <p th:text="${gig.gigType}"></p>
-                            <p th:text="${gig.gigLocation}"></p>
+                            <p >[[${gig.gigType}]]</p>
+                            <p >[[${gig.gigLocation}]]</p>
+
+                                <h1>[[${applied}]]</h1>
+
                         </div>
                         <div class="card-action">
                             <div class="row">
@@ -41,6 +48,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>

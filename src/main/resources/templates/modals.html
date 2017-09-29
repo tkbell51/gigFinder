@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
 <body>
 
@@ -23,7 +24,7 @@
 <div th:fragment="musicianUpdate">
     <div id="musicUpdate" class="modal">
         <div class="modal-content">
-            <form th:action="'/musician/' + @{${musicianProfile.id}} + '/update-profile/'" th:object="${musicianProfile}" method="post">
+            <form th:action="'/musician/' + @{${musicianProfile.id}} + '/update-profile/'" th:object="${musicianProfile}" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="firstName">First Name</label>
@@ -47,37 +48,7 @@
                 <div class="input-field col s12">
                     <select multiple="multiple" th:field="*{musicianInstruments}">
                         <option value="" disabled="disabled" selected="selected">Choose Musical Instruments</option>
-                        <option value="singer">Singer</option>
-                        <option value="accordion">Accordion</option>
-                        <option value="acoustic guitar">Acoustic Guitar</option>
-                        <option value="bagpipes">Bagpipes</option>
-                        <option value="banjo">Banjo</option>
-                        <option value="bass guitar">Bass Guitar</option>
-                        <option value="bassoon">Bassoon</option>
-                        <option value="bongo">Bongo</option>
-                        <option value="cello">Cello</option>
-                        <option value="clarinet">Clarinet</option>
-                        <option value="didgeridoo">Didgeridoo</option>
-                        <option value="drum">Drums</option>
-                        <option value="electric guitar">Electric Guitar</option>
-                        <option value="flute">Flute</option>
-                        <option value="french horn">French Horn</option>
-                        <option value="harmonica">Harmonica</option>
-                        <option value="Harp">Harp</option>
-                        <option value="keyboard">Keyboard</option>
-                        <option value="mandolin">Mandolin</option>
-                        <option value="marimba">Marimba</option>
-                        <option value="oboe">Oboe</option>
-                        <option value="organ">Organ</option>
-                        <option value="piano">Piano</option>
-                        <option value="saxophone">Saxophone</option>
-                        <option value="trombone">Trombone</option>
-                        <option value="trumpet">Trumpet</option>
-                        <option value="tuba">Tuba</option>
-                        <option value="ukulele">Ukulele</option>
-                        <option value="violoa">Viola</option>
-                        <option value="violin">Violin</option>
-
+                        <option th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
                     </select>
 
                 </div>
@@ -100,6 +71,17 @@
                         <input id="birthDate" type="date" class="datepicker" th:field="*{birthDate}"/>
                     </div>
                 </div>
+                <!--<div class="row">-->
+                    <!--<div class="file-field input-field">-->
+                        <!--<div class="btn">-->
+                            <!--<span>File</span>-->
+                            <!--<input type="file">-->
+                        <!--</div>-->
+                        <!--<div class="file-path-wrapper">-->
+                            <!--<input class="file-path validate" type="text" th:field="*{picImage}" placeholder="Choose Profile Image">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
             </form>
 
@@ -130,7 +112,7 @@
 <div th:fragment="companyProfileUpdate">
     <div id="companyUpdate" class="modal">
         <div class="modal-content">
-    <form th:action="'/company/' + @{${companyProfile.id}} + '/update-profile/'" th:object="${companyProfile}" method="post">
+    <form th:action="'/company/' + @{${companyProfile.id}} + '/update-profile/'" th:object="${companyProfile}" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="input-field col s12">
                 <label for="name">Company Name</label>
@@ -158,6 +140,17 @@
                 <input id="email" type="email" th:field="*{email}" />
             </div>
         </div>
+        <!--<div class="row">-->
+            <!--<div class="file-field input-field">-->
+                <!--<div class="btn">-->
+                    <!--<span>File</span>-->
+                    <!--<input type="file">-->
+                <!--</div>-->
+                <!--<div class="file-path-wrapper">-->
+                    <!--<input class="file-path validate" type="text" th:field="*{companyPic}" placeholder="Choose Profile Image">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
 
     </form>
@@ -167,7 +160,7 @@
 <div th:fragment="gigUpdate">
     <div id="gigUpdate" class="modal">
         <div class="modal-content">
-            <form th:action="'/company/gig/' +@{${gig.id}} + '/update'" method="post" th:object="${gig}">
+            <form th:action="'/company/gig/' +@{${gig.id}} + '/update'" method="post" th:object="${gig}" enctype="multipart/form-data">
                 <div class="row">
                     <div class="input-field col s12">
                         <label for="location">Street</label>
@@ -214,6 +207,17 @@
 
                     </div>
                 </div>
+                <!--<div class="row">-->
+                    <!--<div class="file-field input-field">-->
+                        <!--<div class="btn">-->
+                            <!--<span>File</span>-->
+                            <!--<input type="file">-->
+                        <!--</div>-->
+                        <!--<div class="file-path-wrapper">-->
+                            <!--<input class="file-path validate" type="text" th:field="*{gigArt}" placeholder="Choose Profile Image">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <button class="waves-effect waves-light btn" type="submit" >Update Gig</button>
 
             </form>

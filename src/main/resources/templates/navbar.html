@@ -1,22 +1,43 @@
 <!DOCTYPE html>
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
 <body>
 <div th:fragment="navHome">
-    <header class="navbar-fixed">
-        <nav class="blue">
-            <div class="container nav-wrapper">
-                <a href="/" class="brand-logo">gigFinder</a>
+            <ul id="dropdown1" class="dropdown-content">
+                <li>
+                    <form th:action="@{/logout}" method="post">
+                        <input class="btn-flat" type="submit" value="LOGOUT"/>
+                    </form>
+                </li>
+                <li sec:authorize="hasRole('ROLE_MUSICIAN')">
+                    <a class="waves-effect waves-light modal-trigger" href="#musicUpdate">Update Profile</a>
+                </li>
+                <li sec:authorize="hasRole('ROLE_COMPANY')">
+                    <a class="waves-effect waves-light modal-trigger" href="#companyUpdate">Update Profile</a>
 
-                <ul class="right hide-on-med-and-down">
-                    <li><a th:href="@{/home/find-gigs}">Find a Gig</a></li>
-                    <li><a th:href="@{/home/find-bands}">Find a Band</a></li>
-                    <li><a class="modal-trigger orange accent-4" href="#signupModal">Sign In</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+                </li>
+            </ul>
+<header class="navbar-fixed">
+    <nav class="blue">
+        <div class="container nav-wrapper">
+            <a sec:authorize="!isAuthenticated()" href="/" class="brand-logo">gigFinder</a>
+
+            <a href="/company/my-profile" sec:authorize="hasRole('ROLE_COMPANY')" class="brand-logo">gigFinder</a>
+
+            <a href="/musician/my-profile" sec:authorize="hasRole('ROLE_MUSICIAN')" class="brand-logo">gigFinder</a>
+
+            <a href="/admin" sec:authorize="hasRole('ROLE_ADMIN')" class="brand-logo">gigFinder</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a th:href="@{/home/find-gigs}">Find a Gig</a></li>
+                <li><a th:href="@{/home/find-bands}">Find a Band</a></li>
+                <li sec:authorize="!isAuthenticated()"><a  class="modal-trigger orange accent-4" href="#signupModal">Sign In</a></li>
+                <li sec:authorize="isAuthenticated()"><a class="dropdown-button" href="#!" data-activates="dropdown1" th:inline="text">@[[${user.username}]]<i class="material-icons right">arrow_drop_down</i></a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
 </div>
 <div th:fragment="navUser">
     <header class="navbar-fixed">
@@ -42,6 +63,7 @@
         </nav>
     </header>
 </div>
+<span th:include="includes :: js"></span>
 
 </body>
 </html>

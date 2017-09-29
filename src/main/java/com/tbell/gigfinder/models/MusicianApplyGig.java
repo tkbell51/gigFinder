@@ -13,12 +13,12 @@ public class MusicianApplyGig implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Id
-    @ManyToMany
+
+    @ManyToOne
     @JoinColumn(name = "company_gig_id")
     private Gig gig;
 
-    @Id
+
     @ManyToOne
     @JoinColumn(name = "user_musician_id")
     private MusicianProfile musicianProfile;
@@ -27,6 +27,12 @@ public class MusicianApplyGig implements Serializable{
     private Date dateApplied;
 
     public MusicianApplyGig() {}
+
+    public MusicianApplyGig(Gig gig, MusicianProfile musicianProfile, Date dateApplied) {
+        this.gig = gig;
+        this.musicianProfile = musicianProfile;
+        this.dateApplied = dateApplied;
+    }
 
     public long getId() {
         return id;

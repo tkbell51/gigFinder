@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: navUser"></div>
+<div th:include="navbar :: navHome"></div>
 
 <main class="container" th:inline="text">
-    <form th:action="@{/company/create-gig/}" method="post" th:object="${gig}">
+    <form th:action="@{/company/create-gig/}" method="post" th:object="${gig}" enctype="multipart/form-data">
         <div class="row">
             <div class="input-field col s12">
                 <label for="location">Street</label>
@@ -54,6 +55,17 @@
 
             </div>
         </div>
+        <!--<div class="row">-->
+            <!--<div class="file-field input-field">-->
+                <!--<div class="btn">-->
+                    <!--<span>File</span>-->
+                    <!--<input type="file">-->
+                <!--</div>-->
+                <!--<div class="file-path-wrapper">-->
+                    <!--<input class="file-path validate" type="text" th:field="*{gigArt}" placeholder="Choose Profile Image">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
         <button class="waves-effect waves-light btn" type="submit" >Create Gig</button>
 
     </form>

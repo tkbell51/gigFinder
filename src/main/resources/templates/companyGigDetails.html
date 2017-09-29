@@ -1,23 +1,57 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: navUser"></div>
+<div th:include="navbar :: navHome"></div>
 <main th:inline="text">
     <div class="row">
-        <div class="col s6">
-            <h1 th:text="${gig.gigDescription}"></h1>
-            <h3 th:text="${gig.gigType}"></h3>
-            <h3>
-                <i class="orange-text text-accent-4 material-icons">access_time</i>
+        <div class="col s8">
+            <div class="  row center-align ">
+                <a th:href="'https://www.google.com/maps/place/'+ @{${gig.gigLocation}}" target="_blank" class="waves-effect waves-light btn">Directions</a>
+                <a class="waves-effect waves-light btn modal-trigger" href="#gigUpdate">Update</a>
+                <a class="waves-effect waves-light btn" sec:authorize="hasRole('ROLE_COMPANY')" th:href="'/company/gig/delete'">Delete</a>
+                <form sec:authorize="hasRole('ROLE_MUSICIAN')" th:action="'/musician/gig/'+ @{${gig.id}} + '/apply'" method="post">
+                    <input type="submit" class="waves-effect waves-light btn" value="Apply for Gig"/>
+                </form>
+            </div>
+            <h1>[[${gig.gigDescription}]]</h1>
+            <h4>
+                <i class="orange-text text-accent-4 material-icons">view_list</i>
+                [[${gig.gigType}]]
+            </h4>
+            <p>
+                <i class="orange-text text-accent-4 material-icons">event</i>
                 [[${gig.gigStart}]] - [[${gig.gigEnd}]]
-            </h3>
-            <h3 th:text="${gig.gigLocation}"></h3>
-            <a class="waves-effect waves-light btn modal-trigger" href="#gigUpdate">Update</a>
-            <a th:href="'https://www.google.com/maps/place/'+ @{${gig.gigLocation}}" target="_blank" class="btn">Directions</a>
-            <a th:href="'/company/gig/delete'"><i class="orange-text text-accent-4 material-icons">delete</i></a>
-        </div>
-        <div class="col s6">
+            </p>
+            <p>
+                <i class="orange-text text-accent-4 material-icons">location_on</i>
+                [[${gig.gigLocation}]]
+            </p>
+            <div sec:authorize="hasRole('ROLE_COMPANY')" class="row" th:each="applied : ${applied}">
+                <div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="images/sample-1.jpg"/>
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">[[${applied.musicianProfile.firstName}]] [[${applied.musicianProfile.lastName}]]</span>
+                            <p>[[${applied.musicianProfile.musicianInstruments}]]</p>
+                            <div class="card-action">
+                                <a th:href="'/home/find-bands/' + @{${applied.musicianProfile.id}}">Go To Page</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
+
+
+
+
+        <div class="col s4">
             <img th:src="${url}" alt="map"/>
 
         </div>

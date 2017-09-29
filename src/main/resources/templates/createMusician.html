@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
 <body>
 <div th:include="navbar :: navHome"></div>
 <main th:inline="text" class="container">
-    <form th:action="@{/signup/musician/}" method="post"  >
+    <form th:action="@{/signup/musician/}" method="post" enctype="multipart/form-data"  >
         <div th:object="${user}">
             <div class="row">
                 <div class="input-field col s12">
@@ -77,9 +78,21 @@
                     <input id="birthDate" type="date" class="datepicker" th:field="*{birthDate}"/>
                 </div>
             </div>
+            <!--<div class="row">-->
+                <!--<div class="file-field input-field">-->
+                    <!--<div class="btn">-->
+                        <!--<span>File</span>-->
+                        <!--<input type="file">-->
+                    <!--</div>-->
+                    <!--<div class="file-path-wrapper">-->
+                        <!--<input class="file-path validate" type="text" th:field="*{picImage}" placeholder="Choose Profile Image">-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
         </div>
 
-        <button class="waves-effect waves-light btn" type="submit" >Save</button>
+        <button class="waves-effect waves-light btn" type="submit" >Create Profile</button>
 
     </form>
 </main>

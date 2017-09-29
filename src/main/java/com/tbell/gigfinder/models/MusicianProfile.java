@@ -49,8 +49,8 @@ public class MusicianProfile {
     @JoinColumn(name = "user_data_id")
     private User user;
 
-    @OneToMany(mappedBy = "user_musician")
-    private Set<MusicianAppyGig> musicianAppyGigs;
+    @OneToMany(mappedBy = "musicianProfile")
+    private Set<MusicianApplyGig> musicianAppyGigs;
 
 
     public MusicianProfile() {}
@@ -164,11 +164,11 @@ public class MusicianProfile {
         this.picImage = picImage;
     }
 
-    public Set<MusicianAppyGig> getMusicianAppyGigs() {
+    public Set<MusicianApplyGig> getMusicianAppyGigs() {
         return musicianAppyGigs;
     }
 
-    public void setMusicianAppyGigs(Set<MusicianAppyGig> musicianAppyGigs) {
+    public void setMusicianAppyGigs(Set<MusicianApplyGig> musicianAppyGigs) {
         this.musicianAppyGigs = musicianAppyGigs;
     }
 }

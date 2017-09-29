@@ -10,4 +10,12 @@ public interface MusicianProfileRepository extends CrudRepository<MusicianProfil
     MusicianProfile findById(long id);
 
     MusicianProfile findByUser(User user);
+
+    MusicianProfile findByFirstNameIgnoreCaseAndLastNameIgnoreCase(String firstName, String lastName);
+    
+    Iterable<MusicianProfile> findByMusicianInstrumentsIgnoreCase(String instrument);
+
+    Iterable<MusicianProfile> findByLocationIgnoreCase(String location);
+
+    Iterable<MusicianProfile> findMusicianProfileByLocationContaining(String location);
 }

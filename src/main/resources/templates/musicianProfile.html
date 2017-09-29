@@ -1,12 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
 <body>
-<div th:include="navbar :: navUser"></div>
+<div th:include="navbar :: navHome"></div>
 <section class="profile">
+    <nav>
+        <a class="btn-floating" href="/musician/search/"><i class=" text-accent-4 material-icons">search</i></a>
+    </nav>
     <h1 class="name" th:text="${musicianProfile.firstName} +' '+ ${musicianProfile.lastName}"></h1>
 </section>
-<main th:inline="text" class="musicProfile">
+<main th:inline="text" class="musicianProfile">
     <div class="row">
         <div class="col s3">
             <p><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
@@ -17,7 +21,6 @@
             <p><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
             <p><i class="orange-text text-accent-4 material-icons">bookmark</i> [[${musicianProfile.bio}]]</p>
 
-            <a class="waves-effect waves-light btn modal-trigger" href="#musicUpdate">Update</a>
         </div>
         <div class="col s6">
             <form th:action="@{/musician/add-media}" method="post" th:object="${mediaContent}">

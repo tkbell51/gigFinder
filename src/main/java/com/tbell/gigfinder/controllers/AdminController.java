@@ -30,8 +30,10 @@ public class AdminController {
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
+
         Iterable<MusicianProfile> allMusicians = musicRepo.findAll();
         model.addAttribute("musician", allMusicians);
+
         Iterable<CompanyProfile> allCompanies = compRepo.findAll();
         model.addAttribute("comp", allCompanies);
         return "admin";
