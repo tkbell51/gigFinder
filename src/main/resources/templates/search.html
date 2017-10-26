@@ -3,28 +3,31 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
-<body th:inline="text">
+<body th:inline="text" class="blue-grey lighten-5">
 <div th:include="navbar :: navHome"></div>
 
 <div sec:authorize="hasRole('ROLE_MUSICIAN')" class="container gigSearch">
     <h1 class="center-align">Search for Gigs</h1>
 
-    <form th:action="@{/searchGigLocation}" method="post">
+    <form th:action="@{/searchGigLocation}" method="post" class="white">
 
-            <div class="section row">
-                <div class="input-field col s10">
-                    <input type="text" placeholder="Search by Location" name="location" id="giglocation"/>
-                    <label for="giglocation">Location</label>
-                </div>
-                <div class="col s2">
-                    <button class="btn orange accent-4" type="submit">Search</button>
-
-                </div>
-            </div>
-    </form>
-    <form th:action="@{/searchGigType}" method="post">
         <div class="section row">
             <div class="input-field col s10">
+                <i class="orange-text text-accent-4 material-icons prefix">location_on</i>
+                <input type="text" placeholder="Search by Location" name="location" id="giglocation"/>
+                <label for="giglocation">Location</label>
+            </div>
+            <div class="col s2">
+                <button class="btn orange accent-4" type="submit">Search</button>
+
+            </div>
+        </div>
+    </form>
+    <form th:action="@{/searchGigType}" method="post" class="white">
+        <div class="section row">
+            <div class="input-field col s10">
+                <i class="orange-text text-accent-4 material-icons prefix">event_note</i>
+
                 <select name="type" id="type">
                     <option value="" disabled="disabled" selected="selected">Search by Gig Type</option>
 
@@ -43,9 +46,11 @@
 <div sec:authorize="hasRole('ROLE_COMPANY')" class="container companySearch">
     <h1 class="center-align">Search for Musicians</h1>
 
-    <form th:action="@{/searchName}" method="post">
+    <form th:action="@{/searchName}" method="post" class="white">
         <div class=" section row">
             <div class="input-field col s5">
+                <i class="orange-text text-accent-4 material-icons prefix">account_circle</i>
+
                 <input placeholder="Search First Name" id="first_name" type="text" name="firstName" class="validate"/>
                 <label for="first_name">First Name</label>
             </div>
@@ -60,9 +65,11 @@
 
         </div>
     </form>
-    <form th:action="@{/searchUsername}" method="post">
+    <form th:action="@{/searchUsername}" method="post" class="white">
         <div class="section row">
             <div class="input-field col s10 ">
+                <i class="orange-text text-accent-4 material-icons prefix">account_box</i>
+
                 <input type="text" placeholder="Search by Username" name="musicianUsername" id="username"/>
                 <label for="username">Username</label>
             </div>
@@ -72,9 +79,11 @@
             </div>
         </div>
     </form>
-    <form th:action="@{/searchInstrument}" method="post">
+    <form th:action="@{/searchInstrument}" method="post" class="white">
         <div class="section row">
             <div class="input-field col s10">
+                <i class="orange-text text-accent-4 material-icons prefix">star</i>
+
                 <select multiple="multiple" name="instrument">
                     <option value="" disabled="disabled" selected="selected">Search by Musical Instruments</option>
                     <option th:inline="text" th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
@@ -86,9 +95,11 @@
             </div>
         </div>
     </form>
-    <form th:action="@{/searchLocation}" method="post">
+    <form th:action="@{/searchLocation}" method="post" class="white">
         <div class="section row">
             <div class="input-field col s10">
+                <i class="orange-text text-accent-4 material-icons prefix">location_on</i>
+
                 <input type="text" placeholder="Search by Location" name="location" id="location"/>
                 <label for="location">Location</label>
             </div>
@@ -103,38 +114,51 @@
 <section class="searchResult container">
     <h1>Search Results</h1>
     <div sec:authorize="hasRole('ROLE_COMPANY')">
-        <div class="row" th:each="musician : ${musician}">
-            <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="images/sample-1.jpg"/>
-                    </div>
-                    <div class="card-content">
-                        <span class="card-title">[[${musician.firstName}]] [[${musician.lastName}]]</span>
-                        <p>[[${musician.musicianInstruments}]]</p>
-                        <div class="card-action">
-                            <a th:href="'/home/find-bands/' + @{${musician.id}}">Go To Page</a>
+        <div class="row">
+            <div  th:each="musician : ${musician}">
+                <div class="col s12 m4">
+                    <div class="card medium">
+                        <div class="card-image">
+                            <img th:src="@{${musician.profPicImage}}"/>
+                        </div>
+                        <div class="card-content center-align">
+                            <span class="card-title" th:text="${musician.firstName} +' '+ ${musician.lastName}"></span>
+                            <p class="circle" th:text="${musician.musicianInstruments}"></p>
+                        </div>
+                        <div class="card-action center-align">
+                            <a th:href="'/home/find-bands/' + @{${musician.id}}" class="btn  waves-effect waves-light">Go To Profile</a>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
     <div sec:authorize="hasRole('ROLE_MUSICIAN')">
         <div class="row">
-            <div th:each="gig : ${gig}" class="col s4">
-                <div class="card small  blue darken-2">
-                    <div class="card-content white-text">
+            <div th:each="gig : ${gig}" class="col s6">
+                <div class="card small">
+                    <div class="card-content">
                         <span class="card-title">[[${gig.gigDescription}]]</span>
 
-                        <p>Time: [[${gig.gigStart}]] - [[${gig.gigEnd}]]</p>
-                        <p >[[${gig.gigType}]]</p>
-                        <p >[[${gig.gigLocation}]]</p>
+                        <p class="valign-wrapper">
+                            <i class="orange-text text-accent-4 material-icons">event</i>
+                            [[${gig.gigStart}]] - [[${gig.gigEnd}]]
+                        </p>
+                        <p class="valign-wrapper">
+                            <i class="orange-text text-accent-4 material-icons">event_note</i>
+                            [[${gig.gigType}]]
+                        </p>
+                        <p class="valign-wrapper">
+                            <i class="orange-text text-accent-4 material-icons">location_on</i>
+                            [[${gig.gigLocation}]]
+                        </p>
 
                     </div>
                     <div class="card-action">
                         <div class="row">
-                            <a class="btn" th:href="'/musician/gig/' + @{${gig.id}}">Apply</a>
+                            <a class="btn" th:href="'/musician/gig/' + @{${gig.id}}">More Info</a>
 
                         </div>
                     </div>

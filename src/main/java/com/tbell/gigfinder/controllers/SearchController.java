@@ -46,7 +46,6 @@ public class SearchController {
     }
 
 
-
     @RequestMapping(value = "/searchName", method = RequestMethod.POST)
     public String searchName(@RequestParam("firstName") String firstName,
                              @RequestParam("lastName") String lastName,
@@ -55,7 +54,7 @@ public class SearchController {
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
 
-        MusicianProfile searchMusicians = musicianRepo.findByFirstNameIgnoreCaseAndLastNameIgnoreCase(firstName, lastName);
+        MusicianProfile searchMusicians = musicianRepo.findByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(firstName, lastName);
         model.addAttribute("musician", searchMusicians);
 
         List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
@@ -71,7 +70,7 @@ public class SearchController {
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
 
-        User searchUser = userRepo.findByUsernameIgnoreCase(musicianUsername);
+        User searchUser = userRepo.findByUsernameContainingIgnoreCase(musicianUsername);
         MusicianProfile searchMusician = musicianRepo.findByUser(searchUser);
         model.addAttribute("musician", searchMusician);
 
@@ -88,7 +87,7 @@ public class SearchController {
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
 
-        Iterable<MusicianProfile> searchMusicians = musicianRepo.findByMusicianInstrumentsIgnoreCase(instrument);
+        Iterable<MusicianProfile> searchMusicians = musicianRepo.findByMusicianInstrumentsContainingIgnoreCase(instrument);
         model.addAttribute("musician", searchMusicians);
 
         List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
@@ -105,7 +104,7 @@ public class SearchController {
 
 
 
-        Iterable<MusicianProfile> searchMusicians = musicianRepo.findMusicianProfileByLocationContaining(location);
+        Iterable<MusicianProfile> searchMusicians = musicianRepo.findMusicianProfileByLocationContainingIgnoreCase(location);
         model.addAttribute("musician", searchMusicians );
 
         List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
@@ -134,7 +133,7 @@ public class SearchController {
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
 
-        Iterable<Gig> searchGig = gigRepo.findByGigLocationIgnoreCase(location);
+        Iterable<Gig> searchGig = gigRepo.findByGigLocationContainingIgnoreCase(location);
         model.addAttribute("gig", searchGig);
 
         List<GigTypes> gigEnums = Arrays.asList(GigTypes.values());
@@ -150,7 +149,7 @@ public class SearchController {
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
 
-        Iterable<Gig> searchGig = gigRepo.findByGigTypeIgnoreCase(type);
+        Iterable<Gig> searchGig = gigRepo.findByGigTypeContainingIgnoreCase(type);
         model.addAttribute("gig", searchGig);
 
         List<GigTypes> gigEnums = Arrays.asList(GigTypes.values());

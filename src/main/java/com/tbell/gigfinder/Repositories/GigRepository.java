@@ -11,14 +11,13 @@ import java.util.List;
 public interface GigRepository extends CrudRepository<Gig, Long> {
     List<Gig> findByCompanyProfile (CompanyProfile companyProfile);
 
-    Iterable<Gig> findByGigLocation(String location);
+    Iterable<Gig> findByGigLocationContaining(String location);
 
     Gig findById(long id);
 
-
-    Iterable<Gig> findByGigLocationIgnoreCase(String location);
-
-    Iterable<Gig> findByGigTypeIgnoreCase(String type);
+    Iterable<Gig> findByGigLocationContainingIgnoreCase(String location);
 
     Iterable<Gig> findByGigStartIgnoreCase(String gigStart);
+
+    Iterable<Gig> findByGigTypeContainingIgnoreCase(String type);
 }

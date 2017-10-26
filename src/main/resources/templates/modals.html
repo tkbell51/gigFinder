@@ -12,7 +12,7 @@
                 <div style="color: red;" th:text="${error}"></div>
 
                 <form th:action="@{/login}" th:object="${user}" method="post">
-                    <input type="text" th:field="*{username}" placeholder="Username"/>
+                    <input type="text" th:field="*{username}" placeholder="Username" autofocus="autofocus"/>
                     <input type="password" th:field="*{password}" placeholder="Password"/>
                     <button class="waves-effect waves-light btn" type="submit" >Login</button>
                 </form>
@@ -24,7 +24,7 @@
 <div th:fragment="musicianUpdate">
     <div id="musicUpdate" class="modal">
         <div class="modal-content">
-            <form th:action="'/musician/' + @{${musicianProfile.id}} + '/update-profile/'" th:object="${musicianProfile}" method="post" enctype="multipart/form-data">
+            <form th:action="'/musician/' + @{${musicianProfile.id}} + '/update-profile/'" th:object="${musicianProfile}" method="post">
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="firstName">First Name</label>
@@ -71,17 +71,6 @@
                         <input id="birthDate" type="date" class="datepicker" th:field="*{birthDate}"/>
                     </div>
                 </div>
-                <!--<div class="row">-->
-                    <!--<div class="file-field input-field">-->
-                        <!--<div class="btn">-->
-                            <!--<span>File</span>-->
-                            <!--<input type="file">-->
-                        <!--</div>-->
-                        <!--<div class="file-path-wrapper">-->
-                            <!--<input class="file-path validate" type="text" th:field="*{picImage}" placeholder="Choose Profile Image">-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
                 <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
             </form>
 
@@ -110,7 +99,7 @@
     </div>
 </div>
 <div th:fragment="mediaUpdate">
-    <div id="mediaUpdate"  class="modal">
+    <div th:id="'mediaUpdate' + ${media.id}"  class="modal">
         <div class="modal-content">
             <form th:action="'/musician/media/' + @{${media.id}} + '/update/'" method="post" th:object="${mediaContent}">
                 <div class="row">
@@ -127,6 +116,32 @@
                 </div>
                 <button class="btn orange accent-4" type="submit">Update</button>
             </form>
+        </div>
+    </div>
+</div>
+<div th:fragment="mediaDelete">
+    <div th:id="'mediaDelete' + ${media.id} " class="modal center-align">
+        <div class="modal-content ">
+
+
+                    <p>Are you sure?</p>
+
+
+
+                    <form th:action="'/musician/media/delete/' + @{${media.id}}" method="post">
+
+                        <input class="modal-action waves-effect waves-light btn" type="submit" value="Yes"/>
+
+                    </form>
+
+
+                    <button class="waves-effect waves-light btn modal-close" type="button" >No</button>
+
+
+
+
+
+
         </div>
     </div>
 </div>
@@ -161,17 +176,6 @@
                 <input id="email" type="email" th:field="*{email}" />
             </div>
         </div>
-        <!--<div class="row">-->
-            <!--<div class="file-field input-field">-->
-                <!--<div class="btn">-->
-                    <!--<span>File</span>-->
-                    <!--<input type="file">-->
-                <!--</div>-->
-                <!--<div class="file-path-wrapper">-->
-                    <!--<input class="file-path validate" type="text" th:field="*{companyPic}" placeholder="Choose Profile Image">-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
         <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
 
     </form>
@@ -228,17 +232,13 @@
 
                     </div>
                 </div>
-                <!--<div class="row">-->
-                    <!--<div class="file-field input-field">-->
-                        <!--<div class="btn">-->
-                            <!--<span>File</span>-->
-                            <!--<input type="file">-->
-                        <!--</div>-->
-                        <!--<div class="file-path-wrapper">-->
-                            <!--<input class="file-path validate" type="text" th:field="*{gigArt}" placeholder="Choose Profile Image">-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="imgurl">Image URL</label>
+                        <input type="url"  id="imgurl" th:field="*{gigArt}" placeholder="Image URL"/>
+                    </div>
+                </div>
+
                 <button class="waves-effect waves-light btn" type="submit" >Update Gig</button>
 
             </form>
@@ -246,25 +246,24 @@
     </div>
 </div>
 <div th:fragment="gigDelete">
-    <div id="gigDelete" class="modal">
+    <div id="gigDelete" class="modal center-align">
         <div class="modal-content">
 
             <div class="row">
-                <div class="col">
+
                     <p>Are you sure?</p>
 
-                </div>
-                <div class="col">
+
                     <form th:action="'/company/gig/' + @{${gig.id}} + '/delete'" method="post">
 
                         <input class="waves-effect waves-light btn" type="submit" value="Yes"/>
 
                     </form>
-                </div>
-                <div class="col">
+
+
                     <button class="waves-effect waves-light btn modal-close" type="close" >No</button>
 
-                </div>
+
 
             </div>
 
@@ -272,32 +271,7 @@
         </div>
     </div>
 </div>
-<div th:fragment="mediaDelete">
-    <div id="mediaDelete" class="modal ">
-        <div class="modal-content">
-            <div class="center-align row">
-                <div class="col">
-                    <p>Are you sure?</p>
 
-                </div>
-                <div class="col">
-                    <form th:action="'/musician/media/' + @{${media.id}} + '/delete'" method="post">
-
-                        <input class="waves-effect waves-light btn" type="submit" value="Yes"/>
-
-                    </form>
-                </div>
-                <div class="col">
-                    <button class="waves-effect waves-light btn modal-close" type="button" >No</button>
-
-                </div>
-
-            </div>
-
-
-        </div>
-    </div>
-</div>
 <div th:fragment="profileMusicianDelete">
     <div id="profileMusicianDelete" class="modal">
         <div class="modal-content">
@@ -329,6 +303,68 @@
         </div>
     </div>
 </div>
+<div th:fragment="coverMusicianPic">
+    <div id="coverMusicianPic" class="modal">
+        <div class="modal-content">
+                <form th:action="'/musician/coverPic/' + @{${musicianProfile.id}} + '/'" method="post" th:object="${musicianProfile}">
+                    <div class="row">
+                            <div class="input-field col s12">
+                                <label for="musicianCover">Image URL</label>
+                                <input type="url"  id="musicianCover" th:field="*{coverPicImage}" placeholder="Image URL"/>
+                            </div>
+                        <input class="waves-effect waves-light btn" type="submit" value="Save"/>
+                    </div>
+                </form>
+        </div>
+    </div>
+
+</div>
+<div th:fragment="profMusicianPic">
+    <div id="profMusicianPic" class="modal">
+        <div class="modal-content">
+            <form th:action="'/musician/profilePic/' + @{${musicianProfile.id}} + '/'" method="post" th:object="${musicianProfile}">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="musicianProf">Image URL</label>
+                        <input type="url"  id="musicianProf" th:field="*{profPicImage}" placeholder="Image URL"/>
+                    </div>
+                    <input class="waves-effect waves-light btn" type="submit" value="Save"/>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div th:fragment="coverCompanyPic">
+    <div id="coverCompanyPic" class="modal">
+        <div class="modal-content">
+            <form th:action="'/company/' + @{${companyProfile.id}} + '/coverPic'" method="post" th:object="${companyProfile}">
+                <div class="input-field col s12">
+                    <label for="companyCover">Image URL</label>
+                    <input type="url"  id="companyCover" th:field="*{companyCoverPic}" placeholder="Image URL"/>
+                </div>
+                <input class="waves-effect waves-light btn" type="submit" value="Save"/>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div th:fragment="profCompanyPic">
+    <div id="profCompanyPic" class="modal">
+        <div class="modal-content">
+            <form th:action="'/company/' + @{${companyProfile.id}} + '/profPic'" method="post" th:object="${companyProfile}">
+                <div class="input-field col s12">
+                    <label for="companyProf">Image URL</label>
+                    <input type="url"  id="companyProf" th:field="*{companyProfPic}" placeholder="Image URL"/>
+                </div>
+                <input class="waves-effect waves-light btn" type="submit" value="Save"/>
+            </form>
+        </div>
+    </div>
+
+</div>
+
 <span th:include="includes :: js"></span>
 </body>
 </html>

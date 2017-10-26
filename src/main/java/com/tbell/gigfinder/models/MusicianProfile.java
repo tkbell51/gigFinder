@@ -39,8 +39,11 @@ public class MusicianProfile {
     @Column(name = "musician_bio")
     private String bio;
 
-    @Column(name = "musician_pic")
-    private String picImage;
+    @Column(name = "musician_cover_pic")
+    private String coverPicImage;
+
+    @Column(name = "musician_prof_pic")
+    private String profPicImage;
 
     @OneToMany(mappedBy = "musicianProfile", cascade = CascadeType.ALL)
     private List<MediaContent> mediaContents;
@@ -156,12 +159,20 @@ public class MusicianProfile {
         this.mediaContents = mediaContents;
     }
 
-    public String getPicImage() {
-        return picImage;
+    public String getCoverPicImage() {
+        return coverPicImage;
     }
 
-    public void setPicImage(String picImage) {
-        this.picImage = picImage;
+    public void setCoverPicImage(String coverPicImage) {
+        this.coverPicImage = coverPicImage;
+    }
+
+    public String getProfPicImage() {
+        return profPicImage;
+    }
+
+    public void setProfPicImage(String profPicImage) {
+        this.profPicImage = profPicImage;
     }
 
     public Set<MusicianApplyGig> getMusicianAppyGigs() {

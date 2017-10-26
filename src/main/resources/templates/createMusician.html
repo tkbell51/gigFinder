@@ -2,93 +2,78 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
-<body>
+<body class="blue-grey lighten-5">
 <div th:include="navbar :: navHome"></div>
 <main th:inline="text" class="container">
     <form th:action="@{/signup/musician/}" method="post" enctype="multipart/form-data"  >
         <div th:object="${user}">
             <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col l6">
                     <input id="username" type="text" th:field="*{username}" placeholder="Username"/>
                     <label for="username">Username</label>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col l6">
                     <label for="password">Password</label>
                     <input id="password" type="password" th:field="*{password}" placeholder="Password"/>
 
                 </div>
             </div>
+
         </div>
         <div th:object="${musicianProfile}">
             <div class="row">
-                <div class="input-field col s6">
+                <div class="input-field col l6">
                     <label for="firstName">First Name</label>
                     <input id="firstName" type="text" th:field="*{firstName}"/>
                 </div>
-                <div class="input-field col s6">
+                <div class="input-field col l6">
                     <label for="lastName">Last Name</label>
                     <input id="lastName" type="text" th:field="*{lastName}"/>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s6">
+                <div class="input-field col l6">
+                    <input id="city" type="text" name="musicianCity"/>
+                    <label for="city">City</label>
+                </div>
+                <div class="input-field col l3">
+                    <select name="musicianState" id="state">
+                        <option value="" disabled="disabled" selected="selected">State</option>
+                        <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col l4">
                     <label for="pNumber">Phone Number</label>
                     <input id="pNumber" type="text" th:field="*{musicianPhoneNumber}"/>
                 </div>
-                <div class="input-field col s6">
+                <div class="input-field col l4">
                     <label for="email">Email</label>
                     <input id="email" type="email" th:field="*{musicianEmail}"/>
                 </div>
-
+                <div class="input-field col l4">
+                    <label for="birthDate">BirthDate</label>
+                    <input id="birthDate" type="date" class="datepicker" th:field="*{birthDate}"/>
+                </div>
             </div>
-            <div class="input-field col s12">
+            <div class="input-field col l12">
                 <select multiple="multiple" th:field="*{musicianInstruments}">
                     <option value="" disabled="disabled" selected="selected">Choose Musical Instruments</option>
                     <option th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
                 </select>
 
             </div>
-            <div class="input-field col s6">
-                <input id="city" type="text" name="musicianCity"/>
-                <label for="city">City</label>
-            </div>
-            <div class="input-field col s3">
-                <select name="musicianState" id="state">
-                    <option value="" disabled="disabled" selected="selected">State</option>
-                    <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
-                </select>
-            </div>
+            
             <div class="row">
-                <div class="input-field col s12">
-                    <label for="location">Location</label>
-                    <input id="location" type="text" th:field="*{location}" class="autocomplete"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col l12">
                     <label for="bio">Bio</label>
                     <input id="bio" type="text" th:field="*{bio}"/>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s12">
-                    <label for="birthDate">BirthDate</label>
-                    <input id="birthDate" type="date" class="datepicker" th:field="*{birthDate}"/>
-                </div>
+
             </div>
-            <!--<div class="row">-->
-                <!--<div class="file-field input-field">-->
-                    <!--<div class="btn">-->
-                        <!--<span>File</span>-->
-                        <!--<input type="file">-->
-                    <!--</div>-->
-                    <!--<div class="file-path-wrapper">-->
-                        <!--<input class="file-path validate" type="text" th:field="*{picImage}" placeholder="Choose Profile Image">-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
 
         </div>
 

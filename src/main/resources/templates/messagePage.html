@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="includes :: indexHead"></head>
+<body class="blue-grey lighten-5">
+<div th:include="navbar :: navHome"></div>
+<main th:inline="text" class="container profileDetails">
+
+    <h1 th:text="${message}"></h1>
+    <a href="/company/my-profile" sec:authorize="hasRole('ROLE_COMPANY')" class="btn  waves-effect waves-light">Go to Profile</a>
+
+    <a href="/musician/my-profile" sec:authorize="hasRole('ROLE_MUSICIAN')" class="btn  waves-effect waves-light">Go to Profile</a>
+
+
+</main>
+<div th:include="footer :: footer"></div>
+
+<span th:include="includes :: js"></span>
+
+</body>
+</html>

@@ -2,31 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
-<body class=" valign-wrapper login">
-<div class="container ">
-    <div class="row ">
-        <div class="col l5 ">
-            <div class="card-panel">
-                <h1 class="brand-logo center-align" id="logo">gigFinder</h1>
-                <div class="card medium">
-                    <div class="card-content">
-                        <h1 class="center-align">LOGIN</h1>
-                        <div style="color: red;" th:text="${error}"></div>
+<body class=" login">
+<main class="login">
+    <div class="container ">
+                <div class="card-panel center-align loginCard">
+                    <h1 class="loginLogo center-align"><a href="/" >gigFinder</a></h1>
+                    <div class="card medium z-depth-5 valign-wrapper">
+                        <div class="card-content">
+                            <h1 class="center-align">LOGIN</h1>
+                            <div th:text="${message}"></div>
+                            <div style="color: red;" th:text="${error}"></div>
 
-                        <form th:action="@{/login}" th:object="${user}" method="post">
-                            <input type="text" th:field="*{username}" placeholder="Username"/>
-                            <input type="password" th:field="*{password}" placeholder="Password"/>
-                            <button class="waves-effect waves-light btn" type="submit" >Login</button>
-                        </form>
+                            <form th:action="@{/login}" th:object="${user}" method="post">
+                                <input type="text" th:field="*{username}" placeholder="Username" autofocus="autofocus"/>
+                                <input type="password" th:field="*{password}" placeholder="Password"/>
+                                <button class="waves-effect waves-light btn" type="submit" >Login</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
 
-</div>
 
-</div>
+
+
+    </div>
+</main>
+
 <div th:include="modals :: signupModal"></div>
 
 <span th:include="includes :: js"></span>

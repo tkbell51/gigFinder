@@ -5,7 +5,7 @@
 <head th:include="includes :: indexHead"></head>
 <body>
 <div th:fragment="navHome">
-            <ul id="dropdown1" class="dropdown-content">
+            <ul id="dropdown1" class="dropdown-content" >
                 <li>
                     <form th:action="@{/logout}" method="post">
                         <input class="btn-flat" type="submit" value="LOGOUT"/>
@@ -19,8 +19,8 @@
 
                 </li>
             </ul>
-<header class="navbar-fixed">
-    <nav class="blue">
+<header class="navbar">
+    <nav class="black">
         <div class=" nav-wrapper">
             <a sec:authorize="!isAuthenticated()" href="/" class="brand-logo">gigFinder</a>
 
@@ -33,7 +33,7 @@
                 <li><a th:href="@{/home/find-gigs}">Find a Gig</a></li>
                 <li><a th:href="@{/home/find-bands}">Find a Band</a></li>
                 <li sec:authorize="!isAuthenticated()"><a  class="modal-trigger orange accent-4" href="#signupModal">Sign In</a></li>
-                <li sec:authorize="isAuthenticated()"><a class="dropdown-button" href="#!" data-activates="dropdown1" th:inline="text">@[[${user.username}]]<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li sec:authorize="isAuthenticated()"><a class="dropdown-button" href="#!" data-activates="dropdown1" data-constrainwidth="false" th:inline="text">@[[${user.username}]]<i class="material-icons right">arrow_drop_down</i></a></li>
             </ul>
         </div>
     </nav>

@@ -2,10 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
-<body>
+<body class="blue-grey lighten-5">
 <div th:include="navbar :: navHome"></div>
 <main class="container">
-    <div class="" th:each="gig : ${gig}">
+    <h1>Find gigs</h1>
+    <div class="divider"></div>
+    <div class="white" th:each="gig : ${gig}">
         <div class="section ">
             <div class="row">
                 <div class="col s3">

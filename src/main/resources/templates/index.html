@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
-<body>
+<body class="blue-grey lighten-5">
 <div th:include="navbar :: navHome"></div>
 <main>
-    <section class="top valign-wrapper section scrollspy" id="top">
-        <h1 class="brand-logo white-text" id="logo">gigFinder</h1>
+    <section class="top valign-wrapper section scrollspy " id="top">
+        <div class="container">
+            <h1 class=" brand-logo white-text" id="logo">gigFinder</h1>
+            <a href="#choiceSection" class="center-align"><i class="material-icons white-text downArrow">arrow_downward</i></a>
+        </div>
 
 
     </section>
-    <div class="black">
-        <div class="choice container center-align">
+    <section id="choiceSection" class="section scrollspy">
+        <div  class="choice center-align">
             <div class="row">
-                <div class="col s6">
-                    <div class="card medium sticky-action hoverable">
+                <div class="col s12 m6">
+                    <div class="card z-depth-5 medium sticky-action hoverable">
                         <div class="card-image waves-effect waves-block waves- light">
                             <img class="materialboxed activator" th:src="@{../assets/images/pexels-guitar.jpeg}"/>
                         </div>
@@ -25,18 +28,14 @@
                         </div>
                         <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4">I'm a Musician<i class="material-icons right">close</i></span>
-                            <p>
-                            <ul>
-                                <li><h3>I'm looking for a gig</h3></li>
-                                <li>I want to network with other musicians</li>
-                                <li>I need to get my name out there</li>
-                            </ul>
-                            </p>
+                            <h5>I'm looking for a gig</h5>
+                            <h5>I want to network with other musicians</h5>
+                            <h5>I need to get my name out there</h5>
                         </div>
                     </div>
                 </div>
-                <div class="col s6">
-                    <div class="card medium sticky-action hoverable">
+                <div class="col s12 m6">
+                    <div class="card z-depth-5 medium sticky-action hoverable">
                         <div class="card-image waves-effect waves-block waves-light">
                             <img class="materialboxed activator" th:src="@{../assets/images/smallVenue.jpg}"/>
                         </div>
@@ -49,19 +48,16 @@
                         </div>
                         <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4">I Book Musicians<i class="material-icons right">close</i></span>
-                            <p>
-                            <ul>
-                                <li>I need help booking musicians</li>
-                                <li>I need to advertise playing opportunities for my venue</li>
-                            </ul>
-                            </p>
+                            <h5>I need help booking musicians</h5>
+                            <h5>I need to advertise playing opportunities for my venue</h5>
+
                         </div>
                     </div>
                 </div>
 
             </div>
         </div>
-    </div>
+    </section>
 
 
 </main>

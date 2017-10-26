@@ -26,8 +26,14 @@ public class CompanyProfile {
     @Column(name = "company_email")
     private String email;
 
-    @Column(name = "company_pic")
-    private String companyPic;
+    @Column(name = "company_cover_pic")
+    private String companyCoverPic;
+
+    @Column(name = "company_prof_pic")
+    private String companyProfPic;
+
+    @Column(name = "company_location")
+    private String companyLocation;
 
     @OneToMany(mappedBy = "companyProfile", cascade = CascadeType.ALL)
     private List<Gig> gigs;
@@ -111,11 +117,27 @@ public class CompanyProfile {
         this.gigs = gigs;
     }
 
-    public String getCompanyPic() {
-        return companyPic;
+    public String getCompanyCoverPic() {
+        return companyCoverPic;
     }
 
-    public void setCompanyPic(String companyPic) {
-        this.companyPic = companyPic;
+    public void setCompanyCoverPic(String companyPic) {
+        this.companyCoverPic = companyPic;
+    }
+
+    public String getCompanyProfPic() {
+        return companyProfPic;
+    }
+
+    public void setCompanyProfPic(String companyProfPic) {
+        this.companyProfPic = companyProfPic;
+    }
+
+    public String getCompanyLocation() {
+        return companyLocation;
+    }
+
+    public void setCompanyLocation(String companyLocation) {
+        this.companyLocation = companyLocation;
     }
 }

@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
-<body>
+<body class="blue-grey lighten-5">
 <div th:include="navbar :: navHome"></div>
 <main th:inline="text">
-    <div class="row">
+    <div class="row gigDetails">
         <div class="col s8">
             <div class="row center-align ">
                 <div sec:authorize="hasRole('ROLE_MUSICIAN')" class="col l3">
@@ -29,6 +29,7 @@
 
 
             </div>
+            <img th:src="@{${gig.gigArt}}" th:alt="${gig.gigDescription}"/>
             <h1>[[${gig.gigDescription}]]</h1>
             <h4>
                 <i class="orange-text text-accent-4 material-icons">view_list</i>
@@ -44,9 +45,9 @@
             </h5>
             <div sec:authorize="hasRole('ROLE_COMPANY')" class="row" th:each="applied : ${applied}">
                 <div class="col s12 m6">
-                    <div class="card">
+                    <div class="card medium">
                         <div class="card-image">
-                            <img src="images/sample-1.jpg"/>
+                            <img th:src="@{${applied.musicianProfile.profPicImage}}"/>
                         </div>
                         <div class="card-content">
                             <span class="card-title">[[${applied.musicianProfile.firstName}]] [[${applied.musicianProfile.lastName}]]</span>
@@ -63,8 +64,7 @@
             </div>
 
         <div class="col s4">
-            <img th:src="${url}" alt="map"/>
-
+            <img class="map" th:src="${url}" alt="map"/>
         </div>
     </div>
 

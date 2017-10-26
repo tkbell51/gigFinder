@@ -7,16 +7,14 @@ import com.tbell.gigfinder.googleAPI.GeoCodingInterface;
 import com.tbell.gigfinder.googleAPI.GeoCodingResponse;
 import com.tbell.gigfinder.enums.GigTypes;
 import com.tbell.gigfinder.enums.State;
-import com.tbell.gigfinder.models.CompanyProfile;
-import com.tbell.gigfinder.models.Gig;
-import com.tbell.gigfinder.models.MusicianApplyGig;
-import com.tbell.gigfinder.models.User;
+import com.tbell.gigfinder.models.*;
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.security.Principal;
@@ -45,6 +43,8 @@ public class CompanyController {
     MusicianApplyGigRepository applyRepo;
 
 
+
+
     @RequestMapping(value = "/company/my-profile", method = RequestMethod.GET)
     public String companyProfile(Model model, Principal principal){
         String username = principal.getName();
@@ -53,17 +53,16 @@ public class CompanyController {
         CompanyProfile companyProfile = compRepo.findByUser(user);
         model.addAttribute("companyProfile", companyProfile);
         Iterable<Gig> myGigs = gigRepo.findByCompanyProfile(companyProfile);
-
             model.addAttribute("gig", myGigs);
 
+        Iterable<MusicianProfile>localMusicians = musicianRepo.findMusicianProfileByLocationContainingIgnoreCase(companyProfile.getCompanyLocation());
+        model.addAttribute("musician", localMusicians);
+
         for(Gig eachGig : myGigs){
-            Long applyGig = applyRepo.countByGigId(eachGig.getId());
+
+            List<MusicianApplyGig> applyGig = applyRepo.findAllByGig(eachGig);
             model.addAttribute("applied", applyGig);
-            System.out.println("===========================");
-            System.out.println("id: " + eachGig.getId());
-            System.out.println("description: " + eachGig.getGigDescription());
-            System.out.println("applied: " + applyGig);
-            System.out.println("=======================");
+
         }
 
         return "companyProfile";
@@ -76,10 +75,12 @@ public class CompanyController {
                                        @RequestParam("phoneNumber")String phoneNumber,
                                        @RequestParam("email")String email,
                                        @RequestParam("companyName")String companyName,
-                                       Model model, Principal principal){
+
+                                       Model model, Principal principal) {
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
+
 
         CompanyProfile companyProfile = compRepo.findById(id);
         companyProfile.setCompanyName(companyName);
@@ -87,9 +88,11 @@ public class CompanyController {
         companyProfile.setCompanyContactLastName(lastName);
         companyProfile.setPhoneNumber(phoneNumber);
         companyProfile.setEmail(email);
+
         compRepo.save(companyProfile);
         return "redirect:/company/my-profile";
     }
+
 
     @RequestMapping(value = "/company/create-gig/", method = RequestMethod.GET)
     public String createGig (Model model, Principal principal){
@@ -112,8 +115,10 @@ public class CompanyController {
                              @RequestParam("gigType")String type,
                              @RequestParam("gigStart") String start,
                              @RequestParam("gigEnd")String end,
+                             @RequestParam("gigArt")String gigArt,
                              @RequestParam("gigDescription") String description,
                              Model model, Principal principal){
+
         String location = street + ", " + city + ", " + state + ", " + zip;
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
@@ -127,6 +132,7 @@ public class CompanyController {
         newGig.setGigStart(start);
         newGig.setGigEnd(end);
         newGig.setCompanyProfile(compUser);
+        newGig.setGigArt(gigArt);
         gigRepo.save(newGig);
         return "redirect:/company/my-profile";
     }
@@ -158,14 +164,6 @@ public class CompanyController {
         double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
         String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=500x1100&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getAPI_KEY();
         model.addAttribute("url", oneMarkerUrl);
-        System.out.println("-----------------------------------------------");
-        System.out.println(gig.getGigDescription());
-        System.out.println(response.getResults().get(0).getGeometry().getLocation().getLat());
-        System.out.println(response.getResults().get(0).getGeometry().getLocation().getLng());
-        System.out.println("LOCATION: " + lat + "," + lng);
-        System.out.println(oneMarkerUrl);
-
-        System.out.println("-------------------------------------------------");
         return "gigDetails";
     }
 
@@ -178,6 +176,7 @@ public class CompanyController {
                             @RequestParam("gigType")String type,
                             @RequestParam("gigStart") String start,
                             @RequestParam("gigEnd")String end,
+                            @RequestParam("gigArt")String gigArt,
                             @RequestParam("gigDescription") String description,
                             Model model, Principal principal){
         String location = street + ", " + city + ", " + state + ", " + zip;
@@ -192,6 +191,7 @@ public class CompanyController {
         newGig.setGigType(type);
         newGig.setGigStart(start);
         newGig.setGigEnd(end);
+        newGig.setGigArt(gigArt);
         newGig.setCompanyProfile(compUser);
         gigRepo.save(newGig);
         return "redirect:/company/my-profile";

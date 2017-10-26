@@ -2,33 +2,55 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
-<body>
+<body class="blue-grey lighten-5">
 <div th:include="navbar :: navHome"></div>
-<main th:inline="text" class="container">
-<section class="head deep-purple darken-4">
-    <div class="row">
-        <div class="col s2">
-            <img th:src="${musicianProfile.picImage}" th:alt="${musicianProfile.user.username}"/>
+<main th:inline="text" >
+    <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{${musicianProfile.coverPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
+        <div class="white-text center-align bannerBio ">
+            <h4  th:text="${musicianProfile.firstName} +' '+ ${musicianProfile.lastName}"></h4>
+            <h5> "[[${musicianProfile.bio}]]"</h5>
         </div>
-        <div class="col s2">
-            <h5 class="black white-text">@[[${musicianProfile.user.username}]]</h5>
-            <p class="black white-text">[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]]</p>
-            <p class="black white-text">[[${musicianProfile.location}]]</p>
+        <div class="picParentDetail" >
+            <img class="profPic circle z-depth-5 responsive-img" th:src="@{${musicianProfile.profPicImage}}" th:alt="${user.username}"/>
         </div>
-    </div>
-</section>
-    <section class="center-align">
-        <p>[[${musicianProfile.bio}]]</p>
     </section>
-<section>
-    <div th:each="media : ${media}">
-        <div class="row">
-            <i class="orange-text text-accent-4 material-icons">music_note</i>
-            <a  th:href="@{${media.media_url}}" target="_blank"  th:text="${media.title}"></a>
+<section >
+    <div class="row bioRow black white-text">
+        <div class="col s3 offset-l3">
+            <p  class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${musicianProfile.user.username}]]</p>
+            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">location_on</i> [[${musicianProfile.location}]]</p>
+        </div>
+        <div class="col s3">
+            <p  >
+                <a class="valign-wrapper" th:href="'mailto:'+@{${musicianProfile.musicianEmail}}">
+                    <i class="orange-text text-accent-4 material-icons">email</i>
+                    [[${musicianProfile.musicianEmail}]]
+                </a>
+            </p>
+            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
 
         </div>
-        <div class="divider"></div>
+        <div class="col s3">
+
+        </div>
+
     </div>
+
+</section>
+
+<section class="container">
+        <h1>[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]] Music</h1>
+        <table class="bordered white  " >
+            <tr  th:each="media : ${media}">
+                <td class="valign-wrapper">
+                    <i class="orange-text text-accent-4 material-icons">music_note</i>
+                    <a  th:href="@{${media.media_url}}" target="_blank"  th:text="${media.title}" class="mediaTitle"></a>
+                </td>
+            </tr>
+        </table>
+
+
+
 </section>
 </main>
 <div th:include="footer :: footer"></div>

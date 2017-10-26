@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface MediaContentRepository extends CrudRepository<MediaContent, Long> {
     List<MediaContent> findByMusicianProfile(MusicianProfile musicianProfile);
+
+    MediaContent findById(long id);
 }

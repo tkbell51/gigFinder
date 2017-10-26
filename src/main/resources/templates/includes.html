@@ -16,12 +16,13 @@
 <script th:src="@{/webjars/materialize/0.100.2/dist/js/materialize.min.js}"></script>
 <script>
       $(document).ready(function(){
-          // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-          $('.modal').modal();
-      });
-      $(document).ready(function() {
           $('select').material_select();
+          $('.scrollspy').scrollSpy();
+          $('.modal').modal();
+          $('.tooltipped').tooltip({delay: 50});
+
       });
+
       $('.datepicker').pickadate({
           selectMonths: true, // Creates a dropdown to control month
           selectYears: 199, // Creates a dropdown of 15 years to control year,
@@ -30,21 +31,8 @@
           close: 'Ok',
           closeOnSelect: false// Close upon selecting a date,
       });
-      $('input.autocomplete').autocomplete({
-          data: {
-              "Apple": null,
-              "Microsoft": null,
-              "Google": 'https://placehold.it/250x250'
-          },
-          limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-          onAutocomplete: function(val) {
-              // Callback function when value is autcompleted.
-          },
-          minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-      });
-      $(document).ready(function(){
-          $('.scrollspy').scrollSpy();
-      });
+
+
 
 </script>
 

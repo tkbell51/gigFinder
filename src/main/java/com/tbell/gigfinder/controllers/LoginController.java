@@ -6,19 +6,15 @@ import com.tbell.gigfinder.Repositories.RoleRepository;
 import com.tbell.gigfinder.Repositories.UserRepository;
 import com.tbell.gigfinder.enums.Instruments;
 import com.tbell.gigfinder.enums.State;
-import com.tbell.gigfinder.models.CompanyProfile;
-import com.tbell.gigfinder.models.MusicianProfile;
-import com.tbell.gigfinder.models.Role;
-import com.tbell.gigfinder.models.User;
+import com.tbell.gigfinder.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +37,6 @@ public class LoginController {
     MusicianProfileRepository musicRepo;
 
 
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, HttpServletRequest request) {
         model.addAttribute("user", new User());
@@ -55,11 +50,12 @@ public class LoginController {
     }
 
 
-
     @RequestMapping(value = "/signup/company/", method = RequestMethod.GET)
     public String createCompanyProfile(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("companyProfile", new CompanyProfile());
+        List<State> stateEnum = Arrays.asList(State.values());
+        model.addAttribute("states", stateEnum);
         return "createCompany";
     }
 
@@ -71,6 +67,8 @@ public class LoginController {
                                        @RequestParam("phoneNumber")String phoneNumber,
                                        @RequestParam("email")String email,
                                        @RequestParam("companyName")String companyName,
+                                       @RequestParam("companyState") String state,
+                                       @RequestParam("companyCity")String city,
                                        Model model){
         User user = new User();
         user.setUsername(username);
@@ -82,6 +80,8 @@ public class LoginController {
         user.setRole(companyRole);
         userRepo.save(user);
 
+        String location = city + ", " + state;
+
         CompanyProfile companyProfile = new CompanyProfile();
         companyProfile.setUser(user);
         companyProfile.setCompanyName(companyName);
@@ -89,9 +89,14 @@ public class LoginController {
         companyProfile.setCompanyContactLastName(lastName);
         companyProfile.setPhoneNumber(phoneNumber);
         companyProfile.setEmail(email);
+        companyProfile.setCompanyLocation(location);
         compRepo.save(companyProfile);
-        return "redirect:/login";
+        model.addAttribute("message", "Thank you for joining! Please login");
+        return "login";
     }
+
+
+
 
     @RequestMapping(value = "/signup/musician/", method = RequestMethod.GET)
     public String createMusicianProfile(Model model){
@@ -106,17 +111,17 @@ public class LoginController {
 
     @RequestMapping(value = "/signup/musician/", method = RequestMethod.POST)
     public String createMusicianProfile(@RequestParam("username")String username,
-                                       @RequestParam("password")String password,
-                                       @RequestParam("firstName")String firstName,
-                                       @RequestParam("lastName")String lastName,
-                                       @RequestParam("musicianPhoneNumber")String phoneNumber,
-                                       @RequestParam("musicianEmail")String musicianEmail,
-                                       @RequestParam("birthDate")String birthDate,
-                                       @RequestParam("musicianInstruments")String instruments,
-                                       @RequestParam("musicianState") String state,
-                                       @RequestParam("musicianCity")String city,
-                                       @RequestParam("bio")String bio,
-                                       Model model){
+                                        @RequestParam("password")String password,
+                                        @RequestParam("firstName")String firstName,
+                                        @RequestParam("lastName")String lastName,
+                                        @RequestParam("musicianPhoneNumber")String phoneNumber,
+                                        @RequestParam("musicianEmail")String musicianEmail,
+                                        @RequestParam("birthDate")String birthDate,
+                                        @RequestParam("musicianInstruments")String instruments,
+                                        @RequestParam("musicianState") String state,
+                                        @RequestParam("musicianCity")String city,
+                                        @RequestParam("bio")String bio,
+                                        Model model){
         User user = new User();
         user.setUsername(username);
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
@@ -126,12 +131,18 @@ public class LoginController {
         Role musicianRole = roleRepo.findByName("ROLE_MUSICIAN");
         user.setRole(musicianRole);
         userRepo.save(user);
+
         String location = city + ", " + state;
+
+        instruments = instruments.replaceAll("[,.!?;:]", "$0 ").replaceAll("\\s+", " ");
+
         MusicianProfile musicianProfile  = new MusicianProfile(user, firstName, lastName, musicianEmail,
                 phoneNumber, birthDate, instruments, location, bio);
         musicRepo.save(musicianProfile);
-        return "redirect:/login";
+        model.addAttribute("message", "Thank you for joining! Please login");
+        return "login";
 
     }
-    
+
+
 }

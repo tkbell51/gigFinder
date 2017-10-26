@@ -2,79 +2,69 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="includes :: indexHead"></head>
-<body th:inline="text" >
+<body th:inline="text" class="blue-grey lighten-5">
 <div th:include="navbar :: navHome"></div>
-<section>
-    <nav class=" blue darken-2 center-align">
-        <a class="btn waves-effect waves-light" href="/musician/search/">Search</a>
-        <a class="waves-effect waves-light btn modal-trigger" href="#addMusicContent">Add Music</a>
 
-    </nav>
-</section>
-<section class=" blue darken-2 profile">
-    <div class="row">
-        <div class=" col l2"><img class="circle responsive-img" th:src="@{../assets/images/pexels-guitar.jpeg}" alt=""/></div>
-        <div class="col l2">
-            <h5 class="black white-text name"  th:text="${musicianProfile.firstName} +' '+ ${musicianProfile.lastName}"></h5>
-            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
-            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">location_on</i> [[${musicianProfile.location}]]</p>
+
+<main th:inline="text" >
+    <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{${musicianProfile.coverPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
+        <a href="#coverMusicianPic" class="modal-trigger tooltipped" data-position="right" data-delay="50" data-tooltip="Update Cover Image"><i class="coverBanner text-accent-4 material-icons">camera_alt</i></a>
+        <div class="white-text center-align bannerBio ">
+            <h4  th:text="${musicianProfile.firstName} +' '+ ${musicianProfile.lastName}"></h4>
+            <h5> "[[${musicianProfile.bio}]]"</h5>
         </div>
-        <div class="col l2">
-            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianProfile.musicianEmail}]] </p>
-            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianProfile.musicianPhoneNumber}]]</p>
-            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">cake</i> [[${musicianProfile.birthDate}]]</p>
+        <div  id="picParent">
+            <img class="profPic circle z-depth-5 responsive-img" th:src="@{${musicianProfile.profPicImage}}" th:alt="${user.username}"/>
+            <div class="middle">
+                <div  id="hover-content">
+                    <a href="#profMusicianPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>
+                    </a>
+                </div>
+            </div>
+
         </div>
-        <div class="col l2">
-            <p class="black white-text"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
+    </section>
+    <div class="row bioRow black white-text">
+        <div class="col s3 offset-l3">
+            <p  class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
+            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">location_on</i> [[${musicianProfile.location}]]</p>
+        </div>
+        <div class="col s3">
+            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianProfile.musicianEmail}]] </p>
+            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianProfile.musicianPhoneNumber}]]</p>
+
+        </div>
+        <div class="col s3">
+            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
+
+            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">cake</i> [[${musicianProfile.birthDate}]]</p>
         </div>
 
     </div>
-</section>
-<main th:inline="text" class="musicianProfile">
-    <div class="row">
-        <div class="col s3">
+    <div class="profileDetails">
+        <div class="row">
+            <div class="col s6">
+                <h1>Gigs in the Area
+                    <span>
+                    <a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Gigs" href="/musician/search/"><i class="material-icons">search</i></a>
+                </span>
+                </h1>
 
-
-
-
-            <p><i class="orange-text text-accent-4 material-icons">bookmark</i> [[${musicianProfile.bio}]]</p>
-
-        </div>
-        <div class="col s6">
-
-            <h1>My Music</h1>
-            <div th:each="media : ${media}">
-                <div class="row">
-                    <i class="orange-text text-accent-4 material-icons">music_note</i>
-                    <a  th:href="@{${media.media_url}}" target="_blank"  th:text="${media.title}"></a>
-                    <a class="waves-effect waves-light modal-trigger" href="#mediaUpdate">
-                        <i class="orange-text text-accent-4 material-icons">edit</i>
-                    </a>
-                    <a class="waves-effect waves-light modal-trigger" href="#mediaDelete">
-                        <i class="orange-text text-accent-4 material-icons">delete</i>
-                    </a>
-                    <div th:include="modals :: mediaUpdate"></div>
-                    <div th:include="modals :: mediaDelete"></div>
-                </div>
-                <h5>
-
-                </h5>
-
-                <div class="divider"></div>
-            </div>
-        </div>
-        <div class="col s3">
-            <h5>Gigs in the Area</h5>
-
-            <div class="card" th:each="gig : ${gig}">
+                <div class="card"  th:each="gig : ${gig}">
                     <div class="card-content">
                         <div class="row">
                             <div class="col s4">
                                 <img class="localGigs" th:src="${gig.gigArt}" alt=""/>
                             </div>
                             <div class="col s8">
-                                <p th:text="'When: '+${gig.gigStart}"></p>
-                                <p th:text="'Type: '+${gig.gigType}"></p>
+                                <p class="valign-wrapper">
+                                    <i class="orange-text text-accent-4 material-icons">event_note</i>
+                                    [[${gig.gigDescription}]]
+                                </p>
+                                <p class="valign-wrapper">
+                                    <i class="orange-text text-accent-4 material-icons">event</i>
+                                    [[${gig.gigStart}]]
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -82,12 +72,50 @@
                         <a class="btn" th:href="'/musician/gig/' + @{${gig.id}}">More Info</a>
 
                     </div>
-            </div>
+                </div>
 
+            </div>
+            <div class="col s6">
+
+                <h1>My Music
+                    <span>
+                <a class="waves-effect waves-light btn-floating modal-trigger tooltipped" data-position="top" data-delay="50" data-tooltip="Add a YouTube video of your music" href="#addMusicContent"><i class="material-icons">add</i></a>
+                </span>
+                </h1>
+                <table class="bordered white">
+                    <tr  th:each="media : ${media}">
+                        <td class="valign-wrapper">
+                            <i class="orange-text text-accent-4 material-icons">music_note</i>
+                            <a  th:href="@{${media.media_url}}" target="_blank"  th:text="${media.title}" class="mediaTitle"></a>
+                        </td>
+                        <td>
+                            <a class="waves-effect waves-light modal-trigger float-right" th:href="'#mediaUpdate' + ${media.id}">
+                                <i class="orange-text text-accent-4 material-icons tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Music">edit</i>
+                            </a>
+                        </td>
+                        <td>
+                            <form th:action="'/musician/media/delete/' + @{${media.id}}" method="post">
+
+                                <input class="modal-action waves-effect waves-light btn " type="submit" value="Delete"/>
+
+                            </form>
+                        </td>
+
+                        <div th:include="modals :: mediaUpdate"></div>
+                        <div th:include="modals :: mediaDelete"></div>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
+
+
+
 </main>
+<div th:include="modals :: coverMusicianPic"></div>
+<div th:include="modals :: profMusicianPic"></div>
+
 <div th:include="footer :: footer"></div>
 <div th:include="modals :: musicianUpdate"></div>
 <div th:include="modals :: createMedia"></div>
