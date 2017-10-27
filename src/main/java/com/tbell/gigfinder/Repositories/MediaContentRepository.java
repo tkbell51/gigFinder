@@ -12,4 +12,5 @@ public interface MediaContentRepository extends CrudRepository<MediaContent, Lon
     List<MediaContent> findByMusicianProfile(MusicianProfile musicianProfile);
 
     MediaContent findById(long id);
+
 }

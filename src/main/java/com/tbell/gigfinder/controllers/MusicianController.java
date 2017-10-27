@@ -124,8 +124,8 @@ public class MusicianController {
         return "redirect:/musician/my-profile";
     }
 
-    @RequestMapping(value = "/musician/media/delete/{mediaId}", method = RequestMethod.POST)
-    public String deleteMedia (@PathVariable("mediaId")long id){
+    @RequestMapping(value = "/musician/media/delete", method = RequestMethod.POST)
+    public String deleteMedia (@RequestParam("mediaId")long id){
         mediaRepo.delete(id);
         return "redirect:/musician/my-profile";
     }

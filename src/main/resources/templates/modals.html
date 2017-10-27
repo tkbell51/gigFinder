@@ -123,25 +123,13 @@
     <div th:id="'mediaDelete' + ${media.id} " class="modal center-align">
         <div class="modal-content ">
 
-
                     <p>Are you sure?</p>
 
-
-
-                    <form th:action="'/musician/media/delete/' + @{${media.id}}" method="post">
-
+                    <form action="/musician/media/delete" method="post">
+                        <input type="hidden" th:value="${media.id}"/>
                         <input class="modal-action waves-effect waves-light btn" type="submit" value="Yes"/>
-
+                        <button class="waves-effect waves-light btn modal-close" type="button" >No</button>
                     </form>
-
-
-                    <button class="waves-effect waves-light btn modal-close" type="button" >No</button>
-
-
-
-
-
-
         </div>
     </div>
 </div>
@@ -255,15 +243,9 @@
 
 
                     <form th:action="'/company/gig/' + @{${gig.id}} + '/delete'" method="post">
-
                         <input class="waves-effect waves-light btn" type="submit" value="Yes"/>
-
                     </form>
-
-
                     <button class="waves-effect waves-light btn modal-close" type="close" >No</button>
-
-
 
             </div>
 

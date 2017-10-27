@@ -4,12 +4,22 @@
 <head th:include="includes :: indexHead"></head>
 <body class="blue-grey lighten-5">
 <div th:include="navbar :: navHome"></div>
-<main th:inline="text" class="container profileDetails">
-
+<main th:inline="text" class="container center-align valign-wrapper">
+<div class="card-panel">
     <h1 th:text="${message}"></h1>
-    <a href="/company/my-profile" sec:authorize="hasRole('ROLE_COMPANY')" class="btn  waves-effect waves-light">Go to Profile</a>
+    <div class="row center-align">
+        <div class="col m6 s12">
+            <a href="/company/my-profile" sec:authorize="hasRole('ROLE_COMPANY')" class="btn  waves-effect waves-light">Go to Profile</a>
 
-    <a href="/musician/my-profile" sec:authorize="hasRole('ROLE_MUSICIAN')" class="btn  waves-effect waves-light">Go to Profile</a>
+        </div>
+        <div class="col m6 s12">
+            <a href="/musician/my-profile" sec:authorize="hasRole('ROLE_MUSICIAN')" class="btn  waves-effect waves-light">Go to Profile</a>
+
+        </div>
+    </div>
+
+
+</div>
 
 
 </main>

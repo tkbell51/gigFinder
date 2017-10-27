@@ -94,11 +94,9 @@
                             </a>
                         </td>
                         <td>
-                            <form th:action="'/musician/media/delete/' + @{${media.id}}" method="post">
-
-                                <input class="modal-action waves-effect waves-light btn " type="submit" value="Delete"/>
-
-                            </form>
+                            <a class="waves-effect waves-light modal-trigger float-right" th:href="'#mediaDelete' + @{${media.id}}">
+                                <i class="orange-text text-accent-4 material-icons tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Music">delete</i>
+                            </a>
                         </td>
 
                         <div th:include="modals :: mediaUpdate"></div>
