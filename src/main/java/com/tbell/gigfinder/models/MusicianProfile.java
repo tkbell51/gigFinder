@@ -3,7 +3,9 @@ package com.tbell.gigfinder.models;
 
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +30,7 @@ public class MusicianProfile {
     private String musicianPhoneNumber;
 
     @Column(name = "birth_date")
-    private String birthDate;
+    private Date birthDate;
 
     @Column(name = "musician_instruments")
     private String musicianInstruments;
@@ -58,7 +60,7 @@ public class MusicianProfile {
 
     public MusicianProfile() {}
 
-    public MusicianProfile(User user, String firstName, String lastName, String musicianEmail, String musicianPhoneNumber, String birthDate, String musicianInstruments, String location, String bio) {
+    public MusicianProfile(User user, String firstName, String lastName, String musicianEmail, String musicianPhoneNumber, Date birthDate, String musicianInstruments, String location, String bio) {
         this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -111,11 +113,11 @@ public class MusicianProfile {
         this.musicianPhoneNumber = musicianPhoneNumber;
     }
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 

@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class LoginController {
@@ -74,7 +77,7 @@ public class LoginController {
         user.setUsername(username);
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         user.setPassword(encryptedPassword);
-        user.setSignup_date(new Date(System.currentTimeMillis()));
+        user.setSignup_date(LocalDate.now());
         user.setActive(true);
         Role companyRole = roleRepo.findByName("ROLE_COMPANY");
         user.setRole(companyRole);
@@ -116,7 +119,7 @@ public class LoginController {
                                         @RequestParam("lastName")String lastName,
                                         @RequestParam("musicianPhoneNumber")String phoneNumber,
                                         @RequestParam("musicianEmail")String musicianEmail,
-                                        @RequestParam("birthDate")String birthDate,
+                                        @RequestParam("birthDate")Date birthDate,
                                         @RequestParam("musicianInstruments")String instruments,
                                         @RequestParam("musicianState") String state,
                                         @RequestParam("musicianCity")String city,
@@ -126,18 +129,19 @@ public class LoginController {
         user.setUsername(username);
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         user.setPassword(encryptedPassword);
-        user.setSignup_date(new Date(System.currentTimeMillis()));
+        user.setSignup_date(LocalDate.now());
         user.setActive(true);
         Role musicianRole = roleRepo.findByName("ROLE_MUSICIAN");
         user.setRole(musicianRole);
         userRepo.save(user);
 
         String location = city + ", " + state;
-
         instruments = instruments.replaceAll("[,.!?;:]", "$0 ").replaceAll("\\s+", " ");
+
 
         MusicianProfile musicianProfile  = new MusicianProfile(user, firstName, lastName, musicianEmail,
                 phoneNumber, birthDate, instruments, location, bio);
+
         musicRepo.save(musicianProfile);
         model.addAttribute("message", "Thank you for joining! Please login");
         return "login";

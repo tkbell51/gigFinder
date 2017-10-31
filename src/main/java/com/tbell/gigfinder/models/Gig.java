@@ -3,9 +3,13 @@ package com.tbell.gigfinder.models;
 
 
 import org.springframework.data.geo.Point;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +21,9 @@ public class Gig {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "gig_title")
+    private String gigTitle;
+
     @Column(name = "gig_location")
     private String gigLocation;
 
@@ -25,10 +32,10 @@ public class Gig {
     private String gigType;
 
     @Column(name = "gig_start")
-    private String gigStart;
+    private Date gigStart;
 
     @Column(name = "gig_end")
-    private String gigEnd;
+    private Date gigEnd;
 
     @Column(name = "gig_description")
     private String gigDescription;
@@ -54,6 +61,13 @@ public class Gig {
         this.id = id;
     }
 
+    public String getGigTitle() {
+        return gigTitle;
+    }
+
+    public void setGigTitle(String gigTitle) {
+        this.gigTitle = gigTitle;
+    }
 
     public String getGigLocation() {
         return gigLocation;
@@ -72,19 +86,19 @@ public class Gig {
         this.gigType = gigType;
     }
 
-    public String getGigStart() {
+    public Date getGigStart() {
         return gigStart;
     }
 
-    public void setGigStart(String gigStart) {
+    public void setGigStart(Date gigStart) {
         this.gigStart = gigStart;
     }
 
-    public String getGigEnd() {
+    public Date getGigEnd() {
         return gigEnd;
     }
 
-    public void setGigEnd(String gigEnd) {
+    public void setGigEnd(Date gigEnd) {
         this.gigEnd = gigEnd;
     }
 

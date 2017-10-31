@@ -11,7 +11,7 @@
         <div th:each="musician : ${musicians}">
 
 
-            <div  th:each="musician : ${musician}">
+            <div  th:each="musician : ${musician}" >
                 <div class="col s12 m4">
                     <div class="card medium">
                         <div class="card-image">
@@ -22,8 +22,8 @@
                             <p class="circle" th:text="${musician.musicianInstruments}"></p>
                         </div>
                         <div class="card-action center-align">
-                            <a th:href="'/home/find-bands/' + @{${musician.id}}" class="btn  waves-effect waves-light">Go To Profile</a>
-
+                            <a sec:authorize="hasRole('ROLE_MUSICIAN')" th:href="'/musician/find-bands/' + @{${musician.id}}" class="btn  waves-effect waves-light">Go To Profile</a>
+                            <a sec:authorize="hasRole('ROLE_COMPANY')" th:href="'/company/find-bands/' + @{${musician.id}}" class="btn  waves-effect waves-light">Go To Profile</a>
                         </div>
                     </div>
                 </div>

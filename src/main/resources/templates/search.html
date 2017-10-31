@@ -140,11 +140,11 @@
             <div th:each="gig : ${gig}" class="col s6">
                 <div class="card small">
                     <div class="card-content">
-                        <span class="card-title">[[${gig.gigDescription}]]</span>
+                        <span class="card-title">[[${gig.gigTitle}]]</span>
 
                         <p class="valign-wrapper">
                             <i class="orange-text text-accent-4 material-icons">event</i>
-                            [[${gig.gigStart}]] - [[${gig.gigEnd}]]
+                            Starts [[${#dates.format(gig.gigStart,'EEE, d MMM yyyy')}]] -  Ends [[${#dates.format(gig.gigEnd,'EEE, d MMM yyyy')}]]
                         </p>
                         <p class="valign-wrapper">
                             <i class="orange-text text-accent-4 material-icons">event_note</i>

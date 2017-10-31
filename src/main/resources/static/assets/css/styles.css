@@ -33,7 +33,7 @@
 }
 .downArrow{
     position: absolute;
-    font-size: 5em;
+    font-size: 2em;
     left: 50%;
     bottom: 0px;
 }
@@ -214,6 +214,9 @@ background: rgba(255,255,255,0.5);
 .mediaTitle{
     font-size: 1.3em;
 }
+.gigCard{
+    width: 90%;
+}
 body {
     display: flex;
     min-height: 100vh;
@@ -229,4 +232,31 @@ main {
 }
 .map{
     position: fixed;
+}
+i.right{
+    margin-left: 0px;
+}
+.cardGigDetails{
+    margin: auto;
+}
+span.badge{
+    width: 25px;
+    padding: 0px 6px;
+    margin-left: 14px;
+    text-align: center;
+    font-size: 1.3em;
+    line-height: 22px;
+    height: 25px;
+    color: #757575;
+    float: right;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 50%;
+    line-height: 25px;
+    margin-top: 4px;
+}
+
+.media.waves-effect{
+    padding: 0;
 }

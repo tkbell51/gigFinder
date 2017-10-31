@@ -7,14 +7,15 @@
 <main class="success container center-align valign-wrapper">
 <div class="card-panel">
     <h3>Great! You applied successfully for: </h3>
-    <h3>[[${gig.gigDescription}]].</h3>
+    <h3>[[${gig.gigTitle}]]</h3>
+    <h5>Starts [[${#dates.format(gig.gigStart,'EEE, d MMM yyyy')}]] -  Ends [[${#dates.format(gig.gigEnd,'EEE, d MMM yyyy')}]]</h5>
     <h3>Look out for an email!</h3>
     <div class="row center-align">
         <div class="col m6 s12">
             <a href="/musician/my-profile/" class="waves-effect waves-light btn">Profile</a>
         </div>
         <div class="col m6 s12">
-            <a href="/musician/search/" class="waves-effect waves-light btn">Search Gig</a>
+            <a href="/musician/search/" class="waves-effect waves-light btn">Search Gigs</a>
 
         </div>
     </div>

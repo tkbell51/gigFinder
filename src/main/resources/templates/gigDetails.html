@@ -22,27 +22,66 @@
                     <a class="waves-effect waves-light btn modal-trigger" href="#gigUpdate">Update</a>
 
                 </div>
-                <div sec:authorize="hasRole('ROLE_COMPANY')" class="col l3">
+                <div th:if="${gig.companyProfile.user.username == user.username}" sec:authorize="hasRole('ROLE_COMPANY')" class="col l3">
                     <a class="waves-effect waves-light modal-trigger btn" href="#gigDelete">Delete</a>
 
                 </div>
 
 
             </div>
-            <img th:src="@{${gig.gigArt}}" th:alt="${gig.gigDescription}"/>
-            <h1>[[${gig.gigDescription}]]</h1>
-            <h4>
-                <i class="orange-text text-accent-4 material-icons">view_list</i>
-                [[${gig.gigType}]]
-            </h4>
-            <h5>
-                <i class="orange-text text-accent-4 material-icons">event</i>
-                [[${gig.gigStart}]] - [[${gig.gigEnd}]]
-            </h5>
-            <h5>
-                <i class="orange-text text-accent-4 material-icons">location_on</i>
-                [[${gig.gigLocation}]]
-            </h5>
+            <table>
+                <tr>
+                    <td class="right-align">
+                        <img th:src="@{${gig.gigArt}}" th:alt="${gig.gigDescription}"/>
+                    </td>
+                    <td>
+                        <h1>[[${gig.gigTitle}]]</h1>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right-align">
+                        <i class="orange-text text-accent-4 material-icons">view_list</i>
+
+                    </td>
+                    <td>
+                        <h4>
+                            [[${gig.gigType}]]
+                        </h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right-align">
+                        <i class="orange-text text-accent-4 material-icons">event</i>
+
+                    </td>
+                    <td>
+                        <h4>
+                            Starts [[${#dates.format(gig.gigStart,'EEE, d MMM yyyy')}]] -  Ends [[${#dates.format(gig.gigEnd,'EEE, d MMM yyyy')}]]
+
+                        </h4>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right-align">
+                        <i class="orange-text text-accent-4 material-icons">location_on</i>
+
+                    </td>
+                    <td>
+                        <h4>
+                            [[${gig.gigLocation}]]
+
+                        </h4>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <h5>[[${gig.gigDescription}]]</h5>
+                    </td>
+                </tr>
+            </table>
             <div sec:authorize="hasRole('ROLE_COMPANY')" class="row" th:each="applied : ${applied}">
                 <div class="col s12 m6">
                     <div class="card medium">
@@ -53,7 +92,7 @@
                             <span class="card-title">[[${applied.musicianProfile.firstName}]] [[${applied.musicianProfile.lastName}]]</span>
                             <p>[[${applied.musicianProfile.musicianInstruments}]]</p>
                             <div class="card-action">
-                                <a th:href="'/home/find-bands/' + @{${applied.musicianProfile.id}}">Go To Page</a>
+                                <a th:href="'/company/find-bands/' + @{${applied.musicianProfile.id}}">Go To Page</a>
 
                                 <a th:href="'mailto:'+@{${applied.musicianProfile.musicianEmail}}">[[${applied.musicianProfile.musicianEmail}]]</a>
                             </div>

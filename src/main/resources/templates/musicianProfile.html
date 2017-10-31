@@ -6,7 +6,7 @@
 <div th:include="navbar :: navHome"></div>
 
 
-<main th:inline="text" >
+<main  th:inline="text" >
     <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{${musicianProfile.coverPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
         <a href="#coverMusicianPic" class="modal-trigger tooltipped" data-position="right" data-delay="50" data-tooltip="Update Cover Image"><i class="coverBanner text-accent-4 material-icons">camera_alt</i></a>
         <div class="white-text center-align bannerBio ">
@@ -37,33 +37,35 @@
         <div class="col s3">
             <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
 
-            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">cake</i> [[${musicianProfile.birthDate}]]</p>
+            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">cake</i> [[${#dates.format(musicianProfile.birthDate,'MMM d, yyyy')}]]</p>
         </div>
 
     </div>
     <div class="profileDetails">
         <div class="row">
-            <div class="col s6">
-                <h1>Gigs in the Area
+            <div class="col s12 m4">
+                <h3 class="center-align">Gigs in the Area
                     <span>
                     <a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Gigs" href="/musician/search/"><i class="material-icons">search</i></a>
                 </span>
-                </h1>
-
-                <div class="card"  th:each="gig : ${gig}">
+                </h3>
+                <div th:if="${gig.isEmpty()}">
+                    <h5>No Gigs found in your area</h5>
+                </div>
+                <div class="card gigCard"  th:each="gig : ${gig}">
                     <div class="card-content">
                         <div class="row">
                             <div class="col s4">
                                 <img class="localGigs" th:src="${gig.gigArt}" alt=""/>
                             </div>
-                            <div class="col s8">
+                            <div class="col s8 cardGigDetails">
                                 <p class="valign-wrapper">
                                     <i class="orange-text text-accent-4 material-icons">event_note</i>
-                                    [[${gig.gigDescription}]]
+                                    [[${gig.gigTitle}]]
                                 </p>
                                 <p class="valign-wrapper">
                                     <i class="orange-text text-accent-4 material-icons">event</i>
-                                    [[${gig.gigStart}]]
+                                    [[${#dates.format(gig.gigStart,'EEE, d MMM yyyy')}]]
                                 </p>
                             </div>
                         </div>
@@ -75,13 +77,16 @@
                 </div>
 
             </div>
-            <div class="col s6">
+            <div class="col s12 m4">
 
-                <h1>My Music
+                <h3 class="center-align">My Music
                     <span>
                 <a class="waves-effect waves-light btn-floating modal-trigger tooltipped" data-position="top" data-delay="50" data-tooltip="Add a YouTube video of your music" href="#addMusicContent"><i class="material-icons">add</i></a>
                 </span>
-                </h1>
+                    <div th:if="${media.isEmpty()}">
+                        <h5>Add Your Music</h5>
+                    </div>
+                </h3>
                 <table class="bordered white">
                     <tr  th:each="media : ${media}">
                         <td class="valign-wrapper">
@@ -89,20 +94,37 @@
                             <a  th:href="@{${media.media_url}}" target="_blank"  th:text="${media.title}" class="mediaTitle"></a>
                         </td>
                         <td>
-                            <a class="waves-effect waves-light modal-trigger float-right" th:href="'#mediaUpdate' + ${media.id}">
-                                <i class="orange-text text-accent-4 material-icons tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Music">edit</i>
+                            <a class="waves-effect waves-light modal-trigger btn-flat float-right" th:href="'#mediaUpdate' + ${media.id}">
+                                <i class="material-icons orange-text text-accent-4 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Music">edit</i>
                             </a>
                         </td>
                         <td>
-                            <a class="waves-effect waves-light modal-trigger float-right" th:href="'#mediaDelete' + @{${media.id}}">
-                                <i class="orange-text text-accent-4 material-icons tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Music">delete</i>
-                            </a>
+                            <form th:action="'/musician/media/delete/' + ${media.id}" method="post">
+                                <button class="modal-action media waves-effect waves-light btn-flat" type="submit" >
+                                    <i class="material-icons orange-text text-accent-4 tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Music">delete</i>
+                                </button>
+                            </form>
                         </td>
-
                         <div th:include="modals :: mediaUpdate"></div>
-                        <div th:include="modals :: mediaDelete"></div>
                     </tr>
                 </table>
+            </div>
+            <div class="col s12 m4">
+                <h3 class="center-align">Applied Gigs</h3>
+
+                <ul class="collection with-header " >
+
+                    <li th:each="applied : ${applied}" class="collection-item avatar">
+                        <i class="orange-text text-accent-4 material-icons circle white">event</i>
+                        <p> [[${applied.gig.gigTitle}]]</p>
+                        <p>[[${#dates.format(applied.gig.gigStart,'EEE, d MMM yyyy')}]]</p>
+                        <a class="secondary-content" th:href="'/musician/gig/' + @{${applied.gig.id}}"  >
+                            <i class="orange-text text-accent-4 material-icons ">send</i>
+
+                        </a>
+                    </li>
+
+                </ul>
             </div>
         </div>
     </div>

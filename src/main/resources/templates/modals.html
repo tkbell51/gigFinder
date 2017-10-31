@@ -125,11 +125,7 @@
 
                     <p>Are you sure?</p>
 
-                    <form action="/musician/media/delete" method="post">
-                        <input type="hidden" th:value="${media.id}"/>
-                        <input class="modal-action waves-effect waves-light btn" type="submit" value="Yes"/>
-                        <button class="waves-effect waves-light btn modal-close" type="button" >No</button>
-                    </form>
+
         </div>
     </div>
 </div>
@@ -176,6 +172,20 @@
             <form th:action="'/company/gig/' +@{${gig.id}} + '/update'" method="post" th:object="${gig}" enctype="multipart/form-data">
                 <div class="row">
                     <div class="input-field col s12">
+                        <label for="title">Title</label>
+                        <input id="title" type="text" th:field="*{gigTitle}"/>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <label for="description">Description</label>
+                        <input id="description" type="text" th:field="*{gigDescription}"/>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
                         <label for="location">Street</label>
                         <input id="location" type="text" name="locationStreet" class="autocomplete"/>
                     </div>
@@ -211,13 +221,6 @@
                     <div class="input-field col s12">
                         <label for="type">Gig Type</label>
                         <input id="type" type="text"  th:field="*{gigType}"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="description">Description</label>
-                        <input id="description" type="text" th:field="*{gigDescription}"/>
-
                     </div>
                 </div>
                 <div class="row">

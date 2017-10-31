@@ -4,7 +4,7 @@
 <head th:include="includes :: indexHead"></head>
 <body class="blue-grey lighten-5">
 <div th:include="navbar :: navHome"></div>
-<main class="container">
+<main class="container" th:inline="text">
     <h1>Find gigs</h1>
     <div class="divider"></div>
     <div class="white" th:each="gig : ${gig}">
@@ -14,17 +14,17 @@
                     <img class="gigArt" th:src="${gig.gigArt}" alt=""/>
                 </div>
             <div class="col s9">
-                <h4 th:text="${gig.gigDescription}"></h4>
-                <h5 th:text="'When: ' + ${gig.gigStart}"></h5>
-                <h5 th:text="'Where: '+${gig.gigLocation}"></h5>
+                <h4 th:text="${gig.gigTitle}"></h4>
+                <h5>Start [[${#dates.format(gig.gigStart,'EEE, d MMM yyyy')}]]</h5>
+                <h5>End: [[${#dates.format(gig.gigEnd,'EEE, d MMM yyyy')}]]</h5>
                 <div class="row">
                     <div class="col s9">
                         <h5 th:text="'Type: '+${gig.gigType}"></h5>
 
                     </div>
                     <div class="col s3">
-                        <a class="btn" th:href="'/musician/gig/' + @{${gig.id}}">Apply</a>
-
+                        <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="btn" th:href="'/musician/gig/' + @{${gig.id}}">Apply</a>
+                        <a sec:authorize="hasRole('ROLE_COMPANY')" class="btn" th:href="'/company/gig/' + @{${gig.id}}">More Info</a>
                     </div>
 
                 </div>

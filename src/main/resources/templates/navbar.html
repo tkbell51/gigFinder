@@ -30,8 +30,12 @@
 
             <a href="/admin" sec:authorize="hasRole('ROLE_ADMIN')" class="brand-logo">gigFinder</a>
             <ul class="right hide-on-med-and-down">
-                <li><a th:href="@{/home/find-gigs}">Find a Gig</a></li>
-                <li><a th:href="@{/home/find-bands}">Find a Band</a></li>
+                <li><a sec:authorize="hasRole('ROLE_COMPANY')" th:href="@{/company/find-gigs}">Find a Gig</a></li>
+                <li><a sec:authorize="hasRole('ROLE_MUSICIAN')" th:href="@{/musician/find-gigs}">Find a Gig</a></li>
+
+                <li><a sec:authorize="hasRole('ROLE_COMPANY')" th:href="@{/company/find-bands}">Find a Band</a></li>
+                <li><a sec:authorize="hasRole('ROLE_MUSICIAN')" th:href="@{/musician/find-bands}">Find a Band</a></li>
+
                 <li sec:authorize="!isAuthenticated()"><a  class="modal-trigger orange accent-4" href="#signupModal">Sign In</a></li>
                 <li sec:authorize="isAuthenticated()"><a class="dropdown-button" href="#!" data-activates="dropdown1" data-constrainwidth="false" th:inline="text">@[[${user.username}]]<i class="material-icons right">arrow_drop_down</i></a></li>
             </ul>

@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -22,7 +23,7 @@ public class User implements UserDetails{
 
 
 
-    private Date signup_date;
+    private LocalDate signup_date;
 
     private boolean active;
 
@@ -87,14 +88,13 @@ public class User implements UserDetails{
         this.active = active;
     }
 
-    public Date getSignup_date() {
+    public LocalDate getSignup_date() {
         return signup_date;
     }
 
-    public void setSignup_date(Date signup_date) {
+    public void setSignup_date(LocalDate signup_date) {
         this.signup_date = signup_date;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

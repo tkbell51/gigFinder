@@ -46,22 +46,25 @@
 
         </span>
                 </h4>
-                <div th:each="gig : ${gig}">
-                    <div th:if="${gig == null}">
-                        <h1>No Gigs</h1>
-                    </div>
-                    <div class="col s12 m6">
-                        <div class="card small blue darken-2">
-                            <div class="card-content white-text">
-                                <span class="card-title">[[${gig.gigDescription}]]</span>
-                                <p>Time: [[${gig.gigStart}]] - [[${gig.gigEnd}]]</p>
+                <div th:if="${companyProfile.getGigs().isEmpty()}">
+                    <h5>You haven't created any Gigs</h5>
+                </div>
+
+                <div th:each="gig : ${gig}" >
+
+                    <div class="col s12 m8">
+                        <div class="card small darken-2">
+                            <div class="card-content">
+
+                                <span class="card-title">[[${gig.gigTitle}]]</span>
+                                <p>Time: [[${#dates.format(gig.gigStart,'EEE, d MMM yyyy')}]] - [[${#dates.format(gig.gigEnd,'EEE, d MMM yyyy')}]]</p>
                                 <p >[[${gig.gigType}]]</p>
                                 <p >[[${gig.gigLocation}]]</p>
 
                             </div>
                             <div class="card-action center-align">
                                 <div class="row ">
-                                    <a class="waves-effect waves-light btn " th:href="'/company/gig/' + @{${gig.id}}">Musicians Applied [[${gig.getMusicianApplyGigs().size()}]]</a>
+                                    <a class="waves-effect waves-light btn" th:href="'/company/gig/' + @{${gig.id}}">Musicians Applied <span class="badge">[[${gig.getMusicianApplyGigs().size()}]]</span></a>
                                 </div>
                             </div>
                         </div>
@@ -75,6 +78,9 @@
                     <a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Musicians" href="/company/search/"><i class="material-icons">search</i></a>
                 </span>
                 </h4>
+                <div th:if="${musician.isEmpty()}">
+                    <h5>No Musicians are in your area</h5>
+                </div>
                 <div  th:each="musician : ${musician}">
                     <div class="col s12 m6">
                         <div class="card medium">

@@ -18,8 +18,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.security.Principal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class CompanyController {
@@ -42,6 +51,9 @@ public class CompanyController {
     @Autowired
     MusicianApplyGigRepository applyRepo;
 
+    @Autowired
+    MediaContentRepository mediaRepo;
+
 
 
 
@@ -52,18 +64,20 @@ public class CompanyController {
         model.addAttribute("user", user);
         CompanyProfile companyProfile = compRepo.findByUser(user);
         model.addAttribute("companyProfile", companyProfile);
+
+
         Iterable<Gig> myGigs = gigRepo.findByCompanyProfile(companyProfile);
-            model.addAttribute("gig", myGigs);
+        model.addAttribute("gig", myGigs);
+
+        for(Gig eachGig : myGigs){
+            List<MusicianApplyGig> applyGig = applyRepo.findAllByGig(eachGig);
+            model.addAttribute("applied", applyGig);
+        }
+
 
         Iterable<MusicianProfile>localMusicians = musicianRepo.findMusicianProfileByLocationContainingIgnoreCase(companyProfile.getCompanyLocation());
         model.addAttribute("musician", localMusicians);
 
-        for(Gig eachGig : myGigs){
-
-            List<MusicianApplyGig> applyGig = applyRepo.findAllByGig(eachGig);
-            model.addAttribute("applied", applyGig);
-
-        }
 
         return "companyProfile";
     }
@@ -113,11 +127,14 @@ public class CompanyController {
                              @RequestParam("locationState") String state,
                              @RequestParam("locationZip") String zip,
                              @RequestParam("gigType")String type,
-                             @RequestParam("gigStart") String start,
-                             @RequestParam("gigEnd")String end,
+                             @RequestParam("gigStart") Date start,
+                             @RequestParam("gigEnd")Date end,
                              @RequestParam("gigArt")String gigArt,
+                             @RequestParam("gigTitle")String gigTitle,
                              @RequestParam("gigDescription") String description,
                              Model model, Principal principal){
+
+
 
         String location = street + ", " + city + ", " + state + ", " + zip;
         String username = principal.getName();
@@ -125,15 +142,23 @@ public class CompanyController {
         model.addAttribute("user", user);
         CompanyProfile compUser = compRepo.findByUser(user);
         model.addAttribute("compUser", compUser);
+
         Gig newGig = new Gig();
+        newGig.setGigTitle(gigTitle);
         newGig.setGigLocation(location);
         newGig.setGigDescription(description);
         newGig.setGigType(type);
-        newGig.setGigStart(start);
+
+
+
+
         newGig.setGigEnd(end);
+        newGig.setGigStart(start);
         newGig.setCompanyProfile(compUser);
         newGig.setGigArt(gigArt);
-        gigRepo.save(newGig);
+            gigRepo.save(newGig);
+
+
         return "redirect:/company/my-profile";
     }
     @RequestMapping(value = "/company/gig/{gigId}", method = RequestMethod.GET)
@@ -174,9 +199,10 @@ public class CompanyController {
                             @RequestParam("locationState") String state,
                             @RequestParam("locationZip") String zip,
                             @RequestParam("gigType")String type,
-                            @RequestParam("gigStart") String start,
-                            @RequestParam("gigEnd")String end,
+                            @RequestParam("gigStart") Date start,
+                            @RequestParam("gigEnd")Date end,
                             @RequestParam("gigArt")String gigArt,
+                            @RequestParam("gigTitle")String gigTitle,
                             @RequestParam("gigDescription") String description,
                             Model model, Principal principal){
         String location = street + ", " + city + ", " + state + ", " + zip;
@@ -187,10 +213,13 @@ public class CompanyController {
         model.addAttribute("compUser", compUser);
         Gig newGig = gigRepo.findById(id);
         newGig.setGigLocation(location);
+        newGig.setGigTitle(gigTitle);
         newGig.setGigDescription(description);
         newGig.setGigType(type);
-        newGig.setGigStart(start);
+//
+
         newGig.setGigEnd(end);
+        newGig.setGigStart(start);
         newGig.setGigArt(gigArt);
         newGig.setCompanyProfile(compUser);
         gigRepo.save(newGig);
@@ -203,5 +232,48 @@ public class CompanyController {
         return "redirect:/company/my-profile";
     }
 
+    @RequestMapping(value = "/company/find-bands", method = RequestMethod.GET)
+    public String findBands(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userRepo.findByUsername(username);
+        model.addAttribute("user", user);
+        CompanyProfile companyProfile = compRepo.findByUser(user);
+        model.addAttribute("companyProfile", companyProfile);
+        Iterable<MusicianProfile> allmusicians = musicianRepo.findAll();
+        model.addAttribute("musicians", allmusicians);
+        return "findBands";
+    }
+
+    @RequestMapping(value = "/company/find-bands/{musicianId}", method = RequestMethod.GET)
+    public String musicianDetails(@PathVariable("musicianId")long id,
+                                  Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userRepo.findByUsername(username);
+        model.addAttribute("user", user);
+
+        CompanyProfile companyProfile = compRepo.findByUser(user);
+        model.addAttribute("companyProfile", companyProfile);
+
+        MusicianProfile musicianDetail = musicianRepo.findById(id);
+        model.addAttribute("musicianProfile", musicianDetail);
+
+        Iterable<MediaContent> media = mediaRepo.findByMusicianProfile(musicianDetail);
+        model.addAttribute("media", media);
+        return "musicianDetails";
+    }
+
+
+    @RequestMapping(value = "/company/find-gigs", method = RequestMethod.GET)
+    public String findGigs(Model model, Principal principal) {
+        String username = principal.getName();
+        User user = userRepo.findByUsername(username);
+        model.addAttribute("user", user);
+        CompanyProfile companyProfile = compRepo.findByUser(user);
+        model.addAttribute("companyProfile", companyProfile);
+
+        Iterable<Gig> allgigs = gigRepo.findAll();
+        model.addAttribute("gig", allgigs);
+        return "findGigs";
+    }
 
 }

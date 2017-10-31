@@ -22,7 +22,7 @@
         </div>
         <div class="col s3">
             <p  >
-                <a class="valign-wrapper" th:href="'mailto:'+@{${musicianProfile.musicianEmail}}">
+                <a class="email valign-wrapper tooltipped white-text" data-position="top" data-delay="50" data-tooltip="Email Me" th:href="'mailto:'+@{${musicianProfile.musicianEmail}}">
                     <i class="orange-text text-accent-4 material-icons">email</i>
                     [[${musicianProfile.musicianEmail}]]
                 </a>

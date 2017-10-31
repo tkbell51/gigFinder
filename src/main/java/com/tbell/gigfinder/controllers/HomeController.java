@@ -59,57 +59,6 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping(value = "/home/find-bands", method = RequestMethod.GET)
-    public String findBands(Model model, HttpServletRequest request) {
-        model.addAttribute("user", new User());
-        try {
-
-            Object message = request.getSession().getAttribute("error");
-            model.addAttribute("error", message);
-            request.getSession().removeAttribute("error");
-        } catch (Exception ex) {
-
-        }
-    Iterable<MusicianProfile> allmusicians = musicianRepo.findAll();
-    model.addAttribute("musicians", allmusicians);
-    return "findBands";
-    }
-
-    @RequestMapping(value = "/home/find-bands/{musicianId}", method = RequestMethod.GET)
-    public String musicianDetails(@PathVariable("musicianId")long id,
-                                  Model model, HttpServletRequest request) {
-        model.addAttribute("user", new User());
-        try {
-
-            Object message = request.getSession().getAttribute("error");
-            model.addAttribute("error", message);
-            request.getSession().removeAttribute("error");
-        } catch (Exception ex) {
-
-        }
-        MusicianProfile musicianProfile = musicianRepo.findById(id);
-        model.addAttribute("musicianProfile", musicianProfile);
-
-        Iterable<MediaContent> mySongs = mediaRepo.findByMusicianProfile(musicianProfile);
-        model.addAttribute("media", mySongs);
-        return "musicianDetails";
-    }
-
-    @RequestMapping(value = "/home/find-gigs", method = RequestMethod.GET)
-    public String findGigs(Model model, HttpServletRequest request) {
-        model.addAttribute("user", new User());
-        try {
-
-            Object message = request.getSession().getAttribute("error");
-            model.addAttribute("error", message);
-            request.getSession().removeAttribute("error");
-        } catch (Exception ex) {
-
-        }
-        Iterable<Gig> allgigs = gigRepo.findAll();
-        model.addAttribute("gig", allgigs);
-        return "findGigs";
-    }
 
 
 }

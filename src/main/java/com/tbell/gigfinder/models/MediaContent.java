@@ -2,6 +2,7 @@ package com.tbell.gigfinder.models;
 
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -14,7 +15,7 @@ public class MediaContent {
 
     @Column(name = "media_url")
     private String media_url;
-    private Date addedDate;
+    private LocalDate addedDate;
     private String title;
 
     @ManyToOne
@@ -23,7 +24,7 @@ public class MediaContent {
 
     public MediaContent() {}
 
-    public MediaContent(String media_url, Date addedDate, String title) {
+    public MediaContent(String media_url, LocalDate addedDate, String title) {
         this.media_url = media_url;
         this.addedDate = addedDate;
         this.title = title;
@@ -45,11 +46,11 @@ public class MediaContent {
         this.media_url = media_url;
     }
 
-    public Date getAddedDate() {
+    public LocalDate getAddedDate() {
         return addedDate;
     }
 
-    public void setAddedDate(Date addedDate) {
+    public void setAddedDate(LocalDate addedDate) {
         this.addedDate = addedDate;
     }
 
