@@ -184,4 +184,11 @@ public class MusicianProfile {
     public void setMusicianAppyGigs(Set<MusicianApplyGig> musicianAppyGigs) {
         this.musicianAppyGigs = musicianAppyGigs;
     }
+
+    @PrePersist
+    void preImage(){
+        if(this.profPicImage == null){
+            this.profPicImage = "/assets/images/empty-profile-pic.jpg";
+        }
+    }
 }

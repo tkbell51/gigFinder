@@ -17,13 +17,15 @@ public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String username;
+
     @Column(name = "user_password")
     private String password;
 
 
 
-    private LocalDate signup_date;
+    private Date signup_date;
 
     private boolean active;
 
@@ -88,11 +90,11 @@ public class User implements UserDetails{
         this.active = active;
     }
 
-    public LocalDate getSignup_date() {
+    public Date getSignup_date() {
         return signup_date;
     }
 
-    public void setSignup_date(LocalDate signup_date) {
+    public void setSignup_date(Date signup_date) {
         this.signup_date = signup_date;
     }
 

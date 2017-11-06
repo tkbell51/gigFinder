@@ -136,4 +136,11 @@ public class Gig {
     public void setMusicianApplyGigs(Set<MusicianApplyGig> musicianApplyGigs) {
         this.musicianApplyGigs = musicianApplyGigs;
     }
+
+    @PrePersist
+    void preGigImage(){
+        if(this.gigArt == null){
+            this.gigArt = "/assets/images/no-image.gif";
+        }
+    }
 }

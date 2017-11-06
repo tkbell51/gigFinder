@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
 
 @Controller
 public class LoginController {
@@ -77,7 +75,7 @@ public class LoginController {
         user.setUsername(username);
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         user.setPassword(encryptedPassword);
-        user.setSignup_date(LocalDate.now());
+        user.setSignup_date(new Date(System.currentTimeMillis()));
         user.setActive(true);
         Role companyRole = roleRepo.findByName("ROLE_COMPANY");
         user.setRole(companyRole);
@@ -94,8 +92,10 @@ public class LoginController {
         companyProfile.setEmail(email);
         companyProfile.setCompanyLocation(location);
         compRepo.save(companyProfile);
+
         model.addAttribute("message", "Thank you for joining! Please login");
-        return "login";
+
+        return "redirect:/login";
     }
 
 
@@ -129,7 +129,8 @@ public class LoginController {
         user.setUsername(username);
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         user.setPassword(encryptedPassword);
-        user.setSignup_date(LocalDate.now());
+
+        user.setSignup_date(new Date(System.currentTimeMillis()));
         user.setActive(true);
         Role musicianRole = roleRepo.findByName("ROLE_MUSICIAN");
         user.setRole(musicianRole);
@@ -144,7 +145,8 @@ public class LoginController {
 
         musicRepo.save(musicianProfile);
         model.addAttribute("message", "Thank you for joining! Please login");
-        return "login";
+        return "redirect:/login";
+
 
     }
 

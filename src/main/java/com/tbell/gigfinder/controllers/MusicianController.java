@@ -108,7 +108,7 @@ public class MusicianController {
         model.addAttribute("user", user);
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
-        MediaContent mediaContent = new MediaContent(mediaURL, LocalDate.now(), title);
+        MediaContent mediaContent = new MediaContent(mediaURL, new Date(System.currentTimeMillis()), title);
         mediaContent.setMusicianProfile(musicianProfile);
         mediaRepo.save(mediaContent);
         return "redirect:/musician/my-profile";
@@ -126,7 +126,7 @@ public class MusicianController {
         MediaContent mediaContent = mediaRepo.findById(id);
         mediaContent.setMedia_url(mediaURL);
         mediaContent.setTitle(title);
-        mediaContent.setAddedDate(LocalDate.now());
+        mediaContent.setAddedDate(new Date(System.currentTimeMillis()));
         mediaRepo.save(mediaContent);
         return "redirect:/musician/my-profile";
     }
@@ -154,10 +154,10 @@ public class MusicianController {
                 .decoder(new GsonDecoder())
                 .target(GeoCodingInterface.class, "https://maps.googleapis.com");
         GeoCodingResponse response = geocodingInterface.geoCodingResponse(gig.getGigLocation(),
-                clientKey.getAPI_KEY());
+                clientKey.getSTATIC_API_KEY());
         double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
         double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
-        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=500x1100&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getAPI_KEY();
+        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=500x1100&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getSTATIC_API_KEY();
         model.addAttribute("url", oneMarkerUrl);
         return "gigDetails";
     }

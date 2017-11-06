@@ -1,21 +1,61 @@
-.nav-wrapper{
+/* label color */
+.input-field label {
+    color: #FD6D22;
+}
+
+/* label focus color */
+.input-field input[type=text]:focus + label, input[type=password]:focus + label {
+    color: #FD6D22 !important;
+}
+
+/* label underline focus color */
+.input-field input[type=text]:focus, input[type=password]:focus {
+    border-bottom: 1px solid #FD6D22 !important;
+    box-shadow: 0 1px 0 0 #FD6D22 !important;
+}
+
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #FD6D22;
+}
+
+.dropdown-content li > span {
+    color: #FD6D22 !important
+}
+
+.input-field.col .dropdown-content [type="checkbox"] + label {
+    top: -10px;
+}
+
+.input-field.col .dropdown-content [type="checkbox"]:checked + label:before {
+    border-right: 2px solid #FD6D22;
+    border-bottom: 2px solid #FD6D22;
+}
+
+.nav-wrapper {
     margin: auto 5vw;
 }
-#dropdown1 li{
+
+#dropdown1 li {
     width: 140px;
 
 }
-#dropdown1{
+
+#dropdown1 {
     margin-top: 64px;
     margin-left: -22px;
 }
+
 .tabs .indicator {
     text-decoration: none;
-    background-color: red !important; }
-#logo{
+    background-color: red !important;
+}
+
+#logo {
     font-size: 6.8em;
 }
-.top{
+
+.top {
 
     background-image: url("/assets/images/microphone_wallpaper copy.jpg");
     background-repeat: no-repeat;
@@ -23,21 +63,24 @@
     height: 100vh;
 }
 
-.brand-logo{
+.brand-logo {
     font-family: 'Great Vibes', cursive;
     margin-left: 15px;
 }
-.loginLogo{
+
+.loginLogo {
     font-family: 'Great Vibes', cursive;
 
 }
-.downArrow{
+
+.downArrow {
     position: absolute;
     font-size: 2em;
     left: 50%;
     bottom: 0px;
 }
-#choiceSection{
+
+#choiceSection {
     background: #2B3989; /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(#200102, #2B3989); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(#200102, #2B3989); /* For Opera 11.1 to 12.0 */
@@ -46,77 +89,91 @@
     margin: 0;
     height: 100vh;
 }
-.choice{
+
+.choice {
     padding: 20px 0;
     margin: 0px 5vw;
 
 }
-.choice .row{
+
+.choice .row {
     margin-bottom: 0;
 }
-.login{
+
+.login {
     background: url("/assets/images/pexelsJazz.jpeg");
-    box-shadow:inset 0 0 0 2000px rgba(21, 60, 101, 0.3);
+    box-shadow: inset 0 0 0 2000px rgba(21, 60, 101, 0.3);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     height: 100vh;
 }
-.loginCard{
+
+.loginCard {
     margin-top: 70px;
     width: 350px;
 }
 
-.loginForm{
+.loginForm {
 
-background: rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.5);
 
 }
-.top .card{
+
+.top .card {
     border: 1px solid white;
 }
-.sect2 .material-icons, .sect3 .material-icons{
+
+.sect2 .material-icons, .sect3 .material-icons {
     font-size: 5em;
     padding: 10px;
     border: 1px solid #FD6D22;
     border-radius: 50%;
 }
-.musicianBanner{
+
+.musicianBanner {
     background: url("/assets/images/pexelsDJ.jpeg");
-    box-shadow:inset 0 0 0 2000px rgba(44, 152, 240, 0.3);
+    box-shadow: inset 0 0 0 2000px rgba(44, 152, 240, 0.3);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     height: 50vh;
-}
-.companyBanner{
-    background: url("/assets/images/weddingHarp.jpg");
-    box-shadow:inset 0 0 0 2000px rgba(44, 152, 240, 0.3);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    height: 50vh;
-}
-.bannerTitle{
-    color:#FFF;
 }
 
-.bannerTitle:hover{
-    color:#FD6D22;
+.companyBanner {
+    background: url("/assets/images/weddingHarp.jpg");
+    box-shadow: inset 0 0 0 2000px rgba(44, 152, 240, 0.3);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 50vh;
 }
-.gigArt{
-   height: 200px;
+
+.bannerTitle {
+    color: #FFF;
 }
-.localGigs{
+
+.bannerTitle:hover {
+    color: #FD6D22;
+}
+
+.gigArt {
+    height: 200px;
+}
+
+.localGigs {
     height: 75px;
 }
-.musicProfile{
+
+.musicProfile {
     margin: 0px 35px;
 }
-.name{
+
+.name {
     text-transform: uppercase;
 }
-.coverBanner{
+
+.coverBanner {
     color: rgba(253, 109, 34, 0.75);
     font-size: 1em;
     margin-left: 20px;
@@ -129,10 +186,12 @@ background: rgba(255,255,255,0.5);
     text-align: center;
     border: 1px solid lightgray;
 }
-.coverBanner:hover{
+
+.coverBanner:hover {
     color: #FD6D22;
 }
-.picParentDetail{
+
+.picParentDetail {
     position: absolute;
     width: 250px;
     border: 2px solid lightgray;
@@ -141,22 +200,26 @@ background: rgba(255,255,255,0.5);
     left: 50px;
     height: 250px;
 }
-#picParent{
+
+#picParent {
     position: absolute;
     width: 250px;
     border: 2px solid lightgray;
     border-radius: 50%;
     top: 200px;
     left: 50px;
+    height: 250px;
 }
-.profPic{
+
+.profPic {
     opacity: 1;
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     transition: .5s ease;
     backface-visibility: hidden;
 }
+
 .middle {
     transition: .5s ease;
     opacity: 0;
@@ -166,6 +229,7 @@ background: rgba(255,255,255,0.5);
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%)
 }
+
 #picParent:hover .profPic {
     opacity: 0.8;
 }
@@ -173,7 +237,8 @@ background: rgba(255,255,255,0.5);
 #picParent:hover .middle {
     opacity: 1;
 }
-#hover-content{
+
+#hover-content {
     background-color: rgba(48, 48, 48, 0.91);
     color: white;
     font-size: 16px;
@@ -182,24 +247,27 @@ background: rgba(255,255,255,0.5);
     text-align: center;
     margin-left: -35px;
 }
-.musicInfo{
+
+.musicInfo {
     position: relative;
     top: 80px;
 
 }
-.musicRow{
+
+.musicRow {
     font-size: 1.2em;
 }
 
-.profileBanner{
+.profileBanner {
     height: 300px;
 
 }
 
-.profileDetails{
+.profileDetails {
     margin: auto 5vw;
 }
-.bannerBio{
+
+.bannerBio {
     position: absolute;
     background-color: rgba(48, 48, 48, 0.91);
     border-radius: 5px;
@@ -211,12 +279,15 @@ background: rgba(255,255,255,0.5);
     margin-right: auto;
     max-width: 30vw;
 }
-.mediaTitle{
+
+.mediaTitle {
     font-size: 1.3em;
 }
-.gigCard{
+
+.gigCard {
     width: 90%;
 }
+
 body {
     display: flex;
     min-height: 100vh;
@@ -226,37 +297,108 @@ body {
 main {
     flex: 1 0 auto;
 }
-.gigDetails{
+
+.gigDetails {
     margin-top: 5px;
     margin-bottom: 0;
 }
-.map{
-    position: fixed;
-}
-i.right{
+
+
+i.right {
     margin-left: 0px;
 }
-.cardGigDetails{
+
+.cardGigDetails {
     margin: auto;
 }
-span.badge{
+
+span.badge {
     width: 25px;
-    padding: 0px 6px;
-    margin-left: 14px;
+    margin-left: 5px;
     text-align: center;
     font-size: 1.3em;
-    line-height: 22px;
     height: 25px;
-    color: #757575;
+    color: #FD6D22;
     float: right;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background: white;
+    background: #FFF;
     border-radius: 50%;
     line-height: 25px;
-    margin-top: 4px;
+    min-width: 0px;
 }
 
-.media.waves-effect{
+.media.waves-effect {
     padding: 0;
+}
+
+img.responsive-img {
+    height: 100%;
+}
+.musicianCards{
+    margin: 5px 0px 5px 30px;
+    height: 120px;
+}
+.musicianCards p{
+    margin: 0px;
+    font-size: 1.2em;
+}
+.cardImage {
+    position: relative;
+    min-height: 100%;
+    width: 100px;
+    right: 45px;
+    top: 3px;
+
+}
+.musicianInfo{
+    position: relative;
+    right: 25px;
+}
+#signupModal {
+    width: 350px;
+
+}
+
+.loginBtn {
+    margin-bottom: 20px;
+}
+.companyProfileGig .btn{
+    padding: 0px 1rem;
+}
+.companyProfileGig{
+    min-width: 80%;
+}
+.gigApplied{
+    border: 1px solid #FD6D22;
+    border-radius: 5px;
+    padding: 5px;
+}
+.dateBox{
+    position: relative;
+    left: 20px;
+    top: 20px;
+    width: 80px;
+    height: 80px;
+    padding-top: 10px;
+    border-radius: 5px;
+}
+.gigCard{
+    margin: 6px;
+    width: 100%;
+}
+.gigCard p, .dateBox h4{
+    margin: 0px;
+}
+.gigImage{
+    height: 200px;
+}
+.gigInfo{
+    padding: 15px;
+}
+.gigCard .divider{
+    margin: 5px 0px;
+}
+.gigCard .btn{
+    padding: 0px 1rem;
 }

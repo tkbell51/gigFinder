@@ -116,49 +116,50 @@
     <div sec:authorize="hasRole('ROLE_COMPANY')">
         <div class="row">
             <div  th:each="musician : ${musician}">
-                <div class="col s12 m4">
-                    <div class="card medium">
-                        <div class="card-image">
-                            <img th:src="@{${musician.profPicImage}}"/>
-                        </div>
-                        <div class="card-content center-align">
-                            <span class="card-title" th:text="${musician.firstName} +' '+ ${musician.lastName}"></span>
-                            <p class="circle" th:text="${musician.musicianInstruments}"></p>
-                        </div>
-                        <div class="card-action center-align">
-                            <a th:href="'/home/find-bands/' + @{${musician.id}}" class="btn  waves-effect waves-light">Go To Profile</a>
+                <div class="col s12 m6">
+                    <div class="musicianCards ">
+                        <a th:href="'/company/find-bands/' + @{${musician.id}}" >
 
-                        </div>
+                            <div class="  white hoverable z-depth-2">
+
+                                <div class="valign-wrapper">
+                                    <div class="left ">
+                                        <img th:src="@{${musician.profPicImage}} " class="cardImage circle"/>
+                                    </div>
+
+                                    <div class="musicianInfo black-text">
+                                        <p ><b>[[${musician.firstName}]] [[${musician.lastName}]]</b></p>
+                                        <p>[[${musician.musicianInstruments}]]</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </a>
                     </div>
+
                 </div>
             </div>
         </div>
-
     </div>
+
+
     <div sec:authorize="hasRole('ROLE_MUSICIAN')">
         <div class="row">
             <div th:each="gig : ${gig}" class="col s6">
-                <div class="card small">
-                    <div class="card-content">
-                        <span class="card-title">[[${gig.gigTitle}]]</span>
+                <div class="col s12 m6">
 
-                        <p class="valign-wrapper">
-                            <i class="orange-text text-accent-4 material-icons">event</i>
-                            Starts [[${#dates.format(gig.gigStart,'EEE, d MMM yyyy')}]] -  Ends [[${#dates.format(gig.gigEnd,'EEE, d MMM yyyy')}]]
-                        </p>
-                        <p class="valign-wrapper">
-                            <i class="orange-text text-accent-4 material-icons">event_note</i>
-                            [[${gig.gigType}]]
-                        </p>
-                        <p class="valign-wrapper">
-                            <i class="orange-text text-accent-4 material-icons">location_on</i>
-                            [[${gig.gigLocation}]]
-                        </p>
-
-                    </div>
-                    <div class="card-action">
-                        <div class="row">
-                            <a class="btn" th:href="'/musician/gig/' + @{${gig.id}}">More Info</a>
+                    <div class="gigCard z-depth-2">
+                        <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
+                            <div class="dateBox white orange-text text-accent-4 center-align">
+                                <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
+                                <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                            </div>
+                        </div>
+                        <div class="gigInfo white center-align">
+                            <p><b>[[${gig.gigTitle}]]</b></p>
+                            <p >[[${gig.gigLocation}]]</p>
+                            <div class="divider"></div>
+                            <a class=" waves-effect waves-light orange-text text-accent-4 hoverable gigApplied " th:href="'/musician/gig/' + @{${gig.id}}">Details</a>
 
                         </div>
                     </div>

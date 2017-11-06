@@ -7,35 +7,32 @@
 <main class="container" th:inline="text">
     <h1>Find gigs</h1>
     <div class="divider"></div>
-    <div class="white" th:each="gig : ${gig}">
-        <div class="section ">
-            <div class="row">
-                <div class="col s3">
-                    <img class="gigArt" th:src="${gig.gigArt}" alt=""/>
-                </div>
-            <div class="col s9">
-                <h4 th:text="${gig.gigTitle}"></h4>
-                <h5>Start [[${#dates.format(gig.gigStart,'EEE, d MMM yyyy')}]]</h5>
-                <h5>End: [[${#dates.format(gig.gigEnd,'EEE, d MMM yyyy')}]]</h5>
-                <div class="row">
-                    <div class="col s9">
-                        <h5 th:text="'Type: '+${gig.gigType}"></h5>
+  <div class="row">
+      <div  th:each="gig : ${gig}">
+          <div class="col s12 m6 l4">
 
-                    </div>
-                    <div class="col s3">
-                        <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="btn" th:href="'/musician/gig/' + @{${gig.id}}">Apply</a>
-                        <a sec:authorize="hasRole('ROLE_COMPANY')" class="btn" th:href="'/company/gig/' + @{${gig.id}}">More Info</a>
-                    </div>
-
-                </div>
-                </div>
-
-            </div>
-
-
-        </div>
+              <div class="gigCard z-depth-2">
+                  <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
+                      <div class="dateBox white orange-text text-accent-4 center-align">
+                          <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
+                          <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                      </div>
+                  </div>
+                  <div class="gigInfo white center-align">
+                      <p><b>[[${gig.gigTitle}]]</b></p>
+                      <p >[[${gig.gigLocation}]]</p>
+                      <p>[[${gig.gigType}]]</p>
+                      <div class="divider"></div>
+                      <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="btn" th:href="'/musician/gig/' + @{${gig.id}}">Apply</a>
+                      <a sec:authorize="hasRole('ROLE_COMPANY')" class="btn" th:href="'/company/gig/' + @{${gig.id}}">More Info</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
         <div class="divider"></div>
-    </div>
+
+
 </main>
 <div th:include="footer :: footer"></div>
 <div th:include="modals :: signupModal"></div>

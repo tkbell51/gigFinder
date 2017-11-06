@@ -140,4 +140,11 @@ public class CompanyProfile {
     public void setCompanyLocation(String companyLocation) {
         this.companyLocation = companyLocation;
     }
+
+    @PrePersist
+    void preImage(){
+        if(this.companyProfPic == null){
+            this.companyProfPic = "/assets/images/empty-profile-pic.jpg";
+        }
+    }
 }

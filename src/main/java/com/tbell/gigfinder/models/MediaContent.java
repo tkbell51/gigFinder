@@ -15,7 +15,7 @@ public class MediaContent {
 
     @Column(name = "media_url")
     private String media_url;
-    private LocalDate addedDate;
+    private Date addedDate;
     private String title;
 
     @ManyToOne
@@ -24,7 +24,7 @@ public class MediaContent {
 
     public MediaContent() {}
 
-    public MediaContent(String media_url, LocalDate addedDate, String title) {
+    public MediaContent(String media_url, Date addedDate, String title) {
         this.media_url = media_url;
         this.addedDate = addedDate;
         this.title = title;
@@ -46,11 +46,11 @@ public class MediaContent {
         this.media_url = media_url;
     }
 
-    public LocalDate getAddedDate() {
+    public Date getAddedDate() {
         return addedDate;
     }
 
-    public void setAddedDate(LocalDate addedDate) {
+    public void setAddedDate(Date addedDate) {
         this.addedDate = addedDate;
     }
 

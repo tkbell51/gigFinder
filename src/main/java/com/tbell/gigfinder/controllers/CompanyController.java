@@ -184,10 +184,10 @@ public class CompanyController {
                 .decoder(new GsonDecoder())
                 .target(GeoCodingInterface.class, "https://maps.googleapis.com");
         GeoCodingResponse response = geocodingInterface.geoCodingResponse(gig.getGigLocation(),
-                clientKey.getAPI_KEY());
+                clientKey.getSTATIC_API_KEY());
         double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
         double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
-        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=500x1100&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getAPI_KEY();
+        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=500x1100&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getSTATIC_API_KEY();
         model.addAttribute("url", oneMarkerUrl);
         return "gigDetails";
     }
@@ -216,8 +216,6 @@ public class CompanyController {
         newGig.setGigTitle(gigTitle);
         newGig.setGigDescription(description);
         newGig.setGigType(type);
-//
-
         newGig.setGigEnd(end);
         newGig.setGigStart(start);
         newGig.setGigArt(gigArt);
