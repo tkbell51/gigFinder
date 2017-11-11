@@ -2,15 +2,11 @@ package com.tbell.gigfinder.models;
 
 
 
-import org.springframework.data.geo.Point;
-import org.springframework.data.jpa.repository.Query;
+
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Calendar;
+import java.time.LocalTime;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,8 +30,14 @@ public class Gig {
     @Column(name = "gig_start")
     private Date gigStart;
 
+    @Column(name = "gig_time_start")
+    private String timeStart;
+
     @Column(name = "gig_end")
     private Date gigEnd;
+
+    @Column(name = "gig_time_end")
+    private String timeEnd;
 
     @Column(name = "gig_description")
     private String gigDescription;
@@ -127,7 +129,21 @@ public class Gig {
         this.companyProfile = companyProfile;
     }
 
+    public String getTimeStart() {
+        return timeStart;
+    }
 
+    public void setTimeStart(String timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public String getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(String timeEnd) {
+        this.timeEnd = timeEnd;
+    }
 
     public Set<MusicianApplyGig> getMusicianApplyGigs() {
         return musicianApplyGigs;

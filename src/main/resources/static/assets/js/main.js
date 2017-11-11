@@ -1,5 +1,5 @@
 (function($){
     "use strict";
 
-    $(".btn, .btn-floating").addClass("orange accent-4");
+    $(".btn, .btn-floating, .btn-large").addClass("orange accent-4");
 }(jQuery));

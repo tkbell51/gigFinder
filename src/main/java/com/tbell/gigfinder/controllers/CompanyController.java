@@ -10,6 +10,7 @@ import com.tbell.gigfinder.enums.State;
 import com.tbell.gigfinder.models.*;
 import feign.Feign;
 import feign.gson.GsonDecoder;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +19,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.security.Principal;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Arrays;
@@ -113,6 +116,9 @@ public class CompanyController {
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
+        CompanyProfile companyProfile = compRepo.findByUser(user);
+        model.addAttribute("companyProfile", companyProfile);
+
         model.addAttribute("gig", new Gig());
         List<State> stateEnums = Arrays.asList(State.values());
         model.addAttribute("states", stateEnums);
@@ -128,12 +134,13 @@ public class CompanyController {
                              @RequestParam("locationZip") String zip,
                              @RequestParam("gigType")String type,
                              @RequestParam("gigStart") Date start,
+                             @RequestParam("timeStart") String timeStart,
                              @RequestParam("gigEnd")Date end,
+                             @RequestParam("timeEnd") String timeEnd,
                              @RequestParam("gigArt")String gigArt,
                              @RequestParam("gigTitle")String gigTitle,
                              @RequestParam("gigDescription") String description,
                              Model model, Principal principal){
-
 
 
         String location = street + ", " + city + ", " + state + ", " + zip;
@@ -142,18 +149,15 @@ public class CompanyController {
         model.addAttribute("user", user);
         CompanyProfile compUser = compRepo.findByUser(user);
         model.addAttribute("compUser", compUser);
-
         Gig newGig = new Gig();
         newGig.setGigTitle(gigTitle);
         newGig.setGigLocation(location);
         newGig.setGigDescription(description);
         newGig.setGigType(type);
-
-
-
-
-        newGig.setGigEnd(end);
         newGig.setGigStart(start);
+        newGig.setTimeStart(timeStart);
+        newGig.setGigEnd(end);
+        newGig.setTimeEnd(timeEnd);
         newGig.setCompanyProfile(compUser);
         newGig.setGigArt(gigArt);
             gigRepo.save(newGig);
@@ -167,6 +171,8 @@ public class CompanyController {
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
+        CompanyProfile companyProfile = compRepo.findByUser(user);
+        model.addAttribute("companyProfile", companyProfile);
         Gig gig = gigRepo.findOne(id);
         model.addAttribute("gig", gig);
 
@@ -187,7 +193,7 @@ public class CompanyController {
                 clientKey.getSTATIC_API_KEY());
         double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
         double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
-        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=500x1100&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getSTATIC_API_KEY();
+        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=400x500&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getSTATIC_API_KEY();
         model.addAttribute("url", oneMarkerUrl);
         return "gigDetails";
     }
@@ -200,11 +206,14 @@ public class CompanyController {
                             @RequestParam("locationZip") String zip,
                             @RequestParam("gigType")String type,
                             @RequestParam("gigStart") Date start,
+                            @RequestParam("timeStart") String timeStart,
                             @RequestParam("gigEnd")Date end,
+                            @RequestParam("timeEnd") String timeEnd,
                             @RequestParam("gigArt")String gigArt,
                             @RequestParam("gigTitle")String gigTitle,
                             @RequestParam("gigDescription") String description,
                             Model model, Principal principal){
+
         String location = street + ", " + city + ", " + state + ", " + zip;
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
@@ -217,7 +226,9 @@ public class CompanyController {
         newGig.setGigDescription(description);
         newGig.setGigType(type);
         newGig.setGigEnd(end);
+        newGig.setTimeEnd(timeEnd);
         newGig.setGigStart(start);
+        newGig.setTimeStart(timeStart);
         newGig.setGigArt(gigArt);
         newGig.setCompanyProfile(compUser);
         gigRepo.save(newGig);

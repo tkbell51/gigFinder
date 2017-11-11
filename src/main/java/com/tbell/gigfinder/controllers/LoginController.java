@@ -72,7 +72,8 @@ public class LoginController {
                                        @RequestParam("companyCity")String city,
                                        Model model){
         User user = new User();
-        user.setUsername(username);
+        String userString = "@"+ username;
+        user.setUsername(userString);
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         user.setPassword(encryptedPassword);
         user.setSignup_date(new Date(System.currentTimeMillis()));
@@ -126,7 +127,8 @@ public class LoginController {
                                         @RequestParam("bio")String bio,
                                         Model model){
         User user = new User();
-        user.setUsername(username);
+        String userString = "@"+ username;
+        user.setUsername(userString);
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         user.setPassword(encryptedPassword);
 

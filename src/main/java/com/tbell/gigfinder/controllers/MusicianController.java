@@ -144,6 +144,8 @@ public class MusicianController {
         String username = principal.getName();
         User user = userRepo.findByUsername(username);
         model.addAttribute("user", user);
+        MusicianProfile musicianProfile = musicRepo.findByUser(user);
+        model.addAttribute("musicianProfile", musicianProfile);
         Gig gig = gigRepo.findOne(gigId);
         model.addAttribute("gig", gig);
 

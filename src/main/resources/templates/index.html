@@ -2,16 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:include="includes :: indexHead"></head>
 <body class="blue-grey lighten-5">
-<div th:include="navbar :: navHome"></div>
+
 <main>
-    <section class="top valign-wrapper section scrollspy " id="top">
-        <div class="container">
-            <h1 class=" brand-logo white-text" id="logo">gigFinder</h1>
-            <a href="#bottom" class="center-align"><i class="material-icons white-text downArrow">arrow_downward</i></a>
+    <section class=" top">
+        <div th:include="navbar :: navHome"></div>
+
+        <div class="section scrollspy" id="top">
+
+            <div class=" container">
+                <h1 class="brand-logo white-text" id="logo">gigFinder</h1>
+                <a href="#bottom" class="center-align"><i class="material-icons white-text downArrow">arrow_downward</i></a>
+            </div>
+
+
         </div>
-
-
     </section>
+
+
     <section id="choiceSection" class="section scrollspy valign-wrapper">
         <div  class="choice center-align">
             <div class="row">

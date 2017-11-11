@@ -223,8 +223,18 @@
                         <input id="start" type="date" class="datepicker" th:field="*{gigStart}"/>
                     </div>
                     <div class="input-field col s6">
+                        <input id="timeStart" type="text" class="timepicker" th:field="*{timeStart}"/>
+                        <label for="timeStart">Start Time</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
                         <label for="end">End</label>
                         <input id="end" type="date" class="datepicker" th:field="*{gigEnd}"/>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="timeEnd" type="text" class="timepicker" th:field="*{timeEnd}"/>
+                        <label for="timeEnd">End Time</label>
                     </div>
                 </div>
                 <div class="row">
@@ -249,23 +259,21 @@
 <div th:fragment="gigDelete">
     <div id="gigDelete" class="modal center-align">
         <div class="modal-content">
-
+                    <h3>Are you sure?</h3>
             <div class="row">
-
-                    <p>Are you sure?</p>
-
-
+                <div class="col s6">
                     <form th:action="'/company/gig/' + @{${gig.id}} + '/delete'" method="post">
                         <input class="waves-effect waves-light btn" type="submit" value="Yes"/>
                     </form>
+                </div>
+                <div class="col s6">
                     <button class="waves-effect waves-light btn modal-close" type="close" >No</button>
-
+                </div>
             </div>
-
-
         </div>
     </div>
 </div>
+
 
 <div th:fragment="profileMusicianDelete">
     <div id="profileMusicianDelete" class="modal">
