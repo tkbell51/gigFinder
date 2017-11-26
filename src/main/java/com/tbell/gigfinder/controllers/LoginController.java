@@ -57,16 +57,16 @@ public class LoginController {
         model.addAttribute("companyProfile", new CompanyProfile());
         List<State> stateEnum = Arrays.asList(State.values());
         model.addAttribute("states", stateEnum);
-        return "createCompany";
+        return "Create/createCompany";
     }
 
     @RequestMapping(value = "/signup/company/", method = RequestMethod.POST)
     public String createCompanyProfile(@RequestParam("username")String username,
                                        @RequestParam("password")String password,
+                                       @RequestParam("email")String email,
+                                       @RequestParam("phoneNumber")String phoneNumber,
                                        @RequestParam("companyContactFirstName")String firstName,
                                        @RequestParam("companyContactLastName")String lastName,
-                                       @RequestParam("phoneNumber")String phoneNumber,
-                                       @RequestParam("email")String email,
                                        @RequestParam("companyName")String companyName,
                                        @RequestParam("companyState") String state,
                                        @RequestParam("companyCity")String city,
@@ -76,21 +76,26 @@ public class LoginController {
         user.setUsername(userString);
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         user.setPassword(encryptedPassword);
+        user.setEmail(email);
+
+        String location = city + ", " + state;
+        if(phoneNumber.substring(0,2) != "+1") {
+            phoneNumber = "+1" + phoneNumber;
+        }
+
+        user.setPhoneNumber(phoneNumber);
         user.setSignup_date(new Date(System.currentTimeMillis()));
         user.setActive(true);
         Role companyRole = roleRepo.findByName("ROLE_COMPANY");
         user.setRole(companyRole);
         userRepo.save(user);
 
-        String location = city + ", " + state;
 
         CompanyProfile companyProfile = new CompanyProfile();
         companyProfile.setUser(user);
         companyProfile.setCompanyName(companyName);
         companyProfile.setCompanyContactFirstName(firstName);
         companyProfile.setCompanyContactLastName(lastName);
-        companyProfile.setPhoneNumber(phoneNumber);
-        companyProfile.setEmail(email);
         companyProfile.setCompanyLocation(location);
         compRepo.save(companyProfile);
 
@@ -110,17 +115,16 @@ public class LoginController {
         model.addAttribute("instruments", instrumentEnums);
         List<State> stateEnum = Arrays.asList(State.values());
         model.addAttribute("states", stateEnum);
-        return "createMusician";
+        return "Create/createMusician";
     }
 
     @RequestMapping(value = "/signup/musician/", method = RequestMethod.POST)
     public String createMusicianProfile(@RequestParam("username")String username,
                                         @RequestParam("password")String password,
+                                        @RequestParam("email")String email,
+                                        @RequestParam("phoneNumber")String phoneNumber,
                                         @RequestParam("firstName")String firstName,
                                         @RequestParam("lastName")String lastName,
-                                        @RequestParam("musicianPhoneNumber")String phoneNumber,
-                                        @RequestParam("musicianEmail")String musicianEmail,
-                                        @RequestParam("birthDate")Date birthDate,
                                         @RequestParam("musicianInstruments")String instruments,
                                         @RequestParam("musicianState") String state,
                                         @RequestParam("musicianCity")String city,
@@ -131,7 +135,11 @@ public class LoginController {
         user.setUsername(userString);
         String encryptedPassword = bCryptPasswordEncoder.encode(password);
         user.setPassword(encryptedPassword);
-
+        user.setEmail(email);
+        if(phoneNumber.substring(0,2) != "+1") {
+            phoneNumber = "+1" + phoneNumber;
+        }
+        user.setPhoneNumber(phoneNumber);
         user.setSignup_date(new Date(System.currentTimeMillis()));
         user.setActive(true);
         Role musicianRole = roleRepo.findByName("ROLE_MUSICIAN");
@@ -142,8 +150,7 @@ public class LoginController {
         instruments = instruments.replaceAll("[,.!?;:]", "$0 ").replaceAll("\\s+", " ");
 
 
-        MusicianProfile musicianProfile  = new MusicianProfile(user, firstName, lastName, musicianEmail,
-                phoneNumber, birthDate, instruments, location, bio);
+        MusicianProfile musicianProfile  = new MusicianProfile(user, firstName, lastName, instruments, location, bio);
 
         musicRepo.save(musicianProfile);
         model.addAttribute("message", "Thank you for joining! Please login");

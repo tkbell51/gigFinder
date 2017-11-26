@@ -3,7 +3,6 @@ package com.tbell.gigfinder.models;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -24,12 +23,16 @@ public class MusicianApplyGig implements Serializable{
     @JoinColumn(name = "user_musician_id")
     private MusicianProfile musicianProfile;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_applied")
-    private LocalDate dateApplied;
+    private Date dateApplied;
+
+    @Column(name = "hired")
+    private Boolean hired;
 
     public MusicianApplyGig() {}
 
-    public MusicianApplyGig(Gig gig, MusicianProfile musicianProfile, LocalDate dateApplied) {
+    public MusicianApplyGig(Gig gig, MusicianProfile musicianProfile, Date dateApplied) {
         this.gig = gig;
         this.musicianProfile = musicianProfile;
         this.dateApplied = dateApplied;
@@ -59,11 +62,19 @@ public class MusicianApplyGig implements Serializable{
         this.musicianProfile = musicianProfile;
     }
 
-    public LocalDate getDateApplied() {
+    public Date getDateApplied() {
         return dateApplied;
     }
 
-    public void setDateApplied(LocalDate dateApplied) {
+    public void setDateApplied(Date dateApplied) {
         this.dateApplied = dateApplied;
+    }
+
+    public Boolean isHired() {
+        return hired;
+    }
+
+    public void setHired(Boolean hired) {
+        this.hired = hired;
     }
 }

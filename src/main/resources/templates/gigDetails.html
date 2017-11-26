@@ -1,96 +1,179 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:include="includes :: indexHead"></head>
-<body class="blue-grey lighten-5">
-<main th:inline="text">
-    <div th:include="navbar :: navHome"></div>
+<head th:include="fragments/includes :: indexHead"></head>
+<body id="gigPage" class="grey lighten-1 ">
+<div th:include="fragments/navbar :: navHome"></div>
+<main th:inline="text" class="gigDetails">
+    <div class="background-image" th:style="'background:url('+ @{${gig.gigArt}}+')no-repeat center ; background-size: cover;' "></div>
 
-    <section th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: 400%; background-repeat: no-repeat; background-position: center; height: 500px; filter: blur(10px); -webkit-filter: blur(10px);'">
-    </section>
-    <div class="gig container">
-        <nav class="gigNav transparent">
+    <div class="gig profileDetails ">
+        <div>
+            <nav th:if="${gig.companyProfile.user.username == user.username}" class="gigNav transparent ">
 
-                <ul class="right">
-                    <li th:if="${gig.companyProfile.user.username == user.username}" sec:authorize="hasRole('ROLE_COMPANY')" class="col s4">
+                <ul>
+                    <li class="col s4">
                         <a class="waves-effect waves-light btn-floating modal-trigger" href="#gigUpdate">
                             <i class="material-icons  tooltipped" data-position="top" data-delay="50" data-tooltip="Update Gig">edit</i>
                         </a>
 
                     </li>
-                    <li th:if="${gig.companyProfile.user.username == user.username}" sec:authorize="hasRole('ROLE_COMPANY')" class="col s4">
+                    <li class="col s4">
                         <a class="waves-effect waves-light btn-floating modal-trigger" href="#gigDelete">
                             <i class="material-icons  tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Gig">delete</i>
                         </a>
 
                     </li>
                 </ul>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col s12 m9">
+                <section class="gig-image white" th:style="'background:url('+ @{${gig.gigArt}}+') no-repeat center ; background-size: cover'">
+                    <div class="gig-details-row white-text">
+                        <p class="white-text gigTitle"><b>[[${gig.gigTitle}]]</b></p>
 
 
-        </nav>
-        <section class="gigTitle white">
-            <p><b>[[${gig.gigTitle}]]</b><span class="gigType right">[[${gig.gigType}]]</span></p>
-        </section>
-        <img class="gigImage" th:src="${gig.gigArt}" th:alt="${gig.gigTitle}"/>
-        <section class="timePlace white">
-            <div class="row">
-                <div class="col s6 " style="border-right: 1px solid lightgray">
-                    <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">event</i>
-                        [[${#dates.format(gig.gigStart,'EEE, d MMM yyyy')}]]
-                        <span style="margin-left: 3px;" th:if="${gig.gigStart != gig.gigEnd}"> to [[${#dates.format(gig.gigEnd,'EEE, d MMM yyyy')}]]</span>
-                    </p>
-
-                </div>
-                <div class="col s6">
-                    <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">access_time</i>[[${gig.timeStart}]] to [[${gig.timeEnd}]]</p>
-
-                </div>
-            </div>
-        </section>
-
-        <section th:style="'background:url('+ @{${url}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 200px;'">
-            <div class="locationBox right">
-                <div class="row">
-                    <div class="col s8">
-                        [[${gig.gigLocation}]]
-                    </div>
-                    <div class="col s4">
-                        <a th:href="'https://www.google.com/maps/place/'+ @{${gig.gigLocation}}" target="_blank" class="waves-effect waves-light btn-floating tooltipped" data-position="top" data-delay="50" data-tooltip="Directions"><i class="material-icons">map</i></a>
 
                     </div>
-                </div>
+
+                </section>
+                <section class="time-description">
+                    <div class="row">
+
+                        <div class="col s12 m6">
+                            <section class="gigDescript white">
+                                <div class="section">
+                                    <p class="gigType">[[${gig.gigType}]]</p>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="section">
+                                    <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">event</i>
+                                        [[${#dates.format(gig.gigStart,'EEE, d MMM yyyy')}]] <br/>
+                                        <span style="margin-left: 3px;" th:if="${gig.gigStart != gig.gigEnd}"> [[${#dates.format(gig.gigEnd,'EEE, d MMM yyyy')}]]</span>
+                                    </p>
+                                </div>
+                                <div class="divider"></div>
+
+                                <div class="section">
+                                    <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">access_time</i>[[${gig.timeStart}]] to [[${gig.timeEnd}]]</p>
+
+                                </div>
+                                <div class="divider"></div>
+
+                                <div class="section">
+                                    <p>[[${gig.gigDescription}]]</p>
+
+                                </div>
+
+
+
+                            </section>
+
+                        </div>
+                        <div class="col s12 m6">
+                            <section class="gig-map" th:style="'background:url('+ @{${url}}+')no-repeat center ; background-size: cover;'">
+                                <div class="locationBox left">
+                                        <div >
+                                            [[${gig.gigLocation}]]
+                                        </div>
+                                        <div >
+                                            <a th:href="'https://www.google.com/maps/place/'+ @{${gig.gigLocation}}" target="_blank" class="waves-effect waves-light btn-floating tooltipped" data-position="top" data-delay="50" data-tooltip="Directions"><i class="material-icons">map</i></a>
+
+                                        </div>
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
+
+                </section>
             </div>
-        </section>
-        <section class="gigDescript center-align white">[[${gig.gigDescription}]]</section>
-        <section sec:authorize="hasRole('ROLE_COMPANY')" class="musiciansApplied white">
-        <div class="row valign-wrapper">
-            <div class="col s2">
-                <p class="appliedTitle"><span class="appliedNum">[[${gig.getMusicianApplyGigs().size()}]]</span> <br/>Musicians Applied </p>
-            </div>
-            <div class="col s10 ">
-                <a th:each="applied : ${applied}" th:href="'/company/find-bands/' + @{${applied.musicianProfile.id}}" >
-                    <img  th:src="@{${applied.musicianProfile.profPicImage}} " class="appliedAvatar circle"/>
-                </a>
+            <div class="col s12 m3">
+                <section class="hireForm grey lighten-3 ">
+                    <div th:if="${gig.gigHired} == true" >
+                        <div class="center-align">
+                            <h4 >Hired<i class="checkmark material-icons">check</i></h4>
+                            <div th:each="hired : ${hired}">
+
+                                <a th:href="'/company/find-bands/' + @{${hired.musicianProfile.id}}" >
+                                    <img th:src="@{${hired.musicianProfile.profPicImage}} " class="cardImage hiredImage circle"/>
+                                    <h5 class="black-text"><b>[[${hired.musicianProfile.firstName}]] [[${hired.musicianProfile.lastName}]]</b></h5>
+
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${gig.gigHired} != true">
+                        <div class="container">
+                            <div class="section">
+                                <p class="center-align appliedNum"><span class="orange-text text-accent-4">[[${gig.getMusicianApplyGigs().size()}]]</span> Musicians Applied </p>
+                            </div>
+                            <div class="section ">
+                                <div class="row">
+                                    <div th:each="applied : ${applied}">
+                                        <div class="col s4 m4">
+                                            <a sec:authorize="hasRole('ROLE_COMPANY')" th:href="'/company/find-bands/' + @{${applied.musicianProfile.id}}" >
+                                                <img th:src="${applied.musicianProfile.profPicImage}" alt="" class="bandInfo hoverable bandApplied" />
+                                            </a>
+                                            <a sec:authorize="hasRole('ROLE_MUSICIAN')" th:href="'/musician/find-bands/' + @{${applied.musicianProfile.id}}" >
+                                                <img th:src="${applied.musicianProfile.profPicImage}" alt="" class="bandInfo hoverable bandApplied" />
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div  th:if="${gig.companyProfile.user.username == user.username}" class="section">
+                                <a class='dropdown-button logBtn hireBtn hoverable' href='#' data-activates='hireDrop'>Select Musician to Hire</a>
+
+                                <ul id="hireDrop" class="dropdown-content">
+                                    <li th:each="applied : ${applied}">
+                                        <a th:href="'/company/gig/' + @{${gig.id}} + '/confirm-hire/musician/' + @{${applied.musicianProfile.id}}">
+                                            <div class="hireRow">
+                                                <img th:src="@{${applied.musicianProfile.profPicImage}} " class="navAvatar circle"/>
+                                                <p>[[${applied.musicianProfile.firstName}]] [[${applied.musicianProfile.lastName}]]</p>
+                                                <div class="divider"></div>
+                                            </div>
+
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div sec:authorize="hasRole('ROLE_MUSICIAN')" class="section">
+                                <div class=" section center-align ">
+                                    <form  th:action="'/musician/gig/'+ @{${gig.id}} + '/apply'" method="post">
+                                        <input type="submit" class="waves-effect waves-light btn-large" value="Apply for Gig"/>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </section>
             </div>
         </div>
-        </section>
-        <section class="white center-align">
-            <div sec:authorize="hasRole('ROLE_MUSICIAN')">
-                <form  th:action="'/musician/gig/'+ @{${gig.id}} + '/apply'" method="post">
-                    <input type="submit" class="waves-effect waves-light btn-large" value="Apply for Gig"/>
-                </form>
-            </div>
-        </section>
     </div>
 
 
 
-</main>
-<div th:include="modals :: gigUpdate"></div>
-<div th:include="modals :: gigDelete"></div>
-<div th:include="footer :: footer"></div>
 
-<span th:include="includes :: js"></span>
+
+
+
+
+
+</main>
+<div th:include="fragments/modals :: gigUpdate"></div>
+<div th:include="fragments/modals :: gigDelete"></div>
+<div th:include="fragments/footer :: footer"></div>
+
+<span th:include="fragments/includes :: js"></span>
 
 </body>
 </html>

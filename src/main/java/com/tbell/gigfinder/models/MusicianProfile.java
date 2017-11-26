@@ -23,14 +23,6 @@ public class MusicianProfile {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "musician_email")
-    private String musicianEmail;
-
-    @Column(name = "musician_phone_number")
-    private String musicianPhoneNumber;
-
-    @Column(name = "birth_date")
-    private Date birthDate;
 
     @Column(name = "musician_instruments")
     private String musicianInstruments;
@@ -60,13 +52,10 @@ public class MusicianProfile {
 
     public MusicianProfile() {}
 
-    public MusicianProfile(User user, String firstName, String lastName, String musicianEmail, String musicianPhoneNumber, Date birthDate, String musicianInstruments, String location, String bio) {
+    public MusicianProfile(User user, String firstName, String lastName,  String musicianInstruments, String location, String bio) {
         this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.musicianEmail = musicianEmail;
-        this.musicianPhoneNumber = musicianPhoneNumber;
-        this.birthDate = birthDate;
         this.musicianInstruments = musicianInstruments;
         this.location = location;
         this.bio = bio;
@@ -97,29 +86,6 @@ public class MusicianProfile {
         this.lastName = lastName;
     }
 
-    public String getMusicianEmail() {
-        return musicianEmail;
-    }
-
-    public void setMusicianEmail(String musicianEmail) {
-        this.musicianEmail = musicianEmail;
-    }
-
-    public String getMusicianPhoneNumber() {
-        return musicianPhoneNumber;
-    }
-
-    public void setMusicianPhoneNumber(String musicianPhoneNumber) {
-        this.musicianPhoneNumber = musicianPhoneNumber;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
 
     public String getMusicianInstruments() {
         return musicianInstruments;

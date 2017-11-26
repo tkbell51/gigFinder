@@ -20,11 +20,6 @@ public class CompanyProfile {
     @Column(name = "contact_last_name")
     private String companyContactLastName;
 
-    @Column(name = "company_phone_number")
-    private String phoneNumber;
-
-    @Column(name = "company_email")
-    private String email;
 
     @Column(name = "company_cover_pic")
     private String companyCoverPic;
@@ -44,14 +39,6 @@ public class CompanyProfile {
 
     public CompanyProfile() {}
 
-    public CompanyProfile(User user, String companyName, String companyContactFirstName, String companyContactLastName, String phoneNumber, String email) {
-        this.user = user;
-        this.companyName = companyName;
-        this.companyContactFirstName = companyContactFirstName;
-        this.companyContactLastName = companyContactLastName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-    }
 
     public long getId() {
         return id;
@@ -85,21 +72,6 @@ public class CompanyProfile {
         this.companyContactLastName = companyContactLastName;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public User getUser() {
         return user;

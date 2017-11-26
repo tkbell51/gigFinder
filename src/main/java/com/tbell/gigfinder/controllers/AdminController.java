@@ -27,8 +27,8 @@ public class AdminController {
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String adminPage (Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
+        model.addAttribute("user", user);
         model.addAttribute("user", user);
 
         Iterable<MusicianProfile> allMusicians = musicRepo.findAll();

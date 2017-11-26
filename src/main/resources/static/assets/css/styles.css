@@ -1,15 +1,30 @@
+*{
+    box-sizing: border-box;
+}
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+.input-field{
+    margin-top: 0px;
+}
 /* label color */
 .input-field label {
     color: #FD6D22;
 }
 
 /* label focus color */
-.input-field input[type=text]:focus + label, input[type=password]:focus + label {
+.input-field input[type=text]:focus + label, input[type=password]:focus + label, input[type=email]:focus + label {
     color: #FD6D22 !important;
 }
 
 /* label underline focus color */
-.input-field input[type=text]:focus, input[type=password]:focus {
+.input-field input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
     border-bottom: 1px solid #FD6D22 !important;
     box-shadow: 0 1px 0 0 #FD6D22 !important;
 }
@@ -19,10 +34,12 @@
     color: #FD6D22;
 }
 
-.dropdown-content li > span {
+.dropdown-content li > span  {
     color: #FD6D22 !important
 }
-
+.dropdown-content li > a{
+    color : #000 !important
+}
 .input-field.col .dropdown-content [type="checkbox"] + label {
     top: -10px;
 }
@@ -31,7 +48,59 @@
     border-right: 2px solid #FD6D22;
     border-bottom: 2px solid #FD6D22;
 }
+.brand-logo {
+    font-family: 'Great Vibes', cursive;
+    margin-left: 15px;
 
+}
+.choice .row, .compSignup .row, .musicSignup .row, .time-description .row{
+    margin-bottom: 0px;
+}
+/*mfp popup*/
+/**
+ * Simple fade transition,
+ */
+.mfp-fade.mfp-bg {
+    opacity: 0;
+    -webkit-transition: all 0.15s ease-out;
+    -moz-transition: all 0.15s ease-out;
+    transition: all 0.15s ease-out;
+}
+.mfp-fade.mfp-bg.mfp-ready {
+    opacity: 0.8;
+}
+.mfp-fade.mfp-bg.mfp-removing {
+    opacity: 0;
+}
+
+.mfp-fade.mfp-wrap .mfp-content {
+    opacity: 0;
+    -webkit-transition: all 0.15s ease-out;
+    -moz-transition: all 0.15s ease-out;
+    transition: all 0.15s ease-out;
+}
+.mfp-fade.mfp-wrap.mfp-ready .mfp-content {
+    opacity: 1;
+}
+.mfp-fade.mfp-wrap.mfp-removing .mfp-content {
+    opacity: 0;
+}
+/*navbar*/
+
+nav{
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.24);
+}
+.top nav{
+    background-color: rgba(0, 0, 0, 0);
+
+}
+nav, footer{
+    position: relative;
+    z-index:8;
+
+}
 .nav-wrapper {
     margin: auto 5vw;
 }
@@ -48,28 +117,48 @@
 
 .tabs .indicator {
     text-decoration: none;
-    background-color: red !important;
+    background-color: #FD6D22 !important;
 }
-nav{
-    background-color: rgba(0, 0, 0, 0.12);
-    position: absolute;
-    z-index:1;
 
+.tabs .tab a{
+    color: #FD6D22;
 }
+.tabs .tab a.active{
+    background-color: #FD6D22;
+    color: #FFF;
+}
+
 .navAvatar{
     border: 1px solid #FD6D22;
     width: 50px;
+    height: 50px;
     margin-left: 8px;
 }
-#logo {
-    font-size: 6.8em;
-    line-height: 80vh;
+#signupModal {
+    width: 350px;
+
 }
-#logBtn{
+
+.logBtn{
     border: 1px solid #FFF;
     border-radius: 15px;
     padding: 5px 20px;
     display: inline;
+}
+.logBtn:hover{
+    border: 1px solid #FD6D22;
+    color: #FD6D22;
+
+}
+footer{
+    position: relative;
+    z-index: 5;
+}
+/*homepage*/
+#logo {
+    font-size: 6.8em;
+    position: relative;
+    top: 30vh;
 }
 .top {
 
@@ -77,14 +166,6 @@ nav{
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
-}
-
-
-
-.brand-logo {
-    font-family: 'Great Vibes', cursive;
-    margin-left: 15px;
-
 }
 
 .loginLogo {
@@ -95,30 +176,52 @@ nav{
 .downArrow {
     position: absolute;
     font-size: 2em;
-    left: 50%;
+    left: 49%;
     bottom: 10px;
 }
 
-#choiceSection {
-    background: #2B3989; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#200102, #2B3989); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#200102, #2B3989); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#200102, #2B3989); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#200102, #2B3989); /* Standard syntax */
-    margin: 0;
-    height: 100vh;
-}
-
-.choice {
-    padding: 20px 0;
-    margin: 0px 5vw;
+#musicChoice {
+    background-image: url("/assets/images/pexels-guitar.jpeg");
 
 }
-
-.choice .row {
-    margin-bottom: 0;
+#compChoice {
+    background-image: url("/assets/images/smallVenue.jpg");
 }
 
+#musicChoice, #compChoice{
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 75vh;
+    display: flex;
+}
+
+#musicChoice section, #compChoice section{
+    margin: auto;
+}
+.musicText, .compText{
+    background-color: rgba(40, 40, 40, 0.51);
+    border-radius: 5px;
+    height: 300px;
+    padding: 20px;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+#musicChoice .logBtn, #compChoice .logBtn{
+    font-size: 1.5em;
+    background-color: #FD6D22;
+    color: #FFF;
+    border-radius: 25px;
+    border: 1px solid #FD6D22;
+    position: relative;
+    top: 15px;
+
+}
+#compChoice .logBtn{
+    top:50px;
+}
+
+/*login page*/
 .login {
     background: url("/assets/images/pexelsJazz.jpeg");
     box-shadow: inset 0 0 0 2000px rgba(21, 60, 101, 0.3);
@@ -132,70 +235,74 @@ nav{
     margin-top: 70px;
     width: 350px;
 }
+/*Company Signup and Music Signup*/
+.logoSide{
 
-.loginForm {
-
-    background: rgba(255, 255, 255, 0.5);
+    position: relative;
+    top: 50px;
 
 }
 
-.top .card {
-    border: 1px solid white;
+.compSignup, .musicSignup{
+    padding: 15px;
+    display: flex;
+    justify-content:center;
+}
+.compSignup .background-image{
+    background:url('/assets/images/great-hall-wedding-reception.jpg');
+
+}
+.musicSignup .background-image{
+    background: url("/assets/images/funkApostles.jpg");
+}
+.gigCreate .background-image{
+    background: url("/assets/images/concertPexels.jpeg");
+}
+.confirmHire .background-image{
+    background: url("/assets/images/pexelsMic2.jpeg");
+}
+.compSignup .background-image, .musicSignup .background-image, .confirmHire .background-image{
+    position:absolute;
+    left: -5%;
+    right:0;
+    top:-5%;
+    bottom:0;
+    background-size:cover;
+    z-index:1;
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+.compSignup .card-panel, .confirmHire .card-panel, .musicSignup .card-panel {
+    background-color: rgba(0, 0, 0, 0.68);
+    margin: auto;
+    position:relative;
+    z-index:2;
+    border-radius: 10px;
 }
 
-.sect2 .material-icons, .sect3 .material-icons {
-    font-size: 5em;
-    padding: 10px;
-    border: 1px solid #FD6D22;
-    border-radius: 50%;
-}
-
-.musicianBanner {
-    background: url("/assets/images/pexelsDJ.jpeg");
-    box-shadow: inset 0 0 0 2000px rgba(44, 152, 240, 0.3);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    height: 50vh;
-}
-
-.companyBanner {
-    background: url("/assets/images/weddingHarp.jpg");
-    box-shadow: inset 0 0 0 2000px rgba(44, 152, 240, 0.3);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    height: 50vh;
-}
-
-.bannerTitle {
+.card-panel .loginLogo h1{
+    font-size: 6em;
     color: #FFF;
 }
-
-.bannerTitle:hover {
+.card-panel .loginLogo h1:hover{
     color: #FD6D22;
 }
+.compForm{
+    border-radius: 10px;
 
-.gigArt {
-    height: 200px;
+}
+.compForm form{
+    margin: 10px;
+
 }
 
-.localGigs {
-    height: 75px;
-}
-
-.musicProfile {
-    margin: 0px 35px;
-}
-
-.name {
-    text-transform: uppercase;
-}
-
+/*Profile Pages*/
 .profCol{
     position: relative;
     top: -250px;
-    left: 100px;
     width: 300px;
 
 }
@@ -207,21 +314,24 @@ nav{
     padding: 25px;
 }
 .coverBanner {
-    color: rgba(253, 109, 34, 0.75);
+    position: absolute;
+    color: rgba(253, 109, 34, 0.4);
     font-size: 1em;
     margin-left: 20px;
-    margin-top: 10px;
-    background-color: rgba(56, 56, 56, 0.88);
+    background-color: rgba(56, 56, 56, 0.5);
     border-radius: 50%;
     width: 30px;
     height: 30px;
     line-height: 30px;
     text-align: center;
-    border: 1px solid lightgray;
+    border: 1px solid rgba(211, 211, 211, 0.2);
 }
 
 .coverBanner:hover {
     color: #FD6D22;
+    background-color: rgb(56, 56, 56);
+    border: 1px solid rgb(211, 211, 211);
+
 }
 
 .picParentDetail {
@@ -234,15 +344,6 @@ nav{
     height: 250px;
 }
 
-#picParent {
-    position: absolute;
-    width: 250px;
-    border: 2px solid lightgray;
-    border-radius: 50%;
-    top: 200px;
-    left: 50px;
-    height: 250px;
-}
 
 .profImage {
     opacity: 1;
@@ -260,11 +361,8 @@ nav{
     -ms-transform: translate(-50%, -50%)
 }
 
-.profImage:hover{
-    opacity: 0.8;
-}
 
-.profImage:hover .middle {
+.profImage:hover .middle, .bandInfo:hover .second {
     opacity: 1;
 }
 
@@ -278,7 +376,16 @@ nav{
     text-align: center;
     margin-left: -35px;
 }
-
+.tabs{
+    margin: 15px auto;
+}
+.musicCard{
+    margin-top: 0px;
+    padding: 10px;
+}
+.musicTable{
+    margin: auto;
+}
 .musicInfo {
     position: relative;
     top: 80px;
@@ -300,12 +407,10 @@ nav{
 
 .bannerBio {
     position: relative;
-    top: 190px;
-    left: 0;
-    right: 0;
+    top: 200px;
+    left: 39%;
     margin-left: auto;
     margin-right: auto;
-    max-width: 30vw;
 }
 .bannerBio h4{
     font-size: 3em;
@@ -324,28 +429,14 @@ nav{
     width: 90%;
 }
 
-body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+
+.goBtn{
+    position:relative;
+    top: 50px;
+    right: 10px;
 }
-
-main {
-    flex: 1 0 auto;
-}
-
-.gigDetails {
-    margin-top: 5px;
-    margin-bottom: 0;
-}
-
-
 i.right {
     margin-left: 0px;
-}
-
-.cardGigDetails {
-    margin: auto;
 }
 
 span.badge {
@@ -371,44 +462,67 @@ span.badge {
 img.responsive-img {
     height: 100%;
 }
-.musicianCards{
-    margin: 5px 0px 5px 30px;
-    height: 120px;
-}
+
 .musicianCards p{
-    margin: 0px;
-    font-size: 1.2em;
+    font-size: 1.09em;
 }
 .cardImage {
+    border: 1px solid #FFF;
     position: relative;
-    min-height: 100%;
+    height: 100px;
     width: 100px;
-    right: 45px;
-    top: 3px;
 
+}
+.gradient-background{
+    background: #23074d;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #D13218, #23074d);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #D13218, #23074d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.findBand .row .col{
+   padding: 0px;
+    margin: 0px;
+}
+.bandInfo{
+    font-size: 1.5em;
+    display: flex;
+    flex-direction:column;
+    justify-content:flex-end;
+}
+.second{
+    background-color: rgba(0,0,0,0.41);
+    color: #FFF;
+    width: 100%;
+    opacity: 0;
+
+}
+
+.bandInfo h5{
+    margin: 0;
+}
+.bandInfo:hover{
+    border: 2px solid #FFF;
+}
+
+.cardImage:hover{
+    border: 1px solid #FD6D22;
 }
 .musicianInfo{
     position: relative;
-    right: 25px;
-}
-#signupModal {
-    width: 350px;
-
 }
 
-.loginBtn {
-    margin-bottom: 20px;
-}
 .companyProfileGig .btn{
     padding: 0px 1rem;
 }
 .companyProfileGig{
     min-width: 80%;
 }
+
 .gigApplied{
     border: 1px solid #FD6D22;
     border-radius: 5px;
     padding: 10px;
+    margin-top: 10px;
 }
 .dateBox{
     position: relative;
@@ -423,17 +537,19 @@ img.responsive-img {
     margin: 6px;
     width: 100%;
 }
+
 .gigCard p, .dateBox h4{
     margin: 0px;
 }
-.gig .gigImage{
-    object-fit: cover;
-    width: 100%;
-    margin-bottom: -5px;
-    height: 250px;
-}
+
+
 .gigInfo{
     padding: 15px;
+}
+
+
+.hireForm .btn-large{
+    padding: 0 1rem;
 }
 .gigCard .divider{
     margin: 5px 0px;
@@ -441,81 +557,152 @@ img.responsive-img {
 .gigCard .btn{
     padding: 0px 1rem;
 }
-.gigDetailsCard .row {
-    margin-bottom: 0px;
-}
-#gigImage{
-    height: 300px;
-}
-#gigDetailsImage{
-    padding-right: 0px;
-}
-#gigDetailsMap{
-    padding-left: 0px;
 
+/*#gigImage{*/
+    /*height: 300px;*/
+/*}*/
+
+
+.checkmark{
+    color: #2DB051;
 }
+
 .locationBox{
     background-color: #FFF;
-    width: 30%;
+    width: 45%;
     min-width: 200px;
     position: relative;
     top: 20px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     padding: 2%;
 }
-.locationBox .row{
-    margin-bottom: 0px;
-}
+
+
 .gigAction {
     padding: 15px;
 }
-.gigAction .row{
-    margin: 0px;
-}
-.appliedNum{
-    color: #FD6D22;
-}
-.gigNav{
-position: relative;
-}
-.gig{
-    position: relative;
-    top: -350px;
-}
+
+
+
+
 .gig h1, .musiciansApplied .row, .timePlace .row{
     margin: 0;
 }
-.gigTitle{
-    font-size: 2.5em;
-    padding: 0 10px;
+
+.appliedMusic{
+    margin-bottom: 8px;
 }
-.gigType{
-    padding: 15px;
-    font-size: .5em;
+.appliedMusic .cardImage{
+height: 60px;
+    width: 60px;
+    right: 30px;
 }
-.gigDescript{
-    font-size: 2em;
+.appliedMusic .flow-text{
+    font-size: 1.2rem;
 }
-.appliedTitle{
-    font-size: 1.4em;
-    text-align: right;
-    border-right: 1px solid lightgray;
-    padding-right: 5px;
-}
-.appliedAvatar{
-    width: 75px;
-}
-.appliedAvatar:hover{
-    border: 2px solid #FD6D22;
-}
-.gig section{
-    border: 1px solid lightgray;
-}
+
 .timePlace{
     font-size: 1.5em;
     padding: 5px 0px 5px 5px;
 }
 .timePlace i{
     margin-right: 10px;
+}
+
+/*Gig Details Page*/
+
+.gigDetails{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+.gigDetails .background-image{
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    height: 800px;
+    display: block;
+
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+.gigNav{
+    position: relative;
+}
+.gig{
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}
+.gig section{
+    border: 1px solid lightgray;
+}
+.gig-image, .gig-map, .gigDescript{
+    height: 30vh;
+}
+.gig-image{
+    display: flex;
+    align-items:flex-end;
+}
+.gig-details-row{
+    flex: 1 1 100%;
+    font-size: 1.8em;
+    background-color: rgba(0,0,0,0.41);
+    padding-left: 10px;
+}
+.gigDescript{
+    padding: 10px;
+}
+.hireForm{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    height:60vh;
+}
+.hireForm .container{
+    height: 60vh;
+}
+.appliedNum{
+    font-size: 1.4em;
+}
+.bandApplied{
+    width: 100%;
+    height: 11vh;
+}
+.hireBtn{
+    background: #FD6D22;
+    color: #FFF;
+}
+.hireBtn:hover{
+    color: #FFF;
+}
+.hireRow, .locationBox{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content:space-between;
+    align-items:center;
+}
+.time-description .row .col, .gig .row .col{
+    padding: 0;
+}
+/*Confirm Hire Page*/
+
+.confirmHire{
+    display:flex;
+    justify-content:center;
+    align-self:center;
+}
+.confirmPic{
+    width: 30vh;
+}
+.confirmAction{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content:space-around;
 }

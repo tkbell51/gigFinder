@@ -42,7 +42,7 @@ public class SearchController {
         model.addAttribute("user", user);
         List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
         model.addAttribute("instruments", instrumentEnums);
-        return "search";
+        return "Search/search";
     }
 
 
@@ -50,8 +50,7 @@ public class SearchController {
     public String searchName(@RequestParam("firstName") String firstName,
                              @RequestParam("lastName") String lastName,
                              Model model, Principal principal) {
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         MusicianProfile searchMusicians = musicianRepo.findByFirstNameContainingIgnoreCaseAndLastNameContainingIgnoreCase(firstName, lastName);
@@ -59,15 +58,14 @@ public class SearchController {
 
         List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
         model.addAttribute("instruments", instrumentEnums);
-        return "search";
+        return "Search/search";
 
     }
 
     @RequestMapping(value = "/searchUsername", method = RequestMethod.POST)
     public String searchUsername(@RequestParam("musicianUsername") String musicianUsername,
                                  Model model, Principal principal) {
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         User searchUser = userRepo.findByUsernameContainingIgnoreCase(musicianUsername);
@@ -77,14 +75,13 @@ public class SearchController {
         List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
         model.addAttribute("instruments", instrumentEnums);
 
-        return "search";
+        return "Search/search";
     }
 
     @RequestMapping(value = "/searchInstrument", method = RequestMethod.POST)
     public String searchByInstrument(@RequestParam("instrument") String instrument,
                                     Model model, Principal principal) {
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         Iterable<MusicianProfile> searchMusicians = musicianRepo.findByMusicianInstrumentsContainingIgnoreCase(instrument);
@@ -92,14 +89,13 @@ public class SearchController {
 
         List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
         model.addAttribute("instruments", instrumentEnums);
-        return "search";
+        return "Search/search";
     }
 
     @RequestMapping(value = "/searchLocation", method = RequestMethod.POST)
     public String searchByLocation(@RequestParam("location")String location,
                                    Model model, Principal principal) {
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
 
@@ -109,7 +105,7 @@ public class SearchController {
 
         List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
         model.addAttribute("instruments", instrumentEnums);
-        return "search";
+        return "Search/search";
     }
 
 
@@ -117,20 +113,18 @@ public class SearchController {
 
     @RequestMapping(value = "/musician/search/", method = RequestMethod.GET)
     public String searchPageMusician(Principal principal, Model model){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         List<GigTypes> gigEnums = Arrays.asList(GigTypes.values());
         model.addAttribute("gigTypes", gigEnums);
-        return "search";
+        return "Search/search";
     }
 
     @RequestMapping(value = "/searchGigLocation", method = RequestMethod.POST)
     public String searchGigLocation(@RequestParam("location")String location,
                                     Model model, Principal principal) {
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         Iterable<Gig> searchGig = gigRepo.findByGigLocationContainingIgnoreCase(location);
@@ -138,15 +132,14 @@ public class SearchController {
 
         List<GigTypes> gigEnums = Arrays.asList(GigTypes.values());
         model.addAttribute("gigTypes", gigEnums);
-        return "search";
+        return "Search/search";
 
     }
 
     @RequestMapping(value = "/searchGigType", method = RequestMethod.POST)
     public String searchGigType(@RequestParam("type")String type,
                                 Model model, Principal principal) {
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         Iterable<Gig> searchGig = gigRepo.findByGigTypeContainingIgnoreCase(type);
@@ -154,7 +147,7 @@ public class SearchController {
 
         List<GigTypes> gigEnums = Arrays.asList(GigTypes.values());
         model.addAttribute("gigTypes", gigEnums);
-        return "search";
+        return "Search/search";
 
     }
 

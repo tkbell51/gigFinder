@@ -23,8 +23,13 @@ public class User implements UserDetails{
     @Column(name = "user_password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date signup_date;
 
     private boolean active;
@@ -65,6 +70,13 @@ public class User implements UserDetails{
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public List<Comment> getComments() {
         return comments;
@@ -96,6 +108,14 @@ public class User implements UserDetails{
 
     public void setSignup_date(Date signup_date) {
         this.signup_date = signup_date;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     @Override

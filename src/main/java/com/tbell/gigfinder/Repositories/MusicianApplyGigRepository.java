@@ -21,4 +21,10 @@ public interface MusicianApplyGigRepository extends CrudRepository<MusicianApply
 
 
     Iterable<MusicianApplyGig> findAllByMusicianProfile(MusicianProfile musicianProfile);
+
+    MusicianApplyGig findByGigAndMusicianProfile(Gig gigApply, MusicianProfile musicianHired);
+
+    Iterable<MusicianApplyGig> findAllByMusicianProfileAndHired(MusicianProfile musicianProfile, Boolean hired);
+
+    Iterable<MusicianApplyGig> findByGigAndHired(Gig gig, Boolean hired);
 }

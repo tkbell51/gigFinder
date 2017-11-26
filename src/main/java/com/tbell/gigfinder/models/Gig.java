@@ -27,6 +27,7 @@ public class Gig {
     @Column(name = "gig_type")
     private String gigType;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gig_start")
     private Date gigStart;
 
@@ -44,6 +45,9 @@ public class Gig {
 
     @Column(name = "gig_art")
     private String gigArt;
+
+    @Column(name = "gig_hired")
+    private Boolean gigHired;
 
     @ManyToOne
     @JoinColumn(name = "company_profile_id")
@@ -143,6 +147,14 @@ public class Gig {
 
     public void setTimeEnd(String timeEnd) {
         this.timeEnd = timeEnd;
+    }
+
+    public Boolean getGigHired() {
+        return gigHired;
+    }
+
+    public void setGigHired(Boolean gigHired) {
+        this.gigHired = gigHired;
     }
 
     public Set<MusicianApplyGig> getMusicianApplyGigs() {

@@ -1,6 +1,5 @@
 package com.tbell.gigfinder.controllers;
 
-import com.sun.tools.internal.ws.wsdl.framework.DuplicateEntityException;
 import com.tbell.gigfinder.Repositories.*;
 import com.tbell.gigfinder.config.ClientKey;
 import com.tbell.gigfinder.googleAPI.GeoCodingInterface;
@@ -19,7 +18,6 @@ import java.io.IOException;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -46,8 +44,7 @@ public class MusicianController {
 
     @RequestMapping(value = "/musician/my-profile", method = RequestMethod.GET)
     public String musicianProfile(Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
@@ -63,6 +60,9 @@ public class MusicianController {
         Iterable<MusicianApplyGig> myAppliedGigs = applyRepo.findAllByMusicianProfile(musicianProfile);
         model.addAttribute("applied", myAppliedGigs);
 
+        Iterable<MusicianApplyGig> hiredGigs = applyRepo.findAllByMusicianProfileAndHired(musicianProfile, true);
+        model.addAttribute("hired", hiredGigs);
+
         List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
         model.addAttribute("instruments", instrumentEnums);
         List<State> stateEnum = Arrays.asList(State.values());
@@ -72,25 +72,27 @@ public class MusicianController {
         return "musicianProfile";
     }
 
-    @RequestMapping(value = "/musician/{musicianProfileId}/update-profile", method = RequestMethod.POST)
-    public String musicianProfileUpdate(@PathVariable("musicianProfileId")long id,
+    @RequestMapping(value = "/musician/update-profile", method = RequestMethod.POST)
+    public String musicianProfileUpdate(@RequestParam("phoneNumber")String phoneNumber,
+                                        @RequestParam("email")String email,
                                         @RequestParam("firstName")String firstName,
                                         @RequestParam("lastName")String lastName,
-                                        @RequestParam("musicianPhoneNumber")String phoneNumber,
-                                        @RequestParam("musicianEmail")String musicianEmail,
-                                        @RequestParam("birthDate")Date birthDate,
                                         @RequestParam("musicianInstruments")String instruments,
                                         @RequestParam("location") String location,
                                         @RequestParam("bio")String bio,
-                                        Model model) throws Exception {
+                                        Model model, Principal principal) throws Exception {
+        User user = userRepo.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        userRepo.save(user);
+        if(phoneNumber.substring(0,2) != "+1") {
+            phoneNumber = "+1" + phoneNumber;
+        }
         instruments = instruments.replaceAll("[,.!?;:]", "$0 ").replaceAll("\\s+", " ");
-
-        MusicianProfile musicianProfile = musicRepo.findById(id);
+        MusicianProfile musicianProfile = musicRepo.findByUser(user);
         musicianProfile.setFirstName(firstName);
         musicianProfile.setLastName(lastName);
-        musicianProfile.setMusicianPhoneNumber(phoneNumber);
-        musicianProfile.setMusicianEmail(musicianEmail);
-        musicianProfile.setBirthDate(birthDate);
         musicianProfile.setMusicianInstruments(instruments);
         musicianProfile.setLocation(location);
         musicianProfile.setBio(bio);
@@ -103,8 +105,7 @@ public class MusicianController {
     public String createGig (@RequestParam("media_url")String mediaURL,
                              @RequestParam("title")String title,
                              Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
@@ -119,8 +120,7 @@ public class MusicianController {
                                @RequestParam("media_url")String mediaURL,
                                @RequestParam("title")String title,
                                Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         MediaContent mediaContent = mediaRepo.findById(id);
@@ -141,13 +141,14 @@ public class MusicianController {
     public String gigDetails(@PathVariable("gigId")long gigId,
                              Model model, Principal principal) throws InterruptedException, IOException {
 
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
         Gig gig = gigRepo.findOne(gigId);
         model.addAttribute("gig", gig);
+        Iterable<MusicianApplyGig> applyGig = applyRepo.findAllByGigId(gigId);
+        model.addAttribute("applied", applyGig);
 
         ClientKey clientKey = new ClientKey();
 
@@ -168,8 +169,7 @@ public class MusicianController {
     @RequestMapping(value = "/musician/gig/{gigId}/apply", method = RequestMethod.POST)
     public String gigApply (@PathVariable("gigId")long gigId,
                             Principal principal, Model model){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
 
         Gig gigApply = gigRepo.findById(gigId);
@@ -182,12 +182,13 @@ public class MusicianController {
             mp1 = eachApplied.getMusicianProfile();
         }
 
-        MusicianApplyGig musicianApplyGig = new MusicianApplyGig(gigApply, musicianProfile, LocalDate.now());
+        MusicianApplyGig musicianApplyGig = new MusicianApplyGig(gigApply, musicianProfile, new Date(System.currentTimeMillis()));
 
         if(gigApply == gigA && musicianProfile == mp1){
             model.addAttribute("user", user);
+            model.addAttribute("musicianProfile", musicianProfile);
             model.addAttribute("message", "You have already applied for this gig.");
-            return "messagePage";
+            return "Messages/messagePage";
         } else {
             applyRepo.save(musicianApplyGig);
             return "redirect:/musician/gig/{gigId}/success";
@@ -201,8 +202,7 @@ public class MusicianController {
     @RequestMapping(value = "/musician/gig/{gigId}/success", method = RequestMethod.GET)
     public String applySuccess(@PathVariable("gigId") long gigId,
                                Principal principal, Model model){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
@@ -211,52 +211,52 @@ public class MusicianController {
         Gig gigApply = gigRepo.findById(gigId);
         model.addAttribute("gig", gigApply);
 
-        return "gigSuccess";
+        return "Messages/gigSuccess";
     }
 
     @RequestMapping(value = "/musician/find-bands", method = RequestMethod.GET)
     public String findBands(Model model, Principal principal) {
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
         Iterable<MusicianProfile> allmusicians = musicRepo.findAll();
         model.addAttribute("musicians", allmusicians);
-        return "findBands";
+        return "Search/findBands";
     }
 
     @RequestMapping(value = "/musician/find-bands/{musicianId}", method = RequestMethod.GET)
     public String musicianDetails(@PathVariable("musicianId")long id,
                                   Model model, Principal principal) {
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
 
         MusicianProfile musicianDetail = musicRepo.findById(id);
-        model.addAttribute("musicianProfile", musicianDetail);
+        model.addAttribute("musicianDetail", musicianDetail);
 
         Iterable<MediaContent> mySongs = mediaRepo.findByMusicianProfile(musicianDetail);
         model.addAttribute("media", mySongs);
+
+        Iterable<MusicianApplyGig> hiredGigs = applyRepo.findAllByMusicianProfileAndHired(musicianDetail, true);
+        model.addAttribute("hired", hiredGigs);
         return "musicianDetails";
     }
 
 
     @RequestMapping(value = "/musician/find-gigs", method = RequestMethod.GET)
     public String findGigs(Model model, Principal principal) {
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
         Iterable<Gig> allgigs = gigRepo.findAll();
         model.addAttribute("gig", allgigs);
-        return "findGigs";
+        return "Search/findGigs";
     }
 
 

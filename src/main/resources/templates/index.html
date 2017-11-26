@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:include="includes :: indexHead"></head>
+<head th:include="fragments/includes :: indexHead"></head>
 <body class="blue-grey lighten-5">
 
 <main>
     <section class=" top">
-        <div th:include="navbar :: navHome"></div>
+        <div th:include="fragments/navbar :: navHome"></div>
 
         <div class="section scrollspy" id="top">
 
@@ -17,59 +17,39 @@
 
         </div>
     </section>
-
-
-    <section id="choiceSection" class="section scrollspy valign-wrapper">
-        <div  class="choice center-align">
-            <div class="row">
-                <div class="col s12 m6">
-                    <div class="card z-depth-5 medium sticky-action hoverable">
-                        <div class="card-image waves-effect waves-block waves- light">
-                            <img class="materialboxed activator" th:src="@{../assets/images/pexels-guitar.jpeg}"/>
-                        </div>
-                        <div class="card-content musicCard">
-                            <span class="card-title activator grey-text text-darken-4">I'm a Musician<i class="material-icons right">more_vert</i></span>
-                        </div>
-                        <div class="card-action">
-                            <a href="/signup/musician/" class="btn">Sign Up</a>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">I'm a Musician<i class="material-icons right">close</i></span>
-                            <h5>I'm looking for a gig</h5>
-                            <h5>I want to network with other musicians</h5>
-                            <h5>I need to get my name out there</h5>
-                        </div>
+    <section class="choice" id="bottom">
+        <div class="row">
+            <div class="col s12 m6" id="musicChoice">
+                <section class="center-align">
+                    <div class="musicText white-text">
+                        <h3>I'm a Musician</h3>
+                        <h5>I'm looking for a gig</h5>
+                        <h5>I want to network with other musicians</h5>
+                        <h5>I need to get my name out there</h5>
+                        <a href="/signup/musician/" class="logBtn">Sign Up</a>
                     </div>
-                </div>
-                <div class="col s12 m6">
-                    <div class="card z-depth-5 medium sticky-action hoverable">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="materialboxed activator" th:src="@{../assets/images/smallVenue.jpg}"/>
-                        </div>
-                        <div class="card-content bookCard">
-                            <span class="card-title activator grey-text text-darken-4">I Book Musicians<i class="material-icons right">more_vert</i></span>
-                        </div>
-                        <div class="card-action ">
-                            <a href="/signup/company/" class="btn ">Sign Up</a>
-
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">I Book Musicians<i class="material-icons right">close</i></span>
-                            <h5>I need help booking musicians</h5>
-                            <h5>I need to advertise playing opportunities for my venue</h5>
-
-                        </div>
-                    </div>
-                </div>
-
+                </section>
             </div>
+            <div id="compChoice" class="col s12 m6">
+                <section class="center-align">
+                    <div class="compText white-text">
+                        <h3>I Book Musicians</h3>
+                        <h5>I need help booking musicians</h5>
+                        <h5>I need to advertise gigs for my venue</h5>
+
+                        <div class="compAction">
+                            <a href="/signup/company/" class="logBtn">Sign Up</a>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+
         </div>
     </section>
-
-
 </main>
-<div th:include="footer :: footer"></div>
-<div th:include="modals :: signupModal"></div>
-<span th:include="includes :: js"></span>
+<div th:include="fragments/footer :: footer"></div>
+<div th:include="fragments/modals :: signupModal"></div>
+<span th:include="fragments/includes :: js"></span>
 </body>
 </html>

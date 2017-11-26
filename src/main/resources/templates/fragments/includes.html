@@ -6,6 +6,7 @@
     <title>gigFinder</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Pacifico" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/webjars/Magnific-Popup/1.0.0/magnific-popup.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/materialize/0.100.2/dist/css/materialize.min.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/styles.css}"/>
 </head>
@@ -14,13 +15,24 @@
 <span th:fragment="js">
 <script th:src="@{/webjars/jquery/3.2.1/dist/jquery.js}"></script>
 <script th:src="@{/webjars/materialize/0.100.2/dist/js/materialize.min.js}"></script>
+    <script th:src="@{/webjars/Magnific-Popup/1.0.0/jquery.magnific-popup.min.js}"></script>
+
 <script>
       $(document).ready(function(){
           $('select').material_select();
           $('.scrollspy').scrollSpy();
           $('.modal').modal();
           $('.tooltipped').tooltip({delay: 50});
+          $('ul.tabs').tabs();
+          $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
+              disableOn: 700,
+              type: 'iframe',
+              mainClass: 'mfp-fade',
+              removalDelay: 160,
+              preloader: false,
 
+              fixedContentPos: false
+          });
       });
 
       $('.datepicker').pickadate({
@@ -45,7 +57,11 @@
       });
 
 </script>
-
+    <script>
+function goBack() {
+    window.history.back();
+}
+</script>
 <script th:src="@{/assets/js/main.js}"></script>
 </span>
 </body>

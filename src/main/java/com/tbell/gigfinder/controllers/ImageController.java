@@ -42,16 +42,16 @@ public class ImageController {
     public String uploadCompanyCoverPic(@PathVariable("companyProfileId")long id,
                                         @RequestParam("companyCoverPic") String coverPic,
                                         Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
+
 
 
         if (coverPic == null) {
             model.addAttribute("user", user);
 
             model.addAttribute("message", "Something went wrong. Please try Again");
-            return "messagePage";
+            return "Messages/messagePage";
         } else {
             CompanyProfile newComp = compRepo.findById(id);
             newComp.setCompanyCoverPic(coverPic);
@@ -64,16 +64,16 @@ public class ImageController {
     public String uploadCompanyProfPic(@PathVariable("companyProfileId")long id,
                                        @RequestParam("companyProfPic") String profPic,
                                        Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
+
 
 
         if (profPic == null) {
             model.addAttribute("user", user);
 
             model.addAttribute("message", "Something went wrong. Please try Again");
-            return "messagePage";
+            return "Messages/messagePage";
         } else {
             CompanyProfile newComp = compRepo.findById(id);
             newComp.setCompanyProfPic(profPic);
@@ -88,15 +88,15 @@ public class ImageController {
     public String uploadMusicCoverPic(@PathVariable("musicianProfileId")long id,
                                       @RequestParam("coverPicImage") String coverPic,
                                       Model model, Principal principal)throws Exception{
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
+
 
         if(coverPic == null) {
             model.addAttribute("user", user);
 
             model.addAttribute("message", "Something went wrong. Please Try Again");
-            return "messagePage";
+            return "Messages/messagePage";
         } else {
             MusicianProfile newMusician = musicRepo.findById(id);
             newMusician.setCoverPicImage(coverPic);
@@ -110,14 +110,14 @@ public class ImageController {
     public String uploadMusicProfPic(@PathVariable("musicianProfileId")long id,
                                      @RequestParam("profPicImage") String profPic,
                                      Model model, Principal principal){
-        String username = principal.getName();
-        User user = userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
+
 
         if(profPic == null) {
             model.addAttribute("user", user);
             model.addAttribute("message", "Something went wrong. Please Try Again");
-            return "messagePage";
+            return "Messages/messagePage";
         } else {
             MusicianProfile newMusician = musicRepo.findById(id);
             newMusician.setProfPicImage(profPic);

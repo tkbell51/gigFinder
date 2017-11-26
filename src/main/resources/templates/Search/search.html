@@ -2,9 +2,9 @@
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:include="includes :: indexHead"></head>
-<body th:inline="text" class="blue-grey lighten-5">
-<div th:include="navbar :: navHome"></div>
+<head th:include="fragments/includes :: indexHead"></head>
+<body th:inline="text" class="grey lighten-1">
+<div th:include="fragments/navbar :: navHome"></div>
 
 <div sec:authorize="hasRole('ROLE_MUSICIAN')" class="container gigSearch">
     <h1 class="center-align">Search for Gigs</h1>
@@ -171,7 +171,7 @@
 </section>
 
 
-<div th:include="footer :: footer"></div>
-<span th:include="includes :: js"></span>
+<div th:include="fragments/footer :: footer"></div>
+<span th:include="fragments/includes :: js"></span>
 </body>
 </html>

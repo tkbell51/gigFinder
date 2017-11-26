@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:include="includes :: indexHead"></head>
-<body class="blue-grey lighten-5">
-<div th:include="navbar :: navHome"></div>
-<main th:inline="text" class="container center-align valign-wrapper">
+<head th:include="fragments/includes :: indexHead"></head>
+<body class="grey lighten-1">
+<div th:include="fragments/navbar :: navHome"></div>
+<main th:inline="text" class="container center-align">
 <div class="card-panel">
-    <h1 th:text="${message}"></h1>
+    <h1 th:utext="${#strings.replace( #strings.escapeXml( message ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></h1>
     <div class="row center-align">
         <div class="col m6 s12">
             <a href="/company/my-profile" sec:authorize="hasRole('ROLE_COMPANY')" class="btn  waves-effect waves-light">Go to Profile</a>
@@ -23,9 +23,9 @@
 
 
 </main>
-<div th:include="footer :: footer"></div>
+<div th:include="fragments/footer :: footer"></div>
 
-<span th:include="includes :: js"></span>
+<span th:include="fragments/includes :: js"></span>
 
 </body>
 </html>

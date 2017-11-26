@@ -1,112 +1,172 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:include="includes :: indexHead"></head>
-<body class="blue-grey lighten-5">
-<div th:include="navbar :: navHome"></div>
+<head th:include="fragments/includes :: indexHead"></head>
+<body class="grey lighten-1">
 <main class="" th:inline="text">
     <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{${companyProfile.companyCoverPic}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
+        <div th:include="fragments/navbar :: navHome"></div>
         <a href="#coverCompanyPic" class="modal-trigger tooltipped" data-position="right" data-delay="50" data-tooltip="Update Cover Image"><i class="coverBanner text-accent-4 material-icons">camera_alt</i></a>
-        <div class="white-text center-align bannerBio ">
+        <div class="white-text bannerBio ">
             <h4  th:text="${companyProfile.companyContactFirstName} +' '+ ${companyProfile.companyContactLastName}"></h4>
             <h5> [[${companyProfile.companyName}]]</h5>
         </div>
-        <div  id="picParent">
-            <img class="profPic circle z-depth-5 responsive-img" th:src="@{${companyProfile.companyProfPic}}" th:alt="${user.username}"/>
-            <div class="middle">
-                <div  id="hover-content">
-                    <a href="#profCompanyPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>
-                    </a>
+
+
+    </section>
+    <section class="container">
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="profCol z-depth-5">
+                    <div class="profImage" th:style="'background:url('+ @{${companyProfile.companyProfPic}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;'">
+                        <div class="middle">
+                            <div  id="hover-content">
+                                <a href="#profMusicianPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profInfo white">
+                        <section >
+                            <div class="section">
+                                <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
+                                <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">location_on</i> [[${companyProfile.companyLocation}]]</p>
+
+                            </div>
+
+                            <div class="divider"></div>
+                            <div class="section">
+                                <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">email</i> [[${user.email}]]</p>
+                                <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${companyProfile.user.phoneNumber}]]</p>
+
+                            </div>
+
+
+                        </section>
+                    </div>
                 </div>
             </div>
-
-        </div>
-    </section>
-    <div class="row bioRow black white-text">
-        <div class="col s3 offset-l3">
-            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
-            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">location_on</i> [[${companyProfile.companyLocation}]]</p>
-
-        </div>
-        <div class="col s3">
-            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">email</i> [[${companyProfile.email}]]</p>
-            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${companyProfile.phoneNumber}]]</p>
-
-        </div>
-
-    </div>
-    <section class="profileDetails">
-        <div class="row">
-            <div class="col l6 s12">
-                <h4 class="center-align">Your Gigs
-                    <span>
+            <div class="col s12 m8">
+                <div class="row">
+                    <div class="col s12">
+                        <ul class="tabs z-depth-4">
+                            <li class="tab col s4"><a href="#gigs">My Events</a></li>
+                            <li class="tab col s4"><a href="#hiredEvents">Hired Events</a></li>
+                            <li class="tab col s4"><a href="#areaMusicians">Musicians in the Area</a></li>
+                        </ul>
+                    </div>
+                    <div id="gigs" class="col s12">
+                        <h4 class="center-align">Your Gigs
+                            <span>
         <a th:href="@{/company/create-gig/}" class="waves-effect waves-light btn-floating tooltipped" data-position="top" data-delay="50" data-tooltip="Create a Gig">
             <i class="material-icons">add</i>
         </a>
 
         </span>
-                </h4>
-                <div th:if="${companyProfile.getGigs().isEmpty()}">
-                    <h5>You haven't created any Gigs</h5>
-                </div>
-                <div class="row">
-                <div  th:each="gig : ${gig}">
-                    <div class="col s12 m6">
+                        </h4>
+                        <div th:if="${companyProfile.getGigs().isEmpty()}">
+                            <h5>You haven't created any Gigs</h5>
+                        </div>
+                        <div class="row">
+                            <div  th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
+                                <div class="col s12 m6 l6">
+                                    <div  class="gigCard z-depth-2">
+                                        <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                            <div class="dateBox white orange-text text-accent-4 center-align">
+                                                <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
+                                                <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                                            </div>
+                                            <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/company/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
-                            <div class="gigCard z-depth-2">
-                                <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
-                                    <div class="dateBox white orange-text text-accent-4 center-align">
-                                        <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
-                                        <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                                        </div>
+                                        <div class="gigInfo white center-align">
+                                            <p><b>[[${gig.gigTitle}]]</b></p>
+                                            <p >[[${gig.gigLocation}]]</p>
+                                            <div class="divider"></div>
+                                            <a class=" waves-effect waves-light white-text orange accent-4 hoverable gigApplied " th:href="'/company/gig/' + @{${gig.id}}">Musicians Applied <span class="badge">[[${gig.getMusicianApplyGigs().size()}]]</span></a>
+
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="gigInfo white center-align">
-                                    <p><b>[[${gig.gigTitle}]]</b></p>
-                                    <p >[[${gig.gigLocation}]]</p>
-                                    <div class="divider"></div>
-                                    <a class=" waves-effect waves-light white-text orange accent-4 hoverable gigApplied " th:href="'/company/gig/' + @{${gig.id}}">Musicians Applied <span class="badge">[[${gig.getMusicianApplyGigs().size()}]]</span></a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div id="hiredEvents" class="col s12">
+<h4 class="center-align">Your Gigs With Hired Musicians</h4>
+                        <div class="row">
+                            <div  th:each="gig : ${gig}" th:if="${gig.gigHired} == true">
+                                <div class="col s12 m6">
+                                    <div  class="gigCard z-depth-2">
+                                        <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                            <div class="dateBox white orange-text text-accent-4 center-align">
+                                                <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
+                                                <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                                            </div>
+                                            <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/company/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
+
+                                        </div>
+                                        <div class="gigInfo white center-align">
+                                            <p><b>[[${gig.gigTitle}]]</b></p>
+                                            <p >[[${gig.gigLocation}]]</p>
+                                            <div class="divider"></div>
+                                            <div class="center-align">
+                                                <h4 >Hired<i class="checkmark material-icons">check</i></h4>
+                                                <div th:each="hired : ${hired}">
+
+                                                    <a th:href="'/company/find-bands/' + @{${hired.musicianProfile.id}}" >
+                                                        <img th:src="@{${hired.musicianProfile.profPicImage}} " class="cardImage hiredImage circle"/>
+                                                        <h5 class="black-text"><b>[[${hired.musicianProfile.firstName}]] [[${hired.musicianProfile.lastName}]]</b></h5>
+
+                                                    </a>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div id="areaMusicians" class="col s12">
+                        <h4 class="center-align">Musicians in the Area
+                            <span>
+                    <a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Musicians" href="/company/search/"><i class="material-icons">search</i></a>
+                </span>
+                        </h4>
+                        <div th:if="${musician.isEmpty()}">
+                            <h5>No Musicians are in your area</h5>
+                        </div>
+                        <div class="row">
+                                <div  th:each="musician : ${musician}" >
+                                    <div class="col s12 m12 l3 ">
+
+                                    <div class="musicianCards center-align">
+                                        <a th:href="'/company/find-bands/' + @{${musician.id}}" >
+                                            <img th:src="@{${musician.profPicImage}} " class="cardImage circle"/>
+                                            <div class="musicianInfo black-text">
+                                                <p ><b>[[${musician.firstName}]] [[${musician.lastName}]]</b></p>
+                                                <p class="flow-text">[[${musician.musicianInstruments}]]</p>
+                                            </div>
+
+                                        </a>
+                                    </div>
+
 
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
-
-                </div>
-
-            </div>
-            <div class="col s12 l6">
-                <h4 class="center-align">Musicians in the Area
-                    <span>
-                    <a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Musicians" href="/company/search/"><i class="material-icons">search</i></a>
-                </span>
-                </h4>
-                <div th:if="${musician.isEmpty()}">
-                    <h5>No Musicians are in your area</h5>
-                </div>
-                <div  th:each="musician : ${musician}" class="container">
-                    <div class="musicianCards ">
-                        <a th:href="'/company/find-bands/' + @{${musician.id}}" >
-
-                            <div class="  white hoverable z-depth-2">
-
-                                <div class="valign-wrapper">
-                                    <div class="left ">
-                                        <img th:src="@{${musician.profPicImage}} " class="cardImage circle"/>
-                                    </div>
-
-                                    <div class="musicianInfo black-text">
-                                        <p ><b>[[${musician.firstName}]] [[${musician.lastName}]]</b></p>
-                                        <p>[[${musician.musicianInstruments}]]</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </a>
-                    </div>
-
-
                 </div>
             </div>
+
+
         </div>
 
 
@@ -116,11 +176,11 @@
 
 
 </main>
-<div th:include="modals :: coverCompanyPic"></div>
-<div th:include="modals :: profCompanyPic"></div>
+<div th:include="fragments/modals :: coverCompanyPic"></div>
+<div th:include="fragments/modals :: profCompanyPic"></div>
 
-<div th:include="footer :: footer"></div>
-<div th:include="modals :: companyProfileUpdate"></div>
-<span th:include="includes :: js"></span>
+<div th:include="fragments/modals :: companyProfileUpdate"></div>
+<div th:include="fragments/footer :: footer"></div>
+<span th:include="fragments/includes :: js"></span>
 </body>
 </html>

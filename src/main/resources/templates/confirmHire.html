@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="fragments/includes :: indexHead"></head>
+<body class="grey lighten-1 hireConfirm " th:inline="text">
+<div th:include="fragments/navbar :: navHome"></div>
+
+<main class="confirmHire">
+    <div class="background-image"></div>
+        <div class="card-panel">
+            <h1 class="white-text">Are you sure you want to hire</h1>
+
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="center-align white-text">
+                        <img th:src="@{${musicianProfile.profPicImage}} " class="confirmPic"/>
+                        <h3>[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]]</h3>
+                    </div>
+
+                </div>
+                <div class="col s12 m4">
+                    <h1 class="center-align white-text">for</h1>
+
+                </div>
+                <div class="col s12 m4 valign-wrapper">
+                    <div  class="gigCard z-depth-2">
+                        <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                            <div class="dateBox white orange-text text-accent-4 center-align">
+                                <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
+                                <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                            </div>
+                            <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/company/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
+
+                        </div>
+                        <div class="gigInfo white center-align">
+                            <p><b>[[${gig.gigTitle}]]</b></p>
+                            <p >[[${gig.gigLocation}]]</p>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="confirmAction">
+                <button class="waves-effect waves-light btn-large" type="button" onclick="goBack()">No</button>
+
+                <div  th:if="${gig.companyProfile.user.username == user.username}" >
+                    <form class="hireBtn" th:action="'/company/gig/' + @{${gig.id}} + '/hire'" method="post">
+                        <input type="hidden" name="musician" th:value="${musicianProfile.id}"/>
+                        <button class="waves-effect waves-light btn-large" type="submit" >Yes</button>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+</main>
+<div th:include="fragments/footer :: footer"></div>
+<span th:include="fragments/includes :: js"></span>
+</body>
+</html>

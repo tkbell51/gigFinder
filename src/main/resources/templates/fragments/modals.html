@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head th:include="includes :: indexHead"></head>
+<head th:include="fragments/includes :: indexHead"></head>
 <body>
 
 <div th:fragment="signupModal">
     <div id="signupModal" class="modal">
         <div class="modal-content">
             <div class="">
-                <h3>LOGIN</h3>
+                <h3 class="center-align">LOGIN</h3>
                 <div style="color: red;" th:text="${error}"></div>
 
                 <form th:action="@{/login}" th:object="${user}" method="post">
@@ -24,7 +24,10 @@
                         <input id="password" type="password" th:field="*{password}" />
                         <label for="password">Password</label>
                     </div>
-                    <button class="waves-effect waves-light btn right loginBtn" type="submit" >Login</button>
+                    <div class="modal-footer">
+                        <button class="waves-effect waves-light btn right loginBtn" type="submit" >Login</button>
+
+                    </div>
                 </form>
             </div>
             </div>
@@ -34,53 +37,54 @@
 <div th:fragment="musicianUpdate">
     <div id="musicUpdate" class="modal">
         <div class="modal-content">
-            <form th:action="'/musician/' + @{${musicianProfile.id}} + '/update-profile/'" th:object="${musicianProfile}" method="post">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <label for="firstName">First Name</label>
-                        <input id="firstName" type="text" th:field="*{firstName}"/>
-                    </div>
-                    <div class="input-field col s6">
-                        <label for="lastName">Last Name</label>
-                        <input id="lastName" type="text" th:field="*{lastName}"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6">
-                        <label for="pNumber">Phone Number</label>
-                        <input id="pNumber" type="text" th:field="*{musicianPhoneNumber}"/>
-                    </div>
-                    <div class="input-field col s6">
-                        <label for="email">Email</label>
-                        <input id="email" type="email" th:field="*{musicianEmail}"/>
-                    </div>
-                </div>
-                <div class="input-field col s12">
-                    <select multiple="multiple" th:field="*{musicianInstruments}">
-                        <option value="" disabled="disabled" selected="selected">Choose Musical Instruments</option>
-                        <option th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
-                    </select>
+            <form th:action="'/musician/' + @{${musicianProfile.id}} + '/update-profile/'"  method="post">
+                <div th:object="${user}">
 
+                    <div class="row">
+                        <div class="input-field col s12 m6">
+                            <label for="email"> Email</label>
+                            <input id="email" type="email" th:field="*{email}"/>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <label for="pNumber">Contact Phone Number</label>
+                            <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
+                        </div>
+                    </div>
+                </div>
+                <div th:object="${musicianProfile}">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="firstName">First Name</label>
+                            <input id="firstName" type="text" th:field="*{firstName}"/>
+                        </div>
+                        <div class="input-field col s6">
+                            <label for="lastName">Last Name</label>
+                            <input id="lastName" type="text" th:field="*{lastName}"/>
+                        </div>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <select multiple="multiple" th:field="*{musicianInstruments}">
+                            <option value="" disabled="disabled" selected="selected">Choose Musical Instruments</option>
+                            <option th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
+                        </select>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="location">Location</label>
+                            <input id="location" type="text" th:field="*{location}" class="autocomplete"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="bio">Bio</label>
+                            <input id="bio" type="text" th:field="*{bio}"/>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="location">Location</label>
-                        <input id="location" type="text" th:field="*{location}" class="autocomplete"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="bio">Bio</label>
-                        <input id="bio" type="text" th:field="*{bio}"/>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="birthDate">BirthDate</label>
-                        <input id="birthDate" type="date" class="datepicker" th:field="*{birthDate}"/>
-                    </div>
-                </div>
                 <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
             </form>
 
@@ -111,19 +115,35 @@
 <div th:fragment="mediaUpdate">
     <div th:id="'mediaUpdate' + ${media.id}"  class="modal">
         <div class="modal-content">
-            <form th:action="'/musician/media/' + @{${media.id}} + '/update/'" method="post" th:object="${mediaContent}">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input type="text" id="title" th:field="*{title}" th:value="${media.title}" placeholder="Title of music"/>
-                        <label for="title">Title</label>
+            <form th:action="'/musician/media/' + @{${media.id}} + '/update/'" method="post" >
+                <div th:object="${user}">
+
+                    <div class="row">
+                        <div class="input-field col s12 m6">
+                            <label for="email"> Email</label>
+                            <input id="email" type="email" th:field="*{email}"/>
+                        </div>
+                        <div class="input-field col s12 m6">
+                            <label for="pNumber">Contact Phone Number</label>
+                            <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="url" type="text" th:field="*{media_url}" th:value="${media.media_url}" placeholder="Youtube URL of your music"/>
-                        <label for="url">Add Music</label>
+                <div th:object="${mediaContent}">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input type="text" id="title" th:field="*{title}" th:value="${media.title}" placeholder="Title of music"/>
+                            <label for="title">Title</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="url" type="text" th:field="*{media_url}" th:value="${media.media_url}" placeholder="Youtube URL of your music"/>
+                            <label for="url">Add Music</label>
+                        </div>
                     </div>
                 </div>
+
                 <button class="btn orange accent-4" type="submit">Update</button>
             </form>
         </div>
@@ -142,34 +162,42 @@
 <div th:fragment="companyProfileUpdate">
     <div id="companyUpdate" class="modal">
         <div class="modal-content">
-    <form th:action="'/company/' + @{${companyProfile.id}} + '/update-profile/'" th:object="${companyProfile}" method="post" enctype="multipart/form-data">
-        <div class="row">
-            <div class="input-field col s12">
-                <label for="name">Company Name</label>
-                <input id="name" type="text" th:field="*{companyName}"/>
-            </div>
+    <form th:action="'/company/' + @{${companyProfile.id}} + '/update-profile/'"  method="post" enctype="multipart/form-data">
+        <div th:object="${user}">
 
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <label for="firstName">Contact First Name</label>
-                <input id="firstName" type="text" th:field="*{companyContactFirstName}"/>
-            </div>
-            <div class="input-field col s6">
-                <label for="lastName">Contact Last Name</label>
-                <input id="lastName" type="text" th:field="*{companyContactLastName}"/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s6">
-                <label for="pNumber">Contact Phone Number</label>
-                <input id="pNumber" type="text" th:field="*{phoneNumber}" />
-            </div>
-            <div class="input-field col s6">
-                <label for="email"> Contact Email</label>
-                <input id="email" type="email" th:field="*{email}" />
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <label for="email"> Email</label>
+                    <input id="email" type="email" th:field="*{email}"/>
+                </div>
+                <div class="input-field col s12 m6">
+                    <label for="pNumber">Contact Phone Number</label>
+                    <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
+                </div>
             </div>
         </div>
+
+        <div th:object="${companyProfile}">
+            <div class="row">
+                <div class="input-field col s12">
+                    <label for="name">Company Name</label>
+                    <input id="name" type="text" th:field="*{companyName}"/>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <label for="firstName">Contact First Name</label>
+                    <input id="firstName" type="text" th:field="*{companyContactFirstName}"/>
+                </div>
+                <div class="input-field col s6">
+                    <label for="lastName">Contact Last Name</label>
+                    <input id="lastName" type="text" th:field="*{companyContactLastName}"/>
+                </div>
+            </div>
+        </div>
+
+
         <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
 
     </form>
@@ -368,6 +396,6 @@
 
 </div>
 
-<span th:include="includes :: js"></span>
+<span th:include="fragments/includes :: js"></span>
 </body>
 </html>

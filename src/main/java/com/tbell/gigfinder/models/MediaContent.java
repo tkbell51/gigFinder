@@ -15,7 +15,10 @@ public class MediaContent {
 
     @Column(name = "media_url")
     private String media_url;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date addedDate;
+
     private String title;
 
     @ManyToOne

@@ -16,8 +16,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepo;
 
-//    @Autowired
-//    GigRepository gigRepo;
+
 
     @Override
     public User findByUsername(String username) {
@@ -33,14 +32,6 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
-//    public void removeOldItems() {
-//        Calendar cal = Calendar.getInstance();
-//        java.sql.Date today = new java.sql.Date(cal.getTimeInMillis());
-//
-//        gigRepo.removeOlderThan(today);
-//
-//
-//    }
 
 
 
