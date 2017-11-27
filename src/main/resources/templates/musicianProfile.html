@@ -74,30 +74,38 @@
                                 <h5>Add Your Music</h5>
                             </div>
                         </h4>
-                        <div class="card  musicTable">
-                            <table class="bordered white ">
-                                <tr  th:each="media : ${media}">
-                                    <td class="valign-wrapper">
+                        <ul class="collapsible" data-collapsible="accordion">
+                            <li th:each="media : ${media}">
+                                <div class="collapsible-header mediaTitle">
+                                    <a class="valign-wrapper popup-youtube" th:href="@{${media.media_url}}">
                                         <i class="orange-text text-accent-4 material-icons">play_circle_filled</i>
-                                        <a class="popup-youtube" th:href="@{${media.media_url}}">[[${media.title}]]</a>
+                                        [[${media.title}]]
+                                    </a>
+                                </div>
+                                <div class="collapsible-body  white">
+                                    <div class="row">
+                                        <div class="col s2">
+                                            <a class="waves-effect waves-light modal-trigger orange-text text-accent-4 btn-floating float-right" th:href="'#mediaUpdate' + ${media.id}">
+                                                <i class="material-icons  tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Music">edit</i>
+                                            </a>
+                                        </div>
+                                        <div class="col s2">
+                                            <form th:action="'/musician/media/delete/' + ${media.id}" method="post">
+                                                <button class="modal-action media waves-effect orange-text text-accent-4 waves-light btn-floating" type="submit" >
+                                                    <i class="material-icons  tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Music">delete</i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
 
-                                    </td>
-                                    <td>
-                                        <a class="waves-effect waves-light modal-trigger btn-flat float-right" th:href="'#mediaUpdate' + ${media.id}">
-                                            <i class="material-icons orange-text text-accent-4 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Music">edit</i>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <form th:action="'/musician/media/delete/' + ${media.id}" method="post">
-                                            <button class="modal-action media waves-effect waves-light btn-flat" type="submit" >
-                                                <i class="material-icons orange-text text-accent-4 tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Music">delete</i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                    <div th:include="fragments/modals :: mediaUpdate"></div>
-                                </tr>
-                            </table>
-                        </div>
+
+
+                                </div>
+                                <div th:include="fragments/modals :: mediaUpdate"></div>
+
+                            </li>
+                        </ul>
+
 
                     </div>
                 </div>

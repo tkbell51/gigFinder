@@ -7,7 +7,7 @@
     <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{${musicianDetail.coverPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
         <div th:include="fragments/navbar :: navHome"></div>
 
-        <div class="white-text center-align  bannerBio ">
+        <div class="white-text bannerBio ">
             <h4>[[${musicianDetail.firstName}]] [[${musicianDetail.lastName}]]</h4>
             <h5 > [[${musicianDetail.location}]]</h5>
 
@@ -58,26 +58,25 @@
                             <li class="tab col s6"><a href="#upEvents">Hired Events</a></li>
                         </ul>
                     </div>
-                    <div id="music" class="col s12 container">
-                        <div class=" musicCard">
+                    <div id="music" class="container">
 
                             <h4 class="center-align">My Music
                                 <div th:if="${media.isEmpty()}">
                                     <h5>No Music</h5>
                                 </div>
                             </h4>
-                            <div class="card container musicTable">
-                                <table class="bordered white ">
-                                    <tr  th:each="media : ${media}">
-                                        <td class="valign-wrapper">
-                                            <i class="orange-text text-accent-4 material-icons">play_circle_filled</i>
-                                            <a class="popup-youtube" th:href="@{${media.media_url}}">[[${media.title}]]</a>
-                                        </td>
-                                    </tr>
-                                </table>
+
+                            <div class="card center-align">
+                                <div th:each="media : ${media}" class="detailsMedia mediaTitle">
+                                    <a class="valign-wrapper popup-youtube" th:href="@{${media.media_url}}">
+                                        <i class="orange-text text-accent-4 material-icons">play_circle_filled</i>
+                                        [[${media.title}]]
+                                    </a>
+                                </div>
                             </div>
 
-                        </div>
+
+
                     </div>
                     <div id="upEvents" class="col s12">
                         <h4 class="center-align">Upcoming Events</h4>

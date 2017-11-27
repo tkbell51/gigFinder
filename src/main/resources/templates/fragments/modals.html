@@ -37,7 +37,7 @@
 <div th:fragment="musicianUpdate">
     <div id="musicUpdate" class="modal">
         <div class="modal-content">
-            <form th:action="'/musician/' + @{${musicianProfile.id}} + '/update-profile/'"  method="post">
+            <form th:action="'/musician/update-profile/'"  method="post">
                 <div th:object="${user}">
 
                     <div class="row">
@@ -50,6 +50,7 @@
                             <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
                         </div>
                     </div>
+
                 </div>
                 <div th:object="${musicianProfile}">
                     <div class="row">
@@ -116,19 +117,7 @@
     <div th:id="'mediaUpdate' + ${media.id}"  class="modal">
         <div class="modal-content">
             <form th:action="'/musician/media/' + @{${media.id}} + '/update/'" method="post" >
-                <div th:object="${user}">
 
-                    <div class="row">
-                        <div class="input-field col s12 m6">
-                            <label for="email"> Email</label>
-                            <input id="email" type="email" th:field="*{email}"/>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <label for="pNumber">Contact Phone Number</label>
-                            <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
-                        </div>
-                    </div>
-                </div>
                 <div th:object="${mediaContent}">
                     <div class="row">
                         <div class="input-field col s12">
@@ -162,7 +151,7 @@
 <div th:fragment="companyProfileUpdate">
     <div id="companyUpdate" class="modal">
         <div class="modal-content">
-    <form th:action="'/company/' + @{${companyProfile.id}} + '/update-profile/'"  method="post" enctype="multipart/form-data">
+    <form th:action="'/company/update-profile/'"  method="post" enctype="multipart/form-data">
         <div th:object="${user}">
 
             <div class="row">

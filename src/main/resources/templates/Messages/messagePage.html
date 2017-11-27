@@ -4,8 +4,9 @@
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="grey lighten-1">
 <div th:include="fragments/navbar :: navHome"></div>
-<main th:inline="text" class="container center-align">
-<div class="card-panel">
+<main th:inline="text" class="container message">
+    <div class="background-image"></div>
+    <div class="card-panel container white-text">
     <h1 th:utext="${#strings.replace( #strings.escapeXml( message ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></h1>
     <div class="row center-align">
         <div class="col m6 s12">

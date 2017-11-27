@@ -4,8 +4,10 @@
 <head th:include="fragments/includes :: indexHead"></head>
 <body th:inline="text" class="grey lighten-1">
 <div th:include="fragments/navbar :: navHome"></div>
-<main class="success container center-align valign-wrapper">
-<div class="card-panel">
+<main class="success">
+    <div class="background-image"></div>
+
+    <div class="card-panel container white-text">
     <h3>Great! You applied successfully for: </h3>
     <h3>[[${gig.gigTitle}]]</h3>
     <h5>Starts [[${#dates.format(gig.gigStart,'EEE, d MMM yyyy')}]] -  Ends [[${#dates.format(gig.gigEnd,'EEE, d MMM yyyy')}]]</h5>

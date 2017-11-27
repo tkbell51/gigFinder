@@ -9,11 +9,11 @@
 
     <div class="card-panel container">
         <div class="row">
-            <div class="col m6 logoSide center-align ">
+            <div class="col s12 m6 logoSide center-align ">
                 <a href="/company/my-profile" class="loginLogo"><h1>gigFinder</h1></a>
                 <h5 class="white-text"> Create Gig</h5>
             </div>
-            <div class="col m6 white compForm">
+            <div class="col s12 m6 white compForm">
                 <form th:action="@{/company/create-gig/}" method="post" th:object="${gig}" enctype="multipart/form-data">
                     <div class="row">
                         <div class="input-field col s12">

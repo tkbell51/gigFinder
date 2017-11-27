@@ -238,12 +238,14 @@ footer{
 /*Company Signup and Music Signup*/
 .logoSide{
 
-    position: relative;
-    top: 50px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content:center;
+    align-items:center;
 
 }
 
-.compSignup, .musicSignup{
+.compSignup, .musicSignup, .success, .message{
     padding: 15px;
     display: flex;
     justify-content:center;
@@ -261,7 +263,13 @@ footer{
 .confirmHire .background-image{
     background: url("/assets/images/pexelsMic2.jpeg");
 }
-.compSignup .background-image, .musicSignup .background-image, .confirmHire .background-image{
+.success .background-image{
+    background: url("/assets/images/pexelFireworks.jpg");
+}
+.message .background-image{
+    background: url("/assets/images/pexelDrums.jpeg");
+}
+.compSignup .background-image, .musicSignup .background-image, .confirmHire .background-image, .success .background-image, .message .background-image{
     position:absolute;
     left: -5%;
     right:0;
@@ -275,7 +283,7 @@ footer{
     -ms-filter: blur(5px);
     filter: blur(5px);
 }
-.compSignup .card-panel, .confirmHire .card-panel, .musicSignup .card-panel {
+.compSignup .card-panel, .confirmHire .card-panel, .musicSignup .card-panel, .message .card-panel, .success .card-panel {
     background-color: rgba(0, 0, 0, 0.68);
     margin: auto;
     position:relative;
@@ -298,11 +306,17 @@ footer{
     margin: 10px;
 
 }
-
+/*Musician Details Page  */
+.detailsMedia{
+    line-height: 1.5;
+    padding: 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
 /*Profile Pages*/
 .profCol{
     position: relative;
-    top: -250px;
+    bottom: 200px;
     width: 300px;
 
 }
@@ -317,6 +331,7 @@ footer{
     position: absolute;
     color: rgba(253, 109, 34, 0.4);
     font-size: 1em;
+    margin-top: 5px;
     margin-left: 20px;
     background-color: rgba(56, 56, 56, 0.5);
     border-radius: 50%;
@@ -379,22 +394,14 @@ footer{
 .tabs{
     margin: 15px auto;
 }
-.musicCard{
-    margin-top: 0px;
-    padding: 10px;
-}
-.musicTable{
-    margin: auto;
-}
+
+
 .musicInfo {
     position: relative;
     top: 80px;
 
 }
 
-.musicRow {
-    font-size: 1.2em;
-}
 
 .profileBanner {
     height: 400px;
