@@ -21,5 +21,4 @@ public interface MusicianProfileRepository extends CrudRepository<MusicianProfil
 
     Iterable<MusicianProfile> findMusicianProfileByLocationContainingIgnoreCase(String location);
 
-
 }

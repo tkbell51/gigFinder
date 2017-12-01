@@ -4,6 +4,7 @@
 <head th:fragment="indexHead">
     <meta charset="UTF-8"/>
     <title>gigFinder</title>
+    <meta name="viewport" content="width=device-width"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Pacifico" rel="stylesheet"/>
     <link rel="stylesheet" th:href="@{/webjars/Magnific-Popup/1.0.0/magnific-popup.css}"/>
@@ -18,23 +19,7 @@
     <script th:src="@{/webjars/Magnific-Popup/1.0.0/jquery.magnific-popup.min.js}"></script>
 
 <script>
-      $(document).ready(function(){
-          $('select').material_select();
-          $('.scrollspy').scrollSpy();
-          $('.modal').modal();
-          $('.tooltipped').tooltip({delay: 50});
-          $('ul.tabs').tabs();
-          $('.collapsible').collapsible();
-          $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
-              disableOn: 700,
-              type: 'iframe',
-              mainClass: 'mfp-fade',
-              removalDelay: 160,
-              preloader: false,
 
-              fixedContentPos: false
-          });
-      });
 
       $('.datepicker').pickadate({
           selectMonths: true, // Creates a dropdown to control month
@@ -55,6 +40,24 @@
           autoclose: false, // automatic close timepicker
           ampmclickable: true, // make AM PM clickable
           aftershow: function(){} //Function for after opening timepicker
+      });
+      $(document).ready(function(){
+          $('select').material_select();
+          $('.scrollspy').scrollSpy();
+          $('.modal').modal();
+          $('.tooltipped').tooltip({delay: 50});
+          $('ul.tabs').tabs();
+          $('.collapsible').collapsible();
+          $(".button-collapse").sideNav();
+          $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
+              disableOn: 700,
+              type: 'iframe',
+              mainClass: 'mfp-fade',
+              removalDelay: 160,
+              preloader: false,
+
+              fixedContentPos: false
+          });
       });
 
 </script>

@@ -6,21 +6,16 @@ import com.tbell.gigfinder.Repositories.*;
 import com.tbell.gigfinder.config.ClientKey;
 import com.tbell.gigfinder.googleAPI.GeoCodingInterface;
 import com.tbell.gigfinder.googleAPI.GeoCodingResponse;
-import com.tbell.gigfinder.models.Gig;
-import com.tbell.gigfinder.models.MediaContent;
-import com.tbell.gigfinder.models.MusicianProfile;
-import com.tbell.gigfinder.models.User;
+import com.tbell.gigfinder.models.*;
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
 
@@ -56,7 +51,13 @@ public class HomeController {
         } catch (Exception ex) {
 
         }
-        return "index";
+        if(request.isUserInRole("ROLE_MUSICIAN")){
+            return "redirect:/musician/my-profile";
+        } else if(request.isUserInRole("ROLE_COMPANY")){
+            return "redirect:/company/my-profile";
+        } else {
+            return "index";
+        }
     }
 
 

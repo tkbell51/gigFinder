@@ -2,36 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
-<body class=" login">
-<main class="login">
-    <div class="container ">
-                <div class="card-panel center-align loginCard">
-                    <h1 class="loginLogo center-align"><a href="/" class="orange-text text-accent-4">gigFinder</a></h1>
-                    <div class="card z-depth-5">
-                        <div class="card-content">
-                            <h3 class="center-align">LOGIN</h3>
-                            <div th:text="${message}"></div>
-                            <div style="color: red;" th:text="${error}"></div>
+<body >
+<main class="login ">
+    <div class="background-image"></div>
 
-                            <form th:action="@{/login}" th:object="${user}" method="post">
-                                <div class="input-field">
-                                    <i class="material-icons prefix">account_circle</i>
-                                    <input id="username" type="text" th:field="*{username}" autofocus="autofocus"/>
-                                    <label for="username">Username</label>
+        <div class="card-panel container center-align">
+            <h1 class="loginLogo"> <a href="/" >gigFinder</a></h1>
+            <h5 class=" white-text">Login</h5>
+            <div th:text="${message}"></div>
+            <div style="color: red; margin: 15px 0px; text-align: center;" th:text="${error}"></div>
 
-                                </div>
-                                <div class="input-field">
-                                    <i class="material-icons prefix">lock</i>
+            <form th:action="@{/login}" th:object="${user}" method="post" class="white-text">
+                <div class="input-field">
+                    <i class="material-icons prefix">account_circle</i>
+                    <input id="username" type="text" th:field="*{username}" autofocus="autofocus"/>
+                    <label for="username">Username</label>
 
-                                    <input id="password" type="password" th:field="*{password}" />
-                                    <label for="password">Password</label>
-                                </div>
-                                <button class="waves-effect waves-light btn" type="submit" >Login</button>
-                            </form>
-                        </div>
-                    </div>
                 </div>
-    </div>
+                <div class="input-field">
+                    <i class="material-icons prefix">lock</i>
+
+                    <input id="password" type="password" th:field="*{password}" />
+                    <label for="password">Password</label>
+                </div>
+                <button class="waves-effect waves-light btn" type="submit" >Login</button>
+            </form>
+        </div>
+
 </main>
 <span th:include="fragments/includes :: js"></span>
 </body>

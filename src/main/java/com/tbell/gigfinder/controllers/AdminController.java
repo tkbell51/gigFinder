@@ -20,7 +20,7 @@ public class AdminController {
     UserRepository userRepo;
 
     @Autowired
-    MusicianProfileRepository musicRepo;
+    MusicianProfileRepository musicianRepo;
 
     @Autowired
     CompanyProfileRepository compRepo;
@@ -31,7 +31,7 @@ public class AdminController {
         model.addAttribute("user", user);
         model.addAttribute("user", user);
 
-        Iterable<MusicianProfile> allMusicians = musicRepo.findAll();
+        Iterable<MusicianProfile> allMusicians = musicianRepo.findAll();
         model.addAttribute("musician", allMusicians);
 
         Iterable<CompanyProfile> allCompanies = compRepo.findAll();

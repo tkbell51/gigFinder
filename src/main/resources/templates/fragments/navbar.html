@@ -20,6 +20,65 @@
                 </li>
             </ul>
 
+    <ul class="side-nav" id="mobile-demo">
+        <div sec:authorize="!isAuthenticated()">
+            <li><a href="/login" >Login</a></li>
+        </div>
+        <div sec:authorize="hasRole('ROLE_COMPANY')">
+            <li>
+                <div class="user-view">
+                    <div class="background">
+                        <img th:src="@{${companyProfile.companyCoverPic}}" alt=""/>
+                    </div>
+                    <a href="#!user"><img class="circle" th:src="@{${companyProfile.companyProfPic}}"/></a>
+                    <a href="#!name"><span class="white-text name">[[${user.username}]]</span></a>
+                    <a href="#!email"><span class="white-text email">[[${user.email}]]</span></a>
+
+                </div>
+            </li>
+            <li>
+                <a class="waves-effect waves-light modal-trigger" href="#companyUpdate">Update Profile</a>
+            </li>
+            <li><div class="divider"></div></li>
+
+            <li><a class="waves-effect" th:href="@{/company/find-gigs}">Find a Gig</a></li>
+            <li><a  class="waves-effect" th:href="@{/company/find-bands}">Find a Band</a></li>
+            <li><a class="waves-effect" href="/company/search/">Search Musicians</a></li>
+            <li><div class="divider"></div></li>
+            <li>
+                <form th:action="@{/logout}" method="post">
+                    <input class="btn-flat" type="submit" value="LOGOUT"/>
+                </form>
+            </li>
+
+        </div>
+        <div sec:authorize="hasRole('ROLE_MUSICIAN')">
+            <li>
+                <div class="user-view">
+                    <div class="background">
+                        <img th:src="@{${musicianProfile.coverPicImage}}" alt=""/>
+                    </div>
+                    <a href="#!user"><img class="circle" th:src="@{${musicianProfile.profPicImage}}"/></a>
+                    <a href="#!name"><span class="white-text name">[[${user.username}]]</span></a>
+                    <a href="#!email"><span class="white-text email">[[${user.email}]]</span></a>
+                </div>
+            </li>
+            <li>
+                <a class="waves-effect waves-light modal-trigger" href="#musicUpdate">Update Profile</a>
+            </li>
+            <li><div class="divider"></div></li>
+            <li><a class="waves-effect"  th:href="@{/musician/find-gigs}">Find a Gig</a></li>
+            <li><a class="waves-effect" th:href="@{/musician/find-bands}">Find a Band</a></li>
+            <li><a class="waves-effect" href="/musician/search/">Search Gigs</a></li>
+            <li><div class="divider"></div></li>
+            <li>
+                <form th:action="@{/logout}" method="post">
+                    <input class="waves-effect" type="submit" value="Logout"/>
+                </form>
+            </li>
+
+        </div>
+    </ul>
 
         <nav>
             <div class=" nav-wrapper">
@@ -28,8 +87,9 @@
                 <a href="/company/my-profile" sec:authorize="hasRole('ROLE_COMPANY')" class="brand-logo">gigFinder</a>
 
                 <a href="/musician/my-profile" sec:authorize="hasRole('ROLE_MUSICIAN')" class="brand-logo">gigFinder</a>
-
                 <a href="/admin" sec:authorize="hasRole('ROLE_ADMIN')" class="brand-logo">gigFinder</a>
+
+                <a sec:authorize="isAuthenticated()" href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a sec:authorize="hasRole('ROLE_COMPANY')" th:href="@{/company/find-gigs}">Find a Gig</a></li>
                     <li><a sec:authorize="hasRole('ROLE_MUSICIAN')" th:href="@{/musician/find-gigs}">Find a Gig</a></li>
@@ -49,12 +109,14 @@
                             <i class="material-icons right">arrow_drop_down</i></a>
                     </li>
                 </ul>
+
             </div>
         </nav>
 
 
 
 </div>
+
 
 <span th:include="fragments/includes :: js"></span>
 

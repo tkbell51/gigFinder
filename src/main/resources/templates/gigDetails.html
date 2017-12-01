@@ -7,7 +7,7 @@
 <main th:inline="text" class="gigDetails">
     <div class="background-image" th:style="'background:url('+ @{${gig.gigArt}}+')no-repeat center ; background-size: cover;' "></div>
 
-    <div class="gig profileDetails ">
+    <div class="gig container ">
         <div>
             <nav th:if="${gig.companyProfile.user.username == user.username}" class="gigNav transparent ">
 
@@ -78,8 +78,7 @@
                                             [[${gig.gigLocation}]]
                                         </div>
                                         <div >
-                                            <a th:href="'https://www.google.com/maps/place/'+ @{${gig.gigLocation}}" target="_blank" class="waves-effect waves-light btn-floating tooltipped" data-position="top" data-delay="50" data-tooltip="Directions"><i class="material-icons">map</i></a>
-
+                                            <a th:href="'https://maps.google.com/maps?q='+ @{${gig.gigLocation}}" target="_blank" class="waves-effect waves-light btn-floating tooltipped popup-gmaps" data-position="top" data-delay="50" data-tooltip="Directions"><i class="material-icons">map</i></a>
                                         </div>
                                 </div>
                             </section>
@@ -96,12 +95,15 @@
                             <h4 >Hired<i class="checkmark material-icons">check</i></h4>
                             <div th:each="hired : ${hired}">
 
-                                <a th:href="'/company/find-bands/' + @{${hired.musicianProfile.id}}" >
+                                <a sec:authorize="hasRole('ROLE_COMPANY')" th:href="'/company/find-bands/' + @{${hired.musicianProfile.id}}" >
                                     <img th:src="@{${hired.musicianProfile.profPicImage}} " class="cardImage hiredImage circle"/>
                                     <h5 class="black-text"><b>[[${hired.musicianProfile.firstName}]] [[${hired.musicianProfile.lastName}]]</b></h5>
-
                                 </a>
 
+                                <a sec:authorize="hasRole('ROLE_MUSICIAN')" th:href="'/musician/find-bands/' + @{${applied.musicianProfile.id}}">
+                                    <img th:src="@{${hired.musicianProfile.profPicImage}} " class="cardImage hiredImage circle"/>
+                                    <h5 class="black-text"><b>[[${hired.musicianProfile.firstName}]] [[${hired.musicianProfile.lastName}]]</b></h5>
+                                </a>
                             </div>
                         </div>
                     </div>

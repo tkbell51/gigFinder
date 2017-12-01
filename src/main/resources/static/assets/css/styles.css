@@ -30,6 +30,9 @@ main {
 }
 
 /* icon prefix focus color */
+.loginCard .input-field .prefix, .loginCard h3{
+    color: #FFF;
+}
 .input-field .prefix.active {
     color: #FD6D22;
 }
@@ -50,8 +53,6 @@ main {
 }
 .brand-logo {
     font-family: 'Great Vibes', cursive;
-    margin-left: 15px;
-
 }
 .choice .row, .compSignup .row, .musicSignup .row, .time-description .row{
     margin-bottom: 0px;
@@ -92,10 +93,7 @@ nav{
     box-shadow: none;
     background-color: rgba(0, 0, 0, 0.24);
 }
-.top nav{
-    background-color: rgba(0, 0, 0, 0);
 
-}
 nav, footer{
     position: relative;
     z-index:8;
@@ -154,11 +152,28 @@ footer{
     position: relative;
     z-index: 5;
 }
+/*search page*/
+.search{
+    background: #f24000; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #f24000 0%, #6041a8 28%, #9e0cf9 50%, #ff8c19 77%, #5600ed 99%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #f24000 0%,#6041a8 28%,#9e0cf9 50%,#ff8c19 77%,#5600ed 99%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #f24000 0%,#6041a8 28%,#9e0cf9 50%,#ff8c19 77%,#5600ed 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f24000', endColorstr='#5600ed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+.search .card-panel{
+    background-color: rgba(0, 0, 0, 0.68);
+
+}
+.search .select-wrapper input, .search .select-wrapper .caret{
+    color: #D1D1D1;
+}
 /*homepage*/
 #logo {
     font-size: 6.8em;
     position: relative;
     top: 30vh;
+    margin-left: 15px;
+
 }
 .top {
 
@@ -166,8 +181,14 @@ footer{
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
-}
 
+}
+.top .card-panel{
+    background-color: rgba(0, 0, 0, 0.68);
+    position:relative;
+    z-index:2;
+    border-radius: 10px;
+}
 .loginLogo {
     font-family: 'Great Vibes', cursive;
 
@@ -199,13 +220,10 @@ footer{
     margin: auto;
 }
 .musicText, .compText{
-    background-color: rgba(40, 40, 40, 0.51);
+    background-color: rgba(0, 0, 0, 0.68);
     border-radius: 5px;
-    height: 300px;
-    padding: 20px;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
+    padding: 3%;
+
 }
 #musicChoice .logBtn, #compChoice .logBtn{
     font-size: 1.5em;
@@ -213,27 +231,30 @@ footer{
     color: #FFF;
     border-radius: 25px;
     border: 1px solid #FD6D22;
-    position: relative;
-    top: 15px;
+    margin-top: 5px;
 
 }
-#compChoice .logBtn{
-    top:50px;
+@media (max-width: 768px)   {
+
+    .top{
+        height: 80vh;
+    }
+    .top .loginCard{
+        border-radius: 5px;
+        padding: 3%;
+        margin-top: 70px;
+    }
+
 }
 
 /*login page*/
-.login {
+.login .background-image{
     background: url("/assets/images/pexelsJazz.jpeg");
-    box-shadow: inset 0 0 0 2000px rgba(21, 60, 101, 0.3);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    height: 100vh;
 }
 
 .loginCard {
+
     margin-top: 70px;
-    width: 350px;
 }
 /*Company Signup and Music Signup*/
 .logoSide{
@@ -245,7 +266,7 @@ footer{
 
 }
 
-.compSignup, .musicSignup, .success, .message{
+.compSignup, .musicSignup, .success, .message, .login{
     padding: 15px;
     display: flex;
     justify-content:center;
@@ -269,7 +290,12 @@ footer{
 .message .background-image{
     background: url("/assets/images/pexelDrums.jpeg");
 }
-.compSignup .background-image, .musicSignup .background-image, .confirmHire .background-image, .success .background-image, .message .background-image{
+.compSignup .background-image,
+.musicSignup .background-image,
+.confirmHire .background-image,
+.success .background-image,
+.message .background-image,
+.login .background-image{
     position:absolute;
     left: -5%;
     right:0;
@@ -283,7 +309,13 @@ footer{
     -ms-filter: blur(5px);
     filter: blur(5px);
 }
-.compSignup .card-panel, .confirmHire .card-panel, .musicSignup .card-panel, .message .card-panel, .success .card-panel {
+
+.compSignup .card-panel,
+.confirmHire .card-panel,
+.musicSignup .card-panel,
+.message .card-panel,
+.success .card-panel,
+.login .card-panel{
     background-color: rgba(0, 0, 0, 0.68);
     margin: auto;
     position:relative;
@@ -291,11 +323,11 @@ footer{
     border-radius: 10px;
 }
 
-.card-panel .loginLogo h1{
-    font-size: 6em;
+.card-panel .loginLogo a{
+    font-size: 4rem;
     color: #FFF;
 }
-.card-panel .loginLogo h1:hover{
+.card-panel .loginLogo a:hover{
     color: #FD6D22;
 }
 .compForm{
@@ -314,6 +346,19 @@ footer{
     border-bottom: 1px solid #ddd;
 }
 /*Profile Pages*/
+.row-content{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content:space-between;
+
+}
+.end{
+    justify-content:flex-end;
+}
+.profile-info{
+    margin-right: 10px;
+}
+
 .profCol{
     position: relative;
     bottom: 200px;
@@ -391,6 +436,9 @@ footer{
     text-align: center;
     margin-left: -35px;
 }
+.profile-content{
+    margin-right: 10px;
+}
 .tabs{
     margin: 15px auto;
 }
@@ -418,6 +466,7 @@ footer{
     left: 39%;
     margin-left: auto;
     margin-right: auto;
+    display: inline-block;
 }
 .bannerBio h4{
     font-size: 3em;
@@ -591,8 +640,6 @@ img.responsive-img {
 }
 
 
-
-
 .gig h1, .musiciansApplied .row, .timePlace .row{
     margin: 0;
 }
@@ -616,7 +663,10 @@ height: 60px;
 .timePlace i{
     margin-right: 10px;
 }
-
+.show-on-medium-and-down .tabs{
+    display: flex;
+    flex-flow: row wrap;
+}
 /*Gig Details Page*/
 
 .gigDetails{
@@ -642,10 +692,10 @@ height: 60px;
     position: relative;
 }
 .gig{
-    position: fixed;
+    position: relative;
     left: 0;
     right: 0;
-    z-index: 9999;
+    z-index: 50;
 }
 .gig section{
     border: 1px solid lightgray;
@@ -685,6 +735,8 @@ height: 60px;
 .hireBtn{
     background: #FD6D22;
     color: #FFF;
+    padding: 3% 6%;
+
 }
 .hireBtn:hover{
     color: #FFF;
@@ -698,6 +750,7 @@ height: 60px;
 .time-description .row .col, .gig .row .col{
     padding: 0;
 }
+
 /*Confirm Hire Page*/
 
 .confirmHire{

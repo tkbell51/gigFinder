@@ -107,6 +107,7 @@ public class MusicianController {
                              Model model, Principal principal){
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
+
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
         MediaContent mediaContent = new MediaContent(mediaURL, new Date(System.currentTimeMillis()), title);
@@ -137,82 +138,9 @@ public class MusicianController {
         return "redirect:/musician/my-profile";
     }
 
-    @RequestMapping(value = "/musician/gig/{gigId}", method = RequestMethod.GET)
-    public String gigDetails(@PathVariable("gigId")long gigId,
-                             Model model, Principal principal) throws InterruptedException, IOException {
-
-        User user = userRepo.findByUsername(principal.getName());
-        model.addAttribute("user", user);
-        MusicianProfile musicianProfile = musicRepo.findByUser(user);
-        model.addAttribute("musicianProfile", musicianProfile);
-        Gig gig = gigRepo.findOne(gigId);
-        model.addAttribute("gig", gig);
-        Iterable<MusicianApplyGig> applyGig = applyRepo.findAllByGigId(gigId);
-        model.addAttribute("applied", applyGig);
-
-        ClientKey clientKey = new ClientKey();
-
-
-        GeoCodingInterface geocodingInterface = Feign.builder()
-                .decoder(new GsonDecoder())
-                .target(GeoCodingInterface.class, "https://maps.googleapis.com");
-        GeoCodingResponse response = geocodingInterface.geoCodingResponse(gig.getGigLocation(),
-                clientKey.getSTATIC_API_KEY());
-        double lat = response.getResults().get(0).getGeometry().getLocation().getLat();
-        double lng = response.getResults().get(0).getGeometry().getLocation().getLng();
-        String oneMarkerUrl = "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=500x1100&maptype=roadmap&markers=color:blue%7Clabel:S%7C" + lat + "," + lng + "&key=" + clientKey.getSTATIC_API_KEY();
-        model.addAttribute("url", oneMarkerUrl);
-        return "gigDetails";
-    }
-
-
-    @RequestMapping(value = "/musician/gig/{gigId}/apply", method = RequestMethod.POST)
-    public String gigApply (@PathVariable("gigId")long gigId,
-                            Principal principal, Model model){
-        User user = userRepo.findByUsername(principal.getName());
-        MusicianProfile musicianProfile = musicRepo.findByUser(user);
-
-        Gig gigApply = gigRepo.findById(gigId);
-
-        Iterable<MusicianApplyGig> allApplied = applyRepo.findAllByGigAndMusicianProfile(gigApply, musicianProfile);
-        Gig gigA = null;
-        MusicianProfile mp1 = null;
-        for(MusicianApplyGig eachApplied : allApplied){
-            gigA = eachApplied.getGig();
-            mp1 = eachApplied.getMusicianProfile();
-        }
-
-        MusicianApplyGig musicianApplyGig = new MusicianApplyGig(gigApply, musicianProfile, new Date(System.currentTimeMillis()));
-
-        if(gigApply == gigA && musicianProfile == mp1){
-            model.addAttribute("user", user);
-            model.addAttribute("musicianProfile", musicianProfile);
-            model.addAttribute("message", "You have already applied for this gig.");
-            return "Messages/messagePage";
-        } else {
-            applyRepo.save(musicianApplyGig);
-            return "redirect:/musician/gig/{gigId}/success";
-
-        }
-    }
 
 
 
-
-    @RequestMapping(value = "/musician/gig/{gigId}/success", method = RequestMethod.GET)
-    public String applySuccess(@PathVariable("gigId") long gigId,
-                               Principal principal, Model model){
-        User user = userRepo.findByUsername(principal.getName());
-        model.addAttribute("user", user);
-
-        MusicianProfile musicianProfile = musicRepo.findByUser(user);
-        model.addAttribute("musicianProfile", musicianProfile);
-
-        Gig gigApply = gigRepo.findById(gigId);
-        model.addAttribute("gig", gigApply);
-
-        return "Messages/gigSuccess";
-    }
 
     @RequestMapping(value = "/musician/find-bands", method = RequestMethod.GET)
     public String findBands(Model model, Principal principal) {
@@ -221,6 +149,7 @@ public class MusicianController {
 
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
+
         Iterable<MusicianProfile> allmusicians = musicRepo.findAll();
         model.addAttribute("musicians", allmusicians);
         return "Search/findBands";
@@ -254,6 +183,7 @@ public class MusicianController {
 
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
+
         Iterable<Gig> allgigs = gigRepo.findAll();
         model.addAttribute("gig", allgigs);
         return "Search/findGigs";
