@@ -121,9 +121,9 @@ nav, footer{
 .tabs .tab a{
     color: #FD6D22;
 }
-.tabs .tab a.active{
-    background-color: #FD6D22;
-    color: #FFF;
+.tabs-fixed-width i {
+    font-size: 2.6rem;
+    margin-top: 5px;
 }
 
 .navAvatar{
@@ -167,6 +167,7 @@ footer{
 .search .select-wrapper input, .search .select-wrapper .caret{
     color: #D1D1D1;
 }
+
 /*homepage*/
 #logo {
     font-size: 6.8em;
@@ -352,6 +353,16 @@ footer{
     justify-content:space-between;
 
 }
+.tab-profile{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items:center;
+    margin-top: 40px;
+}
+.tab-profile h4, .tab-profile h5{
+    margin-top: 0;
+    margin-bottom: 0;
+}
 .end{
     justify-content:flex-end;
 }
@@ -432,9 +443,12 @@ footer{
     color: white;
     font-size: 16px;
     border-radius: 5px;
-    width: 160%;
+    width: 101%;
     text-align: center;
-    margin-left: -35px;
+    margin-left: 0px;
+}
+.tab-profile .middle{
+    top: 25%;
 }
 .profile-content{
     margin-right: 10px;
@@ -697,13 +711,26 @@ height: 60px;
     right: 0;
     z-index: 50;
 }
-.gig section{
-    border: 1px solid lightgray;
+.gig-info{
+    display: flex;
+    flex-flow: row nowrap;
 }
+.gig-left{
+    flex: 1 1 75%;
+
+}
+.gig-map, .gigDescript{
+    flex: 1 1 50%;
+}
+.hire-right{
+    flex: 1 1 25%;
+}
+
 .gig-image, .gig-map, .gigDescript{
     height: 30vh;
 }
 .gig-image{
+    flex: 1 1 100%;
     display: flex;
     align-items:flex-end;
 }
@@ -713,20 +740,20 @@ height: 60px;
     background-color: rgba(0,0,0,0.41);
     padding-left: 10px;
 }
+.time-description{
+    display: flex;
+    flex-flow: row nowrap;
+}
 .gigDescript{
     padding: 10px;
 }
 .hireForm{
+    flex: 1 1 35%;
     display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-between;
     height:60vh;
 }
-.hireForm .container{
-    height: 60vh;
-}
 .appliedNum{
-    font-size: 1.4em;
+    font-size: 1.2em;
 }
 .bandApplied{
     width: 100%;
@@ -736,10 +763,13 @@ height: 60px;
     background: #FD6D22;
     color: #FFF;
     padding: 3% 6%;
-
+    text-align: center;
 }
 .hireBtn:hover{
     color: #FFF;
+}
+#hireDrop{
+    min-width: 225px;
 }
 .hireRow, .locationBox{
     display: flex;
@@ -749,6 +779,19 @@ height: 60px;
 }
 .time-description .row .col, .gig .row .col{
     padding: 0;
+}
+@media (max-width: 768px)   {
+    .gig-info, .time-description{
+        flex-flow: column nowrap;
+    }
+    .gig-left,
+    .gig-map,
+    .gigDescript,
+    .time-description{
+        flex: 1 1 100%;
+
+    }
+
 }
 
 /*Confirm Hire Page*/

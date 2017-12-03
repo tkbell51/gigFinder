@@ -46,7 +46,7 @@
                 <button class="waves-effect waves-light btn-large" type="button" onclick="goBack()">No</button>
 
                 <div  th:if="${gig.companyProfile.user.username == user.username}" >
-                    <form class="hireBtn" th:action="'/company/gig/' + @{${gig.id}} + '/hire'" method="post">
+                    <form class="" th:action="'/company/gig/' + @{${gig.id}} + '/hire'" method="post">
                         <input type="hidden" name="musician" th:value="${musicianProfile.id}"/>
                         <button class="waves-effect waves-light btn-large" type="submit" >Yes</button>
                     </form>

@@ -7,7 +7,7 @@
 <main th:inline="text" class="container message">
     <div class="background-image"></div>
     <div class="card-panel container white-text">
-    <h1 th:utext="${#strings.replace( #strings.escapeXml( message ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></h1>
+    <h4 th:utext="${#strings.replace( #strings.escapeXml( message ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}"></h4>
     <div class="row center-align">
         <div class="col m6 s12">
             <a href="/company/my-profile" sec:authorize="hasRole('ROLE_COMPANY')" class="btn  waves-effect waves-light">Go to Profile</a>

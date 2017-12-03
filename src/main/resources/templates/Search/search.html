@@ -6,6 +6,7 @@
 <body th:inline="text" >
 <main class="search">
     <div th:include="fragments/navbar :: navHome"></div>
+    <div class="container">
         <div sec:authorize="hasRole('ROLE_MUSICIAN')">
             <h1 class="center-align white-text">Search for Gigs</h1>
 
@@ -13,13 +14,13 @@
                 <div class="section">
                     <form th:action="@{/searchGigLocation}" method="post" class="white-text">
 
-                        <div class="section row">
-                            <div class="input-field col s10">
+                        <div class="section">
+                            <div class="input-field ">
                                 <i class="orange-text text-accent-4 material-icons prefix">location_on</i>
                                 <input type="text" placeholder="Search by Location" name="location" id="giglocation"/>
                                 <label for="giglocation">Location</label>
                             </div>
-                            <div class="col s2">
+                            <div class="right">
                                 <button class="btn orange accent-4" type="submit">Search</button>
 
                             </div>
@@ -28,8 +29,8 @@
                 </div>
                 <div class="section">
                     <form th:action="@{/searchGigType}" method="post" class="white-text">
-                        <div class="section row">
-                            <div class="input-field col s10">
+                        <div class="section">
+                            <div class="input-field ">
                                 <i class="orange-text text-accent-4 material-icons prefix">event_note</i>
 
                                 <select name="type" id="type">
@@ -39,7 +40,7 @@
                                 </select>
                                 <label for="type">Type of Gigs</label>
                             </div>
-                            <div class="col s2">
+                            <div class="right">
                                 <button class="btn orange accent-4" type="submit">Search</button>
 
                             </div>
@@ -50,24 +51,26 @@
 
         </div>
 
+    </div>
+
 
     <div sec:authorize="hasRole('ROLE_COMPANY')" class="container">
         <h1 class="center-align white-text">Search for Musicians</h1>
         <div class="card-panel">
             <div class="section">
                 <form th:action="@{/searchName}" method="post" class="white-text">
-                    <div class=" section row">
-                        <div class="input-field col s5">
+                    <div class=" section ">
+                        <div class="input-field ">
                             <i class="orange-text text-accent-4 material-icons prefix">account_circle</i>
 
                             <input placeholder="Search First Name" id="first_name" type="text" name="firstName" class="validate"/>
                             <label for="first_name">First Name</label>
                         </div>
-                        <div class="input-field col s5">
+                        <div class="input-field ">
                             <input placeholder="Search Last Name" id="last_name" type="text" name="lastName" class="validate"/>
                             <label for="last_name">Last Name</label>
                         </div>
-                        <div class="col s2">
+                        <div class="right">
                             <button class="btn orange accent-4 " type="submit">Search</button>
 
                         </div>
@@ -77,8 +80,8 @@
             </div>
             <div class="section">
                 <form th:action="@{/searchInstrument}" method="post" class="white-text">
-                    <div class="section row">
-                        <div class="input-field col s10">
+                    <div class="section ">
+                        <div class="input-field">
                             <i class="orange-text text-accent-4 material-icons prefix">star</i>
 
                             <select multiple="multiple" name="instrument">
@@ -86,7 +89,7 @@
                                 <option th:inline="text" th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
                             </select>
                         </div>
-                        <div class="col s2">
+                        <div class="right">
                             <button class="btn orange accent-4" type="submit">Search</button>
 
                         </div>
@@ -95,14 +98,14 @@
             </div>
             <div class="section">
                 <form th:action="@{/searchLocation}" method="post" class="white-text">
-                    <div class="section row">
-                        <div class="input-field col s10">
+                    <div class="section ">
+                        <div class="input-field">
                             <i class="orange-text text-accent-4 material-icons prefix">location_on</i>
 
                             <input type="text" placeholder="Search by Location" name="location" id="location"/>
                             <label for="location">Location</label>
                         </div>
-                        <div class="col s2">
+                        <div class="right">
                             <button class="btn orange accent-4" type="submit">Search</button>
 
                         </div>
@@ -139,11 +142,10 @@
 
         <div sec:authorize="hasRole('ROLE_MUSICIAN')">
             <div class="row">
-                <div th:each="gig : ${gig}" class="col s6">
-                    <div class="col s12 m6">
+                <div th:each="gig : ${gig}" class="col s12 m6 l3">
 
                         <div class="gigCard z-depth-2">
-                            <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
+                            <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                                 <div class="dateBox white orange-text text-accent-4 center-align">
                                     <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
                                     <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
@@ -157,7 +159,7 @@
 
                             </div>
                         </div>
-                    </div>
+
                 </div>
             </div>
 

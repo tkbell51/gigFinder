@@ -4,540 +4,372 @@
 <head th:include="fragments/includes :: indexHead"></head>
 <body th:inline="text" class=" grey lighten-1">
 
-<main class="hide-on-med-and-down">
+<main >
     <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{${musicianProfile.coverPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
     <div th:include="fragments/navbar :: navHome"></div>
-
         <a href="#coverMusicianPic" class="modal-trigger tooltipped" data-position="right" data-delay="50" data-tooltip="Update Cover Image"><i class="coverBanner text-accent-4 material-icons">camera_alt</i></a>
-        <div class="white-text bannerBio ">
-            <h4>[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]]</h4>
-            <h5 > [[${musicianProfile.location}]]</h5>
+        <div class="hide-on-med-and-down">
+            <div class="white-text bannerBio ">
+                <h4>[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]]</h4>
+                <h5 > [[${musicianProfile.location}]]</h5>
 
-        </div>
-
-    </section>
-    <section class="container">
-        <div class="row-content">
-            <div class="profile-info">
-                <div class="profCol z-depth-5">
-                    <div class="profImage" th:style="'background:url('+ @{${musicianProfile.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;'">
-                        <div class="middle">
-                            <div  id="hover-content">
-                                <a href="#profMusicianPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="profInfo white">
-                        <section >
-                            <div class="section">
-                                <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
-
-                            </div>
-
-                            <div class="divider"></div>
-                            <div class="section">
-                                <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianProfile.user.email}]] </p>
-                                <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianProfile.user.phoneNumber}]]</p>
-
-                            </div>
-
-                            <div class="divider"></div>
-                            <div class="section">
-                                <p> [[${musicianProfile.bio}]]</p>
-
-                            </div>
-
-                        </section>
-                    </div>
-                </div>
-            </div>
-            <div class="profile-content">
-                <div class="row">
-                    <div class="col s12">
-                        <ul class="tabs z-depth-4">
-                            <li class="tab col s3"><a href="#music">My Music</a></li>
-                            <li class="tab col s3"><a href="#upEvents">Hired Events</a></li>
-                            <li class="tab col s3"><a href="#areaGigs">Gigs in Area</a></li>
-                            <li class="tab col s3"><a href="#appliedGigs">Applied Gigs</a></li>
-                        </ul>
-                    </div>
-                    <div id="music" class="col s12 container">
-                        <div class=" musicCard">
-                    <div class="card">
-                        <h4 class="center-align ">My Music
-                            <span>
-                <a class="waves-effect waves-light btn-floating modal-trigger tooltipped" data-position="top" data-delay="50" data-tooltip="Add a YouTube video of your music" href="#addMusicContent"><i class="material-icons">add</i></a>
-                </span>
-                            <div th:if="${media.isEmpty()}">
-                                <h5>Add Your Music</h5>
-                            </div>
-                        </h4>
-                    </div>
-
-                            <div th:each="media : ${media}" class="media-row">
-                                <div class="row-content card valign-wrapper">
-                                    <div>
-                                        <h5>
-                                            <a class="valign-wrapper popup-youtube" th:href="@{${media.media_url}}">
-                                                <i class="orange-text text-accent-4 material-icons">play_circle_filled</i>
-                                                [[${media.title}]]
-                                            </a>
-                                        </h5>
-
-                                    </div>
-                                    <div class="row-content end right-align">
-                                        <a class="modal-trigger orange accent-4 white-text logBtn " th:href="'#mediaUpdate' + ${media.id}">
-                                            Edit
-                                        </a>
-                                        <form th:action="'/musician/media/delete/' + ${media.id}" method="post">
-                                            <button class="modal-action orange accent-4 white-text logBtn" type="submit" > Delete</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div th:include="fragments/modals :: mediaUpdate"></div>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-                    <div id="upEvents" class="col s12">
-                        <h4 class="center-align">Upcoming Events</h4>
-                        <div th:if="${hired.isEmpty()}">
-                            <h5>No Upcoming Events</h5>
-                        </div>
-                        <div class="row"  >
-                            <div class="col s12 m4" th:each="hired : ${hired}">
-                                <div  class="gigCard hoverable">
-                                    <div class="gigImage" th:style="'background:url('+ @{${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
-                                        <div class="dateBox white orange-text text-accent-4 center-align">
-                                            <h4>[[${#dates.format(hired.gig.gigStart,'d')}]]</h4>
-                                            <p>[[${#dates.format(hired.gig.gigStart,'MMMM')}]]</p>
-                                        </div>
-                                        <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/musician/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
-
-                                    </div>
-                                    <div class="gigInfo white center-align">
-                                        <p><b>[[${hired.gig.gigTitle}]]</b></p>
-                                        <p >[[${hired.gig.gigLocation}]]</p>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                    <div id="areaGigs" class="col s12">
-                        <h4 class="center-align">Gigs in the Area
-                            <span>
-                    <a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Gigs" href="/musician/search/"><i class="material-icons">search</i></a>
-                </span>
-                        </h4>
-                        <div th:if="${gig.isEmpty()}">
-                            <h5>No Gigs found in your area</h5>
-                        </div>
-                        <div class="row"  >
-                            <div class="col s12 m4" th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
-                                <div  class="gigCard hoverable">
-                                    <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
-                                        <div class="dateBox white orange-text text-accent-4 center-align">
-                                            <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
-                                            <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
-                                        </div>
-                                        <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/musician/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
-
-                                    </div>
-                                    <div class="gigInfo white center-align">
-                                        <p><b>[[${gig.gigTitle}]]</b></p>
-                                        <p >[[${gig.gigLocation}]]</p>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                    <div id="appliedGigs" class="col s12">
-                        <h4 class="center-align">Applied Gigs</h4>
-
-                        <div class="row">
-                            <div class="col s12 m4" th:each="applied : ${applied}" th:if="${applied.gig.gigHired} != true">
-                                <div  class="gigCard hoverable">
-                                    <div class="gigImage" th:style="'background:url('+ @{${applied.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
-                                        <div class="dateBox white orange-text text-accent-4 center-align">
-                                            <h4>[[${#dates.format(applied.gig.gigStart,'d')}]]</h4>
-                                            <p>[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>
-                                        </div>
-                                        <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/musician/gig/' + @{${applied.gig.id}}"><i class="material-icons">arrow_forward</i></a>
-
-                                    </div>
-                                    <div class="gigInfo white center-align">
-                                        <p><b>[[${applied.gig.gigTitle}]]</b></p>
-                                        <p >[[${applied.gig.gigLocation}]]</p>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
             </div>
         </div>
-    </section>
-<!--<section class="container">-->
-    <!--<div class=" row">-->
-        <!--<div class="col s12 m4">-->
-            <!--<div class="profCol z-depth-5">-->
-                <!--<div class="profImage" th:style="'background:url('+ @{${musicianProfile.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;'">-->
-                    <!--<div class="middle">-->
-                        <!--<div  id="hover-content">-->
-                            <!--<a href="#profMusicianPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>-->
-                            <!--</a>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="profInfo white">-->
-                    <!--<section >-->
-                        <!--<div class="section">-->
-                            <!--<p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>-->
-
-                        <!--</div>-->
-
-                        <!--<div class="divider"></div>-->
-                        <!--<div class="section">-->
-                            <!--<p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianProfile.user.email}]] </p>-->
-                            <!--<p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianProfile.user.phoneNumber}]]</p>-->
-
-                        <!--</div>-->
-
-                        <!--<div class="divider"></div>-->
-                        <!--<div class="section">-->
-                            <!--<p> [[${musicianProfile.bio}]]</p>-->
-
-                        <!--</div>-->
-
-                    <!--</section>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col s12 m8">-->
-            <!--<div class="row">-->
-                <!--<div class="col s12">-->
-                    <!--<ul class="tabs z-depth-4">-->
-                        <!--<li class="tab col s3"><a href="#music">My Music</a></li>-->
-                        <!--<li class="tab col s3"><a href="#upEvents">Hired Events</a></li>-->
-                        <!--<li class="tab col s3"><a href="#areaGigs">Gigs in Area</a></li>-->
-                        <!--<li class="tab col s3"><a href="#appliedGigs">Applied Gigs</a></li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-                <!--<div id="music" class="col s12 container">-->
-                    <!--<div class=" musicCard">-->
-
-                        <!--<h4 class="center-align">My Music-->
-                            <!--<span>-->
-                <!--<a class="waves-effect waves-light btn-floating modal-trigger tooltipped" data-position="top" data-delay="50" data-tooltip="Add a YouTube video of your music" href="#addMusicContent"><i class="material-icons">add</i></a>-->
-                <!--</span>-->
-                            <!--<div th:if="${media.isEmpty()}">-->
-                                <!--<h5>Add Your Music</h5>-->
-                            <!--</div>-->
-                        <!--</h4>-->
-                        <!--<ul class="collapsible" data-collapsible="accordion">-->
-                            <!--<li th:each="media : ${media}">-->
-                                <!--<div class="collapsible-header mediaTitle">-->
-                                    <!--<a class="valign-wrapper popup-youtube" th:href="@{${media.media_url}}">-->
-                                        <!--<i class="orange-text text-accent-4 material-icons">play_circle_filled</i>-->
-                                        <!--[[${media.title}]]-->
-                                    <!--</a>-->
-                                <!--</div>-->
-                                <!--<div class="collapsible-body  white">-->
-                                    <!--<div class="row">-->
-                                        <!--<div class="col s2">-->
-                                            <!--<a class="waves-effect waves-light modal-trigger orange-text text-accent-4 btn-floating float-right" th:href="'#mediaUpdate' + ${media.id}">-->
-                                                <!--<i class="material-icons  tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Music">edit</i>-->
-                                            <!--</a>-->
-                                        <!--</div>-->
-                                        <!--<div class="col s2">-->
-                                            <!--<form th:action="'/musician/media/delete/' + ${media.id}" method="post">-->
-                                                <!--<button class="modal-action media waves-effect orange-text text-accent-4 waves-light btn-floating" type="submit" >-->
-                                                    <!--<i class="material-icons  tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Music">delete</i>-->
-                                                <!--</button>-->
-                                            <!--</form>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
 
 
-
-                                <!--</div>-->
-                                <!--<div th:include="fragments/modals :: mediaUpdate"></div>-->
-
-                            <!--</li>-->
-                        <!--</ul>-->
-
-
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div id="upEvents" class="col s12">-->
-                    <!--<h4 class="center-align">Upcoming Events</h4>-->
-                    <!--<div th:if="${hired.isEmpty()}">-->
-                        <!--<h5>No Upcoming Events</h5>-->
-                    <!--</div>-->
-                    <!--<div class="row"  >-->
-                        <!--<div class="col s12 m4" th:each="hired : ${hired}">-->
-                            <!--<div  class="gigCard hoverable">-->
-                                <!--<div class="gigImage" th:style="'background:url('+ @{${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">-->
-                                    <!--<div class="dateBox white orange-text text-accent-4 center-align">-->
-                                        <!--<h4>[[${#dates.format(hired.gig.gigStart,'d')}]]</h4>-->
-                                        <!--<p>[[${#dates.format(hired.gig.gigStart,'MMMM')}]]</p>-->
-                                    <!--</div>-->
-                                    <!--<a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/musician/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>-->
-
-                                <!--</div>-->
-                                <!--<div class="gigInfo white center-align">-->
-                                    <!--<p><b>[[${hired.gig.gigTitle}]]</b></p>-->
-                                    <!--<p >[[${hired.gig.gigLocation}]]</p>-->
-
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-
-
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div id="areaGigs" class="col s12">-->
-                    <!--<h4 class="center-align">Gigs in the Area-->
-                        <!--<span>-->
-                    <!--<a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Gigs" href="/musician/search/"><i class="material-icons">search</i></a>-->
-                <!--</span>-->
-                    <!--</h4>-->
-                    <!--<div th:if="${gig.isEmpty()}">-->
-                        <!--<h5>No Gigs found in your area</h5>-->
-                    <!--</div>-->
-                    <!--<div class="row"  >-->
-                        <!--<div class="col s12 m4" th:each="gig : ${gig}" th:if="${gig.gigHired} != true">-->
-                            <!--<div  class="gigCard hoverable">-->
-                                <!--<div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">-->
-                                    <!--<div class="dateBox white orange-text text-accent-4 center-align">-->
-                                        <!--<h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>-->
-                                        <!--<p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>-->
-                                    <!--</div>-->
-                                    <!--<a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/musician/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>-->
-
-                                <!--</div>-->
-                                <!--<div class="gigInfo white center-align">-->
-                                    <!--<p><b>[[${gig.gigTitle}]]</b></p>-->
-                                    <!--<p >[[${gig.gigLocation}]]</p>-->
-
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-
-
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div id="appliedGigs" class="col s12">-->
-                    <!--<h4 class="center-align">Applied Gigs</h4>-->
-
-                    <!--<div class="row">-->
-                        <!--<div class="col s12 m4" th:each="applied : ${applied}" th:if="${applied.gig.gigHired} != true">-->
-                            <!--<div  class="gigCard hoverable">-->
-                                <!--<div class="gigImage" th:style="'background:url('+ @{${applied.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">-->
-                                    <!--<div class="dateBox white orange-text text-accent-4 center-align">-->
-                                        <!--<h4>[[${#dates.format(applied.gig.gigStart,'d')}]]</h4>-->
-                                        <!--<p>[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>-->
-                                    <!--</div>-->
-                                    <!--<a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/musician/gig/' + @{${applied.gig.id}}"><i class="material-icons">arrow_forward</i></a>-->
-
-                                <!--</div>-->
-                                <!--<div class="gigInfo white center-align">-->
-                                    <!--<p><b>[[${applied.gig.gigTitle}]]</b></p>-->
-                                    <!--<p >[[${applied.gig.gigLocation}]]</p>-->
-
-                                <!--</div>-->
-                            <!--</div>-->
-
-                        <!--</div>-->
-                    <!--</div>-->
-
-                <!--</div>-->
-            <!--</div>-->
-
-        <!--</div>-->
-
-    <!--</div>-->
-<!--</section>-->
-
-</main>
-
-<main class="show-on-medium-and-down hide-on-large-only">
-    <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{${musicianProfile.coverPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
-        <div th:include="fragments/navbar :: navHome"></div>
-
-        <a href="#coverMusicianPic" class="modal-trigger tooltipped" data-position="right" data-delay="50" data-tooltip="Update Cover Image"><i class="coverBanner text-accent-4 material-icons">camera_alt</i></a>
-        <div class="white-text  center-align">
-<div class="tab-profile ">
-    <div class="circle tab-profPic" th:style="'background:url('+ @{${musicianProfile.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; width: 200px; height: 200px;'">
-        <div class="middle">
-            <div  id="hover-content">
-                <a href="#profMusicianPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>
-                </a>
-            </div>
-        </div>
-    </div>
-    <h4>[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]]</h4>
-    <h5 > [[${musicianProfile.location}]]</h5>
-</div>
-            <div class="row">
-                <div class="col s6">
-                    <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
-
-                </div>
-                <div class="col s6">
-                    <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianProfile.user.email}]] </p>
-                    <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianProfile.user.phoneNumber}]]</p>
-                </div>
-            </div>
-            <p> [[${musicianProfile.bio}]]</p>
-
-        </div>
-
-    </section>
-    <div class="row">
-    <div class="col s12">
-        <ul class="tabs z-depth-4">
-            <li class="tab col s3"><a href="#tab-music">My Music</a></li>
-            <li class="tab col s3"><a href="#tab-upEvents">Hired Events</a></li>
-            <li class="tab col s3"><a href="#tab-areaGigs">Gigs in Area</a></li>
-            <li class="tab col s3"><a href="#tab-appliedGigs">Applied Gigs</a></li>
-        </ul>
-    </div>
-    <div id="tab-music" class="col s12 container">
-        <div class=" musicCard">
-
-            <h4 class="center-align">My Music
-                <span>
-                <a class="waves-effect waves-light btn-floating modal-trigger tooltipped" data-position="top" data-delay="50" data-tooltip="Add a YouTube video of your music" href="#addMusicContent"><i class="material-icons">add</i></a>
-                </span>
-                <div th:if="${media.isEmpty()}">
-                    <h5>Add Your Music</h5>
-                </div>
-            </h4>
-            <div th:each="media : ${media}" class="media-row">
-                <div class="row-content white section valign-wrapper">
-                    <div>
-                        <h5>
-                            <a class="valign-wrapper popup-youtube" th:href="@{${media.media_url}}">
-                                <i class="orange-text text-accent-4 material-icons">play_circle_filled</i>
-                                [[${media.title}]]
+        <div class="show-on-medium-and-down hide-on-large-only">
+            <div class="tab-profile white-text">
+                <div class="circle tab-profPic profImage" th:style="'background:url('+ @{${musicianProfile.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; width: 200px; height: 200px;'">
+                    <div class="middle">
+                        <div  id="hover-content">
+                            <a href="#profMusicianPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>
                             </a>
-                        </h5>
-
-                    </div>
-                    <div class="row-content end right-align">
-                        <a class="modal-trigger orange accent-4 white-text logBtn " th:href="'#mediaUpdate' + ${media.id}">
-                            Edit
-                        </a>
-                        <form th:action="'/musician/media/delete/' + ${media.id}" method="post">
-                            <button class="modal-action orange accent-4 white-text logBtn" type="submit" > Delete</button>
-                        </form>
-                    </div>
-                </div>
-                <div th:include="fragments/modals :: mediaUpdate"></div>
-
-            </div>
-
-
-        </div>
-    </div>
-    <div id="tab-upEvents" class="col s12">
-        <h4 class="center-align">Upcoming Events</h4>
-        <div th:if="${hired.isEmpty()}">
-            <h5>No Upcoming Events</h5>
-        </div>
-        <div class="row"  >
-            <div class="col s12 m4" th:each="hired : ${hired}">
-                <div  class="gigCard hoverable">
-                    <div class="gigImage" th:style="'background:url('+ @{${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
-                        <div class="dateBox white orange-text text-accent-4 center-align">
-                            <h4>[[${#dates.format(hired.gig.gigStart,'d')}]]</h4>
-                            <p>[[${#dates.format(hired.gig.gigStart,'MMMM')}]]</p>
                         </div>
-                        <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/musician/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
-
-                    </div>
-                    <div class="gigInfo white center-align">
-                        <p><b>[[${hired.gig.gigTitle}]]</b></p>
-                        <p >[[${hired.gig.gigLocation}]]</p>
-
                     </div>
                 </div>
+                <h4>[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]]</h4>
+                <h5 > [[${musicianProfile.location}]]</h5>
             </div>
-
-
         </div>
-    </div>
-    <div id="tab-areaGigs" class="col s12">
-        <h4 class="center-align">Gigs in the Area
-            <span>
+
+
+    </section>
+    <div class="hide-on-med-and-down">
+        <section class="container">
+            <div class="row-content">
+                <div class="profile-info">
+                    <div class="profCol z-depth-5">
+                        <div class="profImage" th:style="'background:url('+ @{${musicianProfile.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;'">
+                            <div class="middle">
+                                <div  id="hover-content">
+                                    <a href="#profMusicianPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profInfo white">
+                            <section >
+                                <div class="section">
+                                    <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
+
+                                </div>
+
+                                <div class="divider"></div>
+                                <div class="section">
+                                    <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianProfile.user.email}]] </p>
+                                    <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianProfile.user.phoneNumber}]]</p>
+
+                                </div>
+
+                                <div class="divider"></div>
+                                <div class="section">
+                                    <p> [[${musicianProfile.bio}]]</p>
+
+                                </div>
+
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-content">
+                    <div class="row">
+                        <div class="col s12">
+                            <ul class="tabs tabs-fixed-width z-depth-4">
+                                <li class="tab "><a href="#music">My Music</a></li>
+                                <li class="tab "><a href="#upEvents">Hired Events</a></li>
+                                <li class="tab "><a href="#areaGigs">Gigs in Area</a></li>
+                                <li class="tab "><a href="#appliedGigs">Applied Gigs</a></li>
+                            </ul>
+                        </div>
+                        <div id="music" class="col s12 container">
+                            <div class=" musicCard">
+                                <div class="card">
+                                    <h4 class="center-align ">My Music
+                                        <span>
+                <a class="waves-effect waves-light btn-floating modal-trigger tooltipped" data-position="top" data-delay="50" data-tooltip="Add a YouTube video of your music" href="#addMusicContent"><i class="material-icons">add</i></a>
+                </span>
+                                        <div th:if="${media.isEmpty()}">
+                                            <h5>Add Your Music</h5>
+                                        </div>
+                                    </h4>
+                                </div>
+
+                                <div th:each="media : ${media}" class="media-row">
+                                    <div class="row-content card valign-wrapper">
+                                        <div>
+                                            <h5>
+                                                <a class="valign-wrapper popup-youtube" th:href="@{${media.media_url}}">
+                                                    <i class="orange-text text-accent-4 material-icons">play_circle_filled</i>
+                                                    [[${media.title}]]
+                                                </a>
+                                            </h5>
+
+                                        </div>
+                                        <div class="row-content end right-align">
+                                            <a class="modal-trigger orange accent-4 white-text logBtn " th:href="'#mediaUpdate' + ${media.id}">
+                                                Edit
+                                            </a>
+                                            <form th:action="'/musician/media/delete/' + ${media.id}" method="post">
+                                                <button class="modal-action orange accent-4 white-text logBtn" type="submit" > Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div th:include="fragments/modals :: mediaUpdate"></div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div id="upEvents" class="col s12">
+                            <h4 class="center-align">Upcoming Events</h4>
+                            <div th:if="${hired.isEmpty()}">
+                                <h5>No Upcoming Events</h5>
+                            </div>
+                            <div class="row"  >
+                                <div class="col s12 m4" th:each="hired : ${hired}">
+                                    <div  class="gigCard hoverable">
+                                        <div class="gigImage" th:style="'background:url('+ @{${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                            <div class="dateBox white orange-text text-accent-4 center-align">
+                                                <h4>[[${#dates.format(hired.gig.gigStart,'d')}]]</h4>
+                                                <p>[[${#dates.format(hired.gig.gigStart,'MMMM')}]]</p>
+                                            </div>
+                                            <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
+
+                                        </div>
+                                        <div class="gigInfo white center-align">
+                                            <p><b>[[${hired.gig.gigTitle}]]</b></p>
+                                            <p >[[${hired.gig.gigLocation}]]</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div id="areaGigs" class="col s12">
+                            <h4 class="center-align">Gigs in the Area
+                                <span>
                     <a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Gigs" href="/musician/search/"><i class="material-icons">search</i></a>
                 </span>
-        </h4>
-        <div th:if="${gig.isEmpty()}">
-            <h5>No Gigs found in your area</h5>
-        </div>
-        <div class="row"  >
-            <div class="col s12 m4" th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
-                <div  class="gigCard hoverable">
-                    <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
-                        <div class="dateBox white orange-text text-accent-4 center-align">
-                            <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
-                            <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                            </h4>
+                            <div th:if="${gig.isEmpty()}">
+                                <h5>No Gigs found in your area</h5>
+                            </div>
+                            <div class="row"  >
+                                <div class="col s12 m4" th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
+                                    <div  class="gigCard hoverable">
+                                        <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                            <div class="dateBox white orange-text text-accent-4 center-align">
+                                                <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
+                                                <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                                            </div>
+                                            <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
+
+                                        </div>
+                                        <div class="gigInfo white center-align">
+                                            <p><b>[[${gig.gigTitle}]]</b></p>
+                                            <p >[[${gig.gigLocation}]]</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
                         </div>
-                        <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/musician/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
+                        <div id="appliedGigs" class="col s12">
+                            <h4 class="center-align">Applied Gigs</h4>
 
-                    </div>
-                    <div class="gigInfo white center-align">
-                        <p><b>[[${gig.gigTitle}]]</b></p>
-                        <p >[[${gig.gigLocation}]]</p>
+                            <div class="row">
+                                <div class="col s12 m4" th:each="applied : ${applied}" th:if="${applied.gig.gigHired} != true">
+                                    <div  class="gigCard hoverable">
+                                        <div class="gigImage" th:style="'background:url('+ @{${applied.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                            <div class="dateBox white orange-text text-accent-4 center-align">
+                                                <h4>[[${#dates.format(applied.gig.gigStart,'d')}]]</h4>
+                                                <p>[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>
+                                            </div>
+                                            <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${applied.gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
+                                        </div>
+                                        <div class="gigInfo white center-align">
+                                            <p><b>[[${applied.gig.gigTitle}]]</b></p>
+                                            <p >[[${applied.gig.gigLocation}]]</p>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-
-
-        </div>
+        </section>
     </div>
-    <div id="tab-appliedGigs" class="col s12">
-        <h4 class="center-align">Applied Gigs</h4>
+    <div class="show-on-medium-and-down hide-on-large-only">
 
         <div class="row">
-            <div class="col s12 m4" th:each="applied : ${applied}" th:if="${applied.gig.gigHired} != true">
-                <div  class="gigCard hoverable">
-                    <div class="gigImage" th:style="'background:url('+ @{${applied.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
-                        <div class="dateBox white orange-text text-accent-4 center-align">
-                            <h4>[[${#dates.format(applied.gig.gigStart,'d')}]]</h4>
-                            <p>[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>
+            <div class="col s12">
+                <ul class="tabs tabs-fixed-width z-depth-4 ">
+                    <li class="tab  "><a href="#tab-music"><i class="orange-text text-accent-4 material-icons">library_music</i></a></li>
+                    <li class="tab "><a href="#tab-upEvents"><i class="orange-text text-accent-4 material-icons">beenhere</i></a></li>
+                    <li class="tab  "><a class="active" href="#tab-bio"><i class="orange-text text-accent-4 material-icons">account_circle</i></a></li>
+                    <li class="tab "><a href="#tab-areaGigs"><i class="orange-text text-accent-4 material-icons">place</i></a></li>
+                    <li class="tab "><a href="#tab-appliedGigs"><i class="orange-text text-accent-4 material-icons">star</i></a></li>
+                </ul>
+            </div>
+            <div id="tab-bio" class="col s12 container">
+                <div class="card-panel">
+                    <section >
+                        <div class="section">
+                            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianProfile.musicianInstruments}]]</p>
+
                         </div>
-                        <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/musician/gig/' + @{${applied.gig.id}}"><i class="material-icons">arrow_forward</i></a>
+
+                        <div class="divider"></div>
+                        <div class="section">
+                            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianProfile.user.email}]] </p>
+                            <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianProfile.user.phoneNumber}]]</p>
+
+                        </div>
+
+                        <div class="divider"></div>
+                        <div class="section">
+                            <p class="center-align"> [[${musicianProfile.bio}]]</p>
+
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+            <div id="tab-music" class="col s12 container">
+                <div class=" musicCard">
+
+                    <h4 class="center-align">My Music
+                        <span>
+                <a class="waves-effect waves-light btn-floating modal-trigger tooltipped" data-position="top" data-delay="50" data-tooltip="Add a YouTube video of your music" href="#addMusicContent"><i class="material-icons">add</i></a>
+                </span>
+                        <div th:if="${media.isEmpty()}">
+                            <h5>Add Your Music</h5>
+                        </div>
+                    </h4>
+                    <div th:each="media : ${media}" class="media-row">
+                        <div class="row-content white section valign-wrapper">
+                            <div>
+                                <h5>
+                                    <a class="valign-wrapper popup-youtube" th:href="@{${media.media_url}}">
+                                        <i class="orange-text text-accent-4 material-icons">play_circle_filled</i>
+                                        [[${media.title}]]
+                                    </a>
+                                </h5>
+
+                            </div>
+                            <div class="row-content end right-align">
+                                <a class="modal-trigger orange accent-4 white-text logBtn " th:href="'#mediaUpdate' + ${media.id}">
+                                    Edit
+                                </a>
+                                <form th:action="'/musician/media/delete/' + ${media.id}" method="post">
+                                    <button class="modal-action orange accent-4 white-text logBtn" type="submit" > Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div th:include="fragments/modals :: mediaUpdate"></div>
 
                     </div>
-                    <div class="gigInfo white center-align">
-                        <p><b>[[${applied.gig.gigTitle}]]</b></p>
-                        <p >[[${applied.gig.gigLocation}]]</p>
 
+
+                </div>
+            </div>
+            <div id="tab-upEvents" class="col s12">
+                <h4 class="center-align">Upcoming Events</h4>
+                <div th:if="${hired.isEmpty()}">
+                    <h5>No Upcoming Events</h5>
+                </div>
+                <div class="row"  >
+                    <div class="col s12 m4" th:each="hired : ${hired}">
+                        <div  class="gigCard hoverable">
+                            <div class="gigImage" th:style="'background:url('+ @{${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                <div class="dateBox white orange-text text-accent-4 center-align">
+                                    <h4>[[${#dates.format(hired.gig.gigStart,'d')}]]</h4>
+                                    <p>[[${#dates.format(hired.gig.gigStart,'MMMM')}]]</p>
+                                </div>
+                                <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
+
+                            </div>
+                            <div class="gigInfo white center-align">
+                                <p><b>[[${hired.gig.gigTitle}]]</b></p>
+                                <p >[[${hired.gig.gigLocation}]]</p>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div id="tab-areaGigs" class="col s12">
+                <h4 class="center-align">Gigs in the Area
+                    <span>
+                    <a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Gigs" href="/musician/search/"><i class="material-icons">search</i></a>
+                </span>
+                </h4>
+                <div th:if="${gig.isEmpty()}">
+                    <h5>No Gigs found in your area</h5>
+                </div>
+                <div class="row"  >
+                    <div class="col s12 m4" th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
+                        <div  class="gigCard hoverable">
+                            <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                <div class="dateBox white orange-text text-accent-4 center-align">
+                                    <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
+                                    <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                                </div>
+                                <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
+
+                            </div>
+                            <div class="gigInfo white center-align">
+                                <p><b>[[${gig.gigTitle}]]</b></p>
+                                <p >[[${gig.gigLocation}]]</p>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div id="tab-appliedGigs" class="col s12">
+                <h4 class="center-align">Applied Gigs</h4>
+
+                <div class="row">
+                    <div class="col s12 m4" th:each="applied : ${applied}" th:if="${applied.gig.gigHired} != true">
+                        <div  class="gigCard hoverable">
+                            <div class="gigImage" th:style="'background:url('+ @{${applied.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                <div class="dateBox white orange-text text-accent-4 center-align">
+                                    <h4>[[${#dates.format(applied.gig.gigStart,'d')}]]</h4>
+                                    <p>[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>
+                                </div>
+                                <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${applied.gig.id}}"><i class="material-icons">arrow_forward</i></a>
+
+                            </div>
+                            <div class="gigInfo white center-align">
+                                <p><b>[[${applied.gig.gigTitle}]]</b></p>
+                                <p >[[${applied.gig.gigLocation}]]</p>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
 
             </div>
         </div>
+    </div>
 
-    </div>
-    </div>
 </main>
+
 <div th:include="fragments/modals :: coverMusicianPic"></div>
 <div th:include="fragments/modals :: profMusicianPic"></div>
 <div th:include="fragments/modals :: musicianUpdate"></div>
