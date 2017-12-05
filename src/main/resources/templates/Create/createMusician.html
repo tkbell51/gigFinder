@@ -2,91 +2,97 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
-<body class="blue-grey lighten-5" th:inline="text">
+<body class="gradient-background" th:inline="text">
 <div th:include="fragments/navbar :: navHome"></div>
 <main class="musicSignup">
-    <div class="background-image"></div>
+    <div class="background-image hide-on-med-and-down"></div>
 
     <div class="card-panel container">
         <div class="row">
+            <div class="col s12 m6 logoSide center-align ">
+                <div class="logoSide">
+                    <h1 class="loginLogo"> <a href="/" >gigFinder</a></h1>
+                    <h5 class="white-text"> Musician Signup</h5>
+                </div>
 
-            <div class="col m6 white compForm">
-                <form th:action="@{/signup/musician/}" method="post" enctype="multipart/form-data"  >
-                    <div th:object="${user}">
-                        <div class="row">
-                            <div class="input-field col s12 m6">
-                                <input id="username" type="text" th:field="*{username}" />
-                                <label for="username">Username</label>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <label for="password">Password</label>
-                                <input id="password" type="password" th:field="*{password}" />
+            </div>
+            <div class="col s12 m6 white ">
+                <div class="compForm">
+                    <form th:action="@{/signup/musician/}" method="post" enctype="multipart/form-data"  >
+                        <div th:object="${user}">
+                            <div class="row">
+                                <div class="input-field col s12 m6">
+                                    <input id="username" type="text" th:field="*{username}" />
+                                    <label for="username">Username</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <label for="password">Password</label>
+                                    <input id="password" type="password" th:field="*{password}" />
+
+                                </div>
+
 
                             </div>
-
-
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12 m6">
-                                <label for="email">Email</label>
-                                <input id="email" type="email" th:field="*{email}"/>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <label for="pNumber">Phone Number</label>
-                                <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div th:object="${musicianProfile}">
-                        <div class="row">
-                            <div class="input-field col s12 m6">
-                                <label for="firstName">First Name</label>
-                                <input id="firstName" type="text" th:field="*{firstName}"/>
-                            </div>
-                            <div class="input-field col s12 m6">
-                                <label for="lastName">Last Name</label>
-                                <input id="lastName" type="text" th:field="*{lastName}"/>
+                            <div class="row">
+                                <div class="input-field col s12 m6">
+                                    <label for="email">Email</label>
+                                    <input id="email" type="email" th:field="*{email}"/>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <label for="pNumber">Phone Number</label>
+                                    <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="input-field col s6 m6">
-                                <input id="city" type="text" name="musicianCity"/>
-                                <label for="city">City</label>
+                        <div th:object="${musicianProfile}">
+                            <div class="row">
+                                <div class="input-field col s12 m6">
+                                    <label for="firstName">First Name</label>
+                                    <input id="firstName" type="text" th:field="*{firstName}"/>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <label for="lastName">Last Name</label>
+                                    <input id="lastName" type="text" th:field="*{lastName}"/>
+                                </div>
                             </div>
-                            <div class="input-field col s6 m6">
-                                <select name="musicianState" id="state">
-                                    <option value="" disabled="disabled" selected="selected">State</option>
-                                    <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
-                                </select>
+                            <div class="row">
+                                <div class="input-field col s6 m6">
+                                    <input id="city" type="text" name="musicianCity"/>
+                                    <label for="city">City</label>
+                                </div>
+                                <div class="input-field col s6 m6">
+                                    <select name="musicianState" id="state">
+                                        <option value="" disabled="disabled" selected="selected">State</option>
+                                        <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="input-field col s12 m12">
-                            <select multiple="multiple" th:field="*{musicianInstruments}">
-                                <option value="" disabled="disabled" selected="selected">Choose Musical Instruments</option>
-                                <option th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
-                            </select>
-
-                        </div>
-
-                        <div class="row">
                             <div class="input-field col s12 m12">
-                                <label for="bio">Bio</label>
-                                <input id="bio" type="text" th:field="*{bio}"/>
+                                <select multiple="multiple" th:field="*{musicianInstruments}">
+                                    <option value="" disabled="disabled" selected="selected">Choose Musical Instruments</option>
+                                    <option th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
+                                </select>
+
                             </div>
+
+                            <div class="row">
+                                <div class="input-field col s12 m12">
+                                    <label for="bio">Bio</label>
+                                    <input id="bio" type="text" th:field="*{bio}"/>
+                                </div>
+                            </div>
+
+
                         </div>
 
+                        <button class="waves-effect waves-light btn" type="submit" >Create Profile</button>
 
-                    </div>
+                    </form>
 
-                    <button class="waves-effect waves-light btn" type="submit" >Create Profile</button>
-
-                </form>
+                </div>
             </div>
-            <div class="col m6 logoSide center-align ">
-                <h1 class="loginLogo"> <a href="/" >gigFinder</a></h1>
-                <h5 class="white-text"> Musician Signup</h5>
-            </div>
+
         </div>
 
     </div>

@@ -2,95 +2,101 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
-<body class="blue-grey lighten-5" th:inline="text">
+<body class="gradient-background" th:inline="text">
 <div th:include="fragments/navbar :: navHome"></div>
 <main class="compSignup gigCreate">
-    <div class="background-image"></div>
+    <div class="background-image hide-on-med-and-down"></div>
 
     <div class="card-panel container">
         <div class="row">
-            <div class="col s12 m6 logoSide center-align ">
-                <h1 class="loginLogo"> <a href="/" >gigFinder</a></h1>
-                <h5 class="white-text"> Create Gig</h5>
+            <div class="col s12 m6 center-align ">
+                <div class="logoSide">
+                    <h1 class="loginLogo"> <a href="/" >gigFinder</a></h1>
+                    <h5 class="white-text"> Create Gig</h5>
+                </div>
+
             </div>
-            <div class="col s12 m6 white compForm">
-                <form th:action="@{/company/create-gig/}" method="post" th:object="${gig}" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <label for="title">Title</label>
-                            <input id="title" type="text" th:field="*{gigTitle}" data-length="40"/>
+            <div class="col s12 m6 white">
+                <div class="compForm">
+                    <form th:action="@{/company/create-gig/}" method="post" th:object="${gig}" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="title">Title</label>
+                                <input id="title" type="text" th:field="*{gigTitle}" data-length="40"/>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="description">Description</label>
+                                <input id="description" type="text" th:field="*{gigDescription}" data-length="140"/>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="location">Street</label>
+                                <input id="location" type="text" name="locationStreet" class="autocomplete"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="city" type="text" name="locationCity"/>
+                                <label for="city">City</label>
+                            </div>
+                            <div class="input-field col s3">
+                                <select name="locationState" id="state">
+                                    <option value="" disabled="disabled" selected="selected">State</option>
+                                    <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
+                                </select>
+                            </div>
+
+                            <div class="input-field col s3">
+                                <input id="zip" type="text" name="locationZip" maxlength="5" minlength="5"/>
+                                <label for="zip">Zip Code</label>
+                            </div>
 
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <label for="description">Description</label>
-                            <input id="description" type="text" th:field="*{gigDescription}" data-length="140"/>
 
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="input-field col s12">
-                            <label for="location">Street</label>
-                            <input id="location" type="text" name="locationStreet" class="autocomplete"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <input id="city" type="text" name="locationCity"/>
-                            <label for="city">City</label>
-                        </div>
-                        <div class="input-field col s3">
-                            <select name="locationState" id="state">
-                                <option value="" disabled="disabled" selected="selected">State</option>
-                                <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
+                            <select th:field="*{gigType}" id="type">
+                                <option value="" disabled="disabled" selected="selected">Type of Gig</option>
+                                <option th:each="gigType : ${gigTypes}" th:value="${gigType.type}">[[${gigType.type}]]</option>
                             </select>
+                            <label for="type">Type of Gig</label>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <label for="start">Start</label>
+                                <input id="start" type="date" class="datepicker" th:field="*{gigStart}"/>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="timeStart" type="text" class="timepicker" th:field="*{timeStart}"/>
+                                <label for="timeStart">Start Time</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <label for="end">End</label>
+                                <input id="end" type="date" class="datepicker" th:field="*{gigEnd}"/>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="timeEnd" type="text" class="timepicker" th:field="*{timeEnd}"/>
+                                <label for="timeEnd">End Time</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="gigArt">Image URL</label>
+                                <input type="url"  id="gigArt" th:field="*{gigArt}" placeholder="Image URL"/>
+                            </div>
                         </div>
 
-                        <div class="input-field col s3">
-                            <input id="zip" type="text" name="locationZip" maxlength="5" minlength="5"/>
-                            <label for="zip">Zip Code</label>
-                        </div>
+                        <button class="waves-effect waves-light btn" type="submit" >Create Gig</button>
 
-                    </div>
+                    </form>
 
-                    <div class="input-field col s12">
-                        <select th:field="*{gigType}" id="type">
-                            <option value="" disabled="disabled" selected="selected">Type of Gig</option>
-                            <option th:each="gigType : ${gigTypes}" th:value="${gigType.type}">[[${gigType.type}]]</option>
-                        </select>
-                        <label for="type">Type of Gig</label>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <label for="start">Start</label>
-                            <input id="start" type="date" class="datepicker" th:field="*{gigStart}"/>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="timeStart" type="text" class="timepicker" th:field="*{timeStart}"/>
-                            <label for="timeStart">Start Time</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <label for="end">End</label>
-                            <input id="end" type="date" class="datepicker" th:field="*{gigEnd}"/>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="timeEnd" type="text" class="timepicker" th:field="*{timeEnd}"/>
-                            <label for="timeEnd">End Time</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <label for="gigArt">Image URL</label>
-                            <input type="url"  id="gigArt" th:field="*{gigArt}" placeholder="Image URL"/>
-                        </div>
-                    </div>
-
-                    <button class="waves-effect waves-light btn" type="submit" >Create Gig</button>
-
-                </form>
+                </div>
             </div>
         </div>
 

@@ -1,7 +1,7 @@
 *{
     box-sizing: border-box;
 }
-body {
+.page-flexbox-wrapper {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -9,6 +9,12 @@ body {
 
 main {
     flex: 1 0 auto;
+}
+
+.gradient-background{
+    background: #23074d;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #D13218, #23074d);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #D13218, #23074d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .input-field{
     margin-top: 0px;
@@ -235,10 +241,10 @@ footer{
     margin-top: 5px;
 
 }
-@media (max-width: 768px)   {
+@media (max-width: 992px)   {
 
-    .top{
-        height: 80vh;
+    .top, #musicChoice, #compChoice{
+        height: 60vh;
     }
     .top .loginCard{
         border-radius: 5px;
@@ -261,7 +267,7 @@ footer{
 .logoSide{
 
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     justify-content:center;
     align-items:center;
 
@@ -476,9 +482,9 @@ footer{
 
 .bannerBio {
     position: relative;
-    top: 200px;
+    top: 23vh;
     left: 39%;
-    margin-left: auto;
+    margin-left:7%;
     margin-right: auto;
     display: inline-block;
 }
@@ -508,7 +514,12 @@ footer{
 i.right {
     margin-left: 0px;
 }
-
+td .btn-flat i, .popup-youtube i{
+    font-size: 2.3rem
+}
+table .right a, table .right button{
+    top: 10px;
+}
 span.badge {
     width: 25px;
     margin-left: 5px;
@@ -543,10 +554,8 @@ img.responsive-img {
     width: 100px;
 
 }
-.gradient-background{
-    background: #23074d;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #D13218, #23074d);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #D13218, #23074d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+#areaMusicians .bandInfo{
+    height: 20vh;
 }
 
 .findBand .row .col{
@@ -808,4 +817,11 @@ height: 60px;
     display: flex;
     flex-flow: row nowrap;
     justify-content:space-around;
+}
+/*Error Page*/
+.error-page{
+    background: url("/assets/images/richie_weba-1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
 }
