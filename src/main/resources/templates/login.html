@@ -3,8 +3,11 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="gradient-background">
-<main class="login ">
-    <div class="background-image"></div>
+<div class="page-flexbox-wrapper">
+
+    <main class="login ">
+
+        <div class="background-image"></div>
 
         <div class="card-panel container center-align">
             <h1 class="loginLogo"> <a href="/" >gigFinder</a></h1>
@@ -29,7 +32,8 @@
             </form>
         </div>
 
-</main>
+    </main>
+</div>
 <span th:include="fragments/includes :: js"></span>
 </body>
 </html>

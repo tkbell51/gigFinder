@@ -4,35 +4,39 @@
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="gradient-background">
 <div th:include="fragments/navbar :: navHome"></div>
-<main class="container" th:inline="text">
-    <h1 class="white-text center-align">Find gigs</h1>
-  <div class="row">
-      <div  th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
+<div class="page-flexbox-wrapper">
+    <main class="container" th:inline="text">
+        <h1 class="white-text center-align">Find gigs</h1>
+        <div class="row">
+            <div  th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
 
-          <div class="col s12 m6 l3">
-              <div  class="gigCard hoverable">
-                  <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
-                      <div class="dateBox white orange-text text-accent-4 center-align">
-                          <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
-                          <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
-                      </div>
-                      <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
+                <div class="col s12 m6 l3">
+                    <div  class="gigCard hoverable">
+                        <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                            <div class="dateBox white orange-text text-accent-4 center-align">
+                                <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
+                                <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                            </div>
+                            <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
-                  </div>
-                  <div class="gigInfo white center-align">
-                      <p><b>[[${gig.gigTitle}]]</b></p>
-                      <p >[[${gig.gigLocation}]]</p>
+                        </div>
+                        <div class="gigInfo white center-align">
+                            <p><b>[[${gig.gigTitle}]]</b></p>
+                            <p >[[${gig.gigLocation}]]</p>
 
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-</main>
-<div th:include="fragments/footer :: footer"></div>
-<div th:include="fragments/modals :: signupModal"></div>
+    </main>
+    <div th:include="fragments/footer :: footer"></div>
+    <div th:include="fragments/modals :: signupModal"></div>
+
+</div>
+
 
 <span th:include="fragments/includes :: js"></span>
 </body>

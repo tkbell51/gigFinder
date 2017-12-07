@@ -5,20 +5,99 @@
 <head th:include="fragments/includes :: indexHead"></head>
 <body th:inline="text" class="search">
 <div th:include="fragments/navbar :: navHome"></div>
-<main >
-    <div class="container">
-        <div sec:authorize="hasRole('ROLE_MUSICIAN')">
-            <h1 class="center-align white-text">Search for Gigs</h1>
+<div class="page-flexbox-wrapper">
 
+    <main >
+        <div class="container">
+            <div sec:authorize="hasRole('ROLE_MUSICIAN')">
+                <h1 class="center-align white-text">Search for Gigs</h1>
+
+                <div class="card-panel">
+                    <div class="section">
+                        <form th:action="@{/searchGigLocation}" method="post" class="white-text">
+
+                            <div class="section">
+                                <div class="input-field ">
+                                    <i class="orange-text text-accent-4 material-icons prefix">location_on</i>
+                                    <input type="text" placeholder="Search by Location" name="location" id="giglocation"/>
+                                    <label for="giglocation">Location</label>
+                                </div>
+                                <div class="right">
+                                    <button class="btn orange accent-4" type="submit">Search</button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="section">
+                        <form th:action="@{/searchGigType}" method="post" class="white-text">
+                            <div class="section">
+                                <div class="input-field ">
+                                    <i class="orange-text text-accent-4 material-icons prefix">event_note</i>
+
+                                    <select name="type" id="type">
+                                        <option value="" disabled="disabled" selected="selected">Search by Gig Type</option>
+
+                                        <option th:each="gigType : ${gigTypes}" th:value="${gigType.type}">[[${gigType.type}]]</option>
+                                    </select>
+                                    <label for="type">Type of Gigs</label>
+                                </div>
+                                <div class="right">
+                                    <button class="btn orange accent-4" type="submit">Search</button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div sec:authorize="hasRole('ROLE_COMPANY')" class="container">
+            <h1 class="center-align white-text">Search for Musicians</h1>
             <div class="card-panel">
                 <div class="section">
-                    <form th:action="@{/searchGigLocation}" method="post" class="white-text">
+                    <form th:action="@{/searchName}" method="post" class="white-text">
+                        <div class=" section ">
+                            <div class="row">
+                                <div class="col s6">
+                                    <div class="input-field ">
+                                        <i class="orange-text text-accent-4 material-icons prefix">account_circle</i>
 
-                        <div class="section">
-                            <div class="input-field ">
-                                <i class="orange-text text-accent-4 material-icons prefix">location_on</i>
-                                <input type="text" placeholder="Search by Location" name="location" id="giglocation"/>
-                                <label for="giglocation">Location</label>
+                                        <input placeholder="Search First Name" id="first_name" type="text" name="firstName" class="validate"/>
+                                        <label for="first_name">First Name</label>
+                                    </div>
+
+                                </div>
+                                <div class="col s6">
+                                    <div class="input-field ">
+                                        <input placeholder="Search Last Name" id="last_name" type="text" name="lastName" class="validate"/>
+                                        <label for="last_name">Last Name</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="right">
+                                <button class="btn orange accent-4 " type="submit">Search</button>
+
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="section">
+                    <form th:action="@{/searchInstrument}" method="post" class="white-text">
+                        <div class="section ">
+                            <div class="input-field">
+                                <i class="orange-text text-accent-4 material-icons prefix">star</i>
+
+                                <select multiple="multiple" name="instrument">
+                                    <option value="" disabled="disabled" selected="selected">Search by Musical Instruments</option>
+                                    <option th:inline="text" th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
+                                </select>
                             </div>
                             <div class="right">
                                 <button class="btn orange accent-4" type="submit">Search</button>
@@ -28,17 +107,13 @@
                     </form>
                 </div>
                 <div class="section">
-                    <form th:action="@{/searchGigType}" method="post" class="white-text">
-                        <div class="section">
-                            <div class="input-field ">
-                                <i class="orange-text text-accent-4 material-icons prefix">event_note</i>
+                    <form th:action="@{/searchLocation}" method="post" class="white-text">
+                        <div class="section ">
+                            <div class="input-field">
+                                <i class="orange-text text-accent-4 material-icons prefix">location_on</i>
 
-                                <select name="type" id="type">
-                                    <option value="" disabled="disabled" selected="selected">Search by Gig Type</option>
-
-                                    <option th:each="gigType : ${gigTypes}" th:value="${gigType.type}">[[${gigType.type}]]</option>
-                                </select>
-                                <label for="type">Type of Gigs</label>
+                                <input type="text" placeholder="Search by Location" name="location" id="location"/>
+                                <label for="location">Location</label>
                             </div>
                             <div class="right">
                                 <button class="btn orange accent-4" type="submit">Search</button>
@@ -50,107 +125,34 @@
             </div>
 
         </div>
-
-    </div>
-
-
-    <div sec:authorize="hasRole('ROLE_COMPANY')" class="container">
-        <h1 class="center-align white-text">Search for Musicians</h1>
-        <div class="card-panel">
-            <div class="section">
-                <form th:action="@{/searchName}" method="post" class="white-text">
-                    <div class=" section ">
-                        <div class="row">
-                            <div class="col s6">
-                                <div class="input-field ">
-                                    <i class="orange-text text-accent-4 material-icons prefix">account_circle</i>
-
-                                    <input placeholder="Search First Name" id="first_name" type="text" name="firstName" class="validate"/>
-                                    <label for="first_name">First Name</label>
-                                </div>
-
-                            </div>
-                            <div class="col s6">
-                                <div class="input-field ">
-                                    <input placeholder="Search Last Name" id="last_name" type="text" name="lastName" class="validate"/>
-                                    <label for="last_name">Last Name</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="right">
-                            <button class="btn orange accent-4 " type="submit">Search</button>
-
-                        </div>
-
-                    </div>
-                </form>
-            </div>
-            <div class="section">
-                <form th:action="@{/searchInstrument}" method="post" class="white-text">
-                    <div class="section ">
-                        <div class="input-field">
-                            <i class="orange-text text-accent-4 material-icons prefix">star</i>
-
-                            <select multiple="multiple" name="instrument">
-                                <option value="" disabled="disabled" selected="selected">Search by Musical Instruments</option>
-                                <option th:inline="text" th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
-                            </select>
-                        </div>
-                        <div class="right">
-                            <button class="btn orange accent-4" type="submit">Search</button>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="section">
-                <form th:action="@{/searchLocation}" method="post" class="white-text">
-                    <div class="section ">
-                        <div class="input-field">
-                            <i class="orange-text text-accent-4 material-icons prefix">location_on</i>
-
-                            <input type="text" placeholder="Search by Location" name="location" id="location"/>
-                            <label for="location">Location</label>
-                        </div>
-                        <div class="right">
-                            <button class="btn orange accent-4" type="submit">Search</button>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-    </div>
-    <div class="divider"></div>
-    <section class="searchResult container">
-        <h1 class="center-align white-text">Search Results</h1>
-        <div sec:authorize="hasRole('ROLE_COMPANY')">
-            <div class="row">
-                <div  th:each="musician : ${musician}">
-                    <div class="col s12 m4 l3  center-align ">
-                        <a sec:authorize="hasRole('ROLE_COMPANY')" th:href="'/company/find-bands/' + @{${musician.id}}" >
-                            <div  th:style="'background:url('+ @{${musician.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 41vh; width: 100%'" class="bandInfo hoverable">
-                                <div class="second">
-                                    <div class="hiddenText">
-                                        <h5 ><b>[[${musician.firstName}]] [[${musician.lastName}]]</b></h5>
-                                        <p class="flow-text">[[${musician.musicianInstruments}]]</p>
+        <div class="divider"></div>
+        <section class="searchResult container">
+            <h1 class="center-align white-text">Search Results</h1>
+            <div sec:authorize="hasRole('ROLE_COMPANY')">
+                <div class="row">
+                    <div  th:each="musician : ${musician}">
+                        <div class="col s12 m4 l3  center-align ">
+                            <a sec:authorize="hasRole('ROLE_COMPANY')" th:href="'/company/find-bands/' + @{${musician.id}}" >
+                                <div  th:style="'background:url('+ @{${musician.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 41vh; width: 100%'" class="bandInfo hoverable">
+                                    <div class="second">
+                                        <div class="hiddenText">
+                                            <h5 ><b>[[${musician.firstName}]] [[${musician.lastName}]]</b></h5>
+                                            <p class="flow-text">[[${musician.musicianInstruments}]]</p>
+                                        </div>
                                     </div>
+
+
                                 </div>
-
-
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 
-        <div sec:authorize="hasRole('ROLE_MUSICIAN')">
-            <div class="row">
-                <div th:each="gig : ${gig}" class="col s12 m6 l3">
+            <div sec:authorize="hasRole('ROLE_MUSICIAN')">
+                <div class="row">
+                    <div th:each="gig : ${gig}" class="col s12 m6 l3">
 
                         <div class="gigCard z-depth-2">
                             <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
@@ -168,17 +170,19 @@
                             </div>
                         </div>
 
+                    </div>
                 </div>
+
             </div>
+        </section>
 
-        </div>
-    </section>
-
-</main>
+    </main>
 
 
 
-<div th:include="fragments/footer :: footer"></div>
+    <div th:include="fragments/footer :: footer"></div>
+</div>
+
 <span th:include="fragments/includes :: js"></span>
 </body>
 </html>

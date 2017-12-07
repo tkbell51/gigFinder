@@ -9,9 +9,13 @@
             <div th:include="fragments/navbar :: navHome"></div>
             <a href="#coverMusicianPic" class="modal-trigger tooltipped" data-position="right" data-delay="50" data-tooltip="Update Cover Image"><i class="coverBanner text-accent-4 material-icons">camera_alt</i></a>
             <div class="hide-on-med-and-down">
-                <div class="white-text bannerBio ">
-                    <h4>[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]]</h4>
-                    <h5 > [[${musicianProfile.location}]]</h5>
+                <div class="details-row white-text">
+                    <div class="row">
+                        <div class="col s6 offset-s5">
+                            <h3>[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]] -- <span><small>[[${musicianProfile.location}]]</small></span></h3>
+
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -83,8 +87,8 @@
                             </div>
                             <div id="music" class="col s12 container">
                                 <div class=" musicCard ">
-                                    <div class="card-panel">
-                                        <h4 class="center-align ">My Music
+                                    <div class="card-panel center-align">
+                                        <h4 >My Music
                                             <span>
                 <a class="waves-effect waves-light btn-floating modal-trigger tooltipped" data-position="top" data-delay="50" data-tooltip="Add a YouTube video of your music" href="#addMusicContent"><i class="material-icons">add</i></a>
                 </span>
@@ -122,10 +126,13 @@
                                 </div>
                             </div>
                             <div id="upEvents" class="col s12">
-                                <h4 class="center-align card-panel">Upcoming Events</h4>
-                                <div th:if="${hired.isEmpty()}">
-                                    <h5>No Upcoming Events</h5>
+                                <div class="card-panel center-align">
+                                    <h4 >Upcoming Events</h4>
+                                    <div th:if="${hired.isEmpty()}">
+                                        <h5>No Upcoming Events</h5>
+                                    </div>
                                 </div>
+
                                 <div class="row"  >
                                     <div class="col s12 m4" th:each="hired : ${hired}">
                                         <div  class="gigCard hoverable">
@@ -149,13 +156,16 @@
                                 </div>
                             </div>
                             <div id="areaGigs" class="col s12">
-                                <h4 class="center-align card-panel">Gigs in the Area
-                                    <span>
+                                <div class="card-panel center-align">
+
+                                    <h4 >Gigs in the Area
+                                        <span>
                     <a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Gigs" href="/musician/search/"><i class="material-icons">search</i></a>
                 </span>
-                                </h4>
-                                <div th:if="${gig.isEmpty()}">
-                                    <h5>No Gigs found in your area</h5>
+                                    </h4>
+                                    <div th:if="${musicianProfile.getLocation() != gig}">
+                                        <h5>No Gigs found in your area</h5>
+                                    </div>
                                 </div>
                                 <div class="row"  >
                                     <div class="col s12 m4" th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
@@ -180,7 +190,12 @@
                                 </div>
                             </div>
                             <div id="appliedGigs" class="col s12">
-                                <h4 class="center-align card-panel">Applied Gigs</h4>
+                                <div class="card-panel center-align">
+                                    <h4>Applied Gigs</h4>
+                                    <div th:if="${applied.isEmpty()}">
+                                        <h5>Find gigs to apply for</h5>
+                                    </div>
+                                </div>
 
                                 <div class="row">
                                     <div class="col s12 m4" th:each="applied : ${applied}" th:if="${applied.gig.gigHired} != true">
@@ -190,7 +205,7 @@
                                                     <h4>[[${#dates.format(applied.gig.gigStart,'d')}]]</h4>
                                                     <p>[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>
                                                 </div>
-                                                <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${applied.gig.id}}"><i class="material-icons">arrow_forward</i></a>
+                                                <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${applied.gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
                                             </div>
                                             <div class="gigInfo white center-align">
@@ -300,7 +315,7 @@
                                         <h4>[[${#dates.format(hired.gig.gigStart,'d')}]]</h4>
                                         <p>[[${#dates.format(hired.gig.gigStart,'MMMM')}]]</p>
                                     </div>
-                                    <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
+                                    <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
                                 </div>
                                 <div class="gigInfo white center-align">
@@ -331,7 +346,7 @@
                                         <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
                                         <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
                                     </div>
-                                    <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
+                                    <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
                                 </div>
                                 <div class="gigInfo white center-align">
@@ -356,7 +371,7 @@
                                         <h4>[[${#dates.format(applied.gig.gigStart,'d')}]]</h4>
                                         <p>[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>
                                     </div>
-                                    <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${applied.gig.id}}"><i class="material-icons">arrow_forward</i></a>
+                                    <a  class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${applied.gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
                                 </div>
                                 <div class="gigInfo white center-align">

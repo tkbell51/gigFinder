@@ -60,7 +60,11 @@ main {
 .brand-logo {
     font-family: 'Great Vibes', cursive;
 }
-.choice .row, .compSignup .row, .musicSignup .row, .time-description .row{
+.choice .row,
+.compSignup .row,
+.musicSignup .row,
+.time-description .row,
+.details-row .row{
     margin-bottom: 0px;
 }
 /*mfp popup*/
@@ -346,11 +350,8 @@ footer{
 
 }
 /*Musician Details Page  */
-.detailsMedia{
-    line-height: 1.5;
-    padding: 1rem;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
+.music-details .hide-on-med-and-down td{
+    padding: 15px 41px;
 }
 /*Profile Pages*/
 .row-content{
@@ -358,6 +359,18 @@ footer{
     flex-flow: row nowrap;
     justify-content:space-between;
 
+}
+
+.profileBanner {
+    height: 400px;
+    position: relative;
+}
+
+.profileBanner .details-row {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    padding-left: 0px;
 }
 .tab-profile{
     display: flex;
@@ -378,11 +391,12 @@ footer{
 
 .profCol{
     position: relative;
-    bottom: 200px;
+    bottom: 275px;
     width: 300px;
 
 }
 .profInfo p{
+    font-size: 1.3em;
     margin: 0;
     margin-bottom: 10px;
 }
@@ -471,32 +485,7 @@ footer{
 }
 
 
-.profileBanner {
-    height: 400px;
 
-}
-
-.profileDetails {
-    margin: auto 5vw;
-}
-
-.bannerBio {
-    position: relative;
-    top: 23vh;
-    left: 39%;
-    margin-left:7%;
-    margin-right: auto;
-    display: inline-block;
-}
-.bannerBio h4{
-    font-size: 3em;
-}
-.bannerBio p{
-    font-size: 2em;
-}
-.bannerBio h4, p{
-    margin: 0;
-}
 .mediaTitle {
     font-size: 1.3em;
 }
@@ -637,10 +626,6 @@ img.responsive-img {
     padding: 0px 1rem;
 }
 
-/*#gigImage{*/
-    /*height: 300px;*/
-/*}*/
-
 
 .checkmark{
     color: #2DB051;
@@ -690,6 +675,9 @@ height: 60px;
     display: flex;
     flex-flow: row wrap;
 }
+.no-media{
+    padding: 0px 83px;
+}
 /*Gig Details Page*/
 
 .gigDetails{
@@ -731,9 +719,7 @@ height: 60px;
 .gig-map, .gigDescript{
     flex: 1 1 50%;
 }
-.hire-right{
-    flex: 1 1 25%;
-}
+
 
 .gig-image, .gig-map, .gigDescript{
     height: 30vh;
@@ -743,7 +729,7 @@ height: 60px;
     display: flex;
     align-items:flex-end;
 }
-.gig-details-row{
+.details-row{
     flex: 1 1 100%;
     font-size: 1.8em;
     background-color: rgba(0,0,0,0.41);
@@ -756,9 +742,15 @@ height: 60px;
 .gigDescript{
     padding: 10px;
 }
-.hireForm{
-    flex: 1 1 35%;
+.gigDescript .section{
+    padding: 0px
+}
+.hire-right{
+    flex: 1 1 25%;
     display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
     height:60vh;
 }
 .appliedNum{

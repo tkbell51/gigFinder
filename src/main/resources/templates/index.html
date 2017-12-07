@@ -3,82 +3,85 @@
 
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="blue-grey lighten-5">
+<div class="page-flexbox-wrapper">
 
-<main>
-    <section class=" top">
-        <div th:include="fragments/navbar :: navHome"></div>
-<div class="hide-on-med-and-down">
-    <div class="section scrollspy" id="top">
+    <main>
+        <section class=" top">
+            <div th:include="fragments/navbar :: navHome"></div>
+            <div class="hide-on-med-and-down">
+                <div class="section scrollspy" id="top">
 
-        <div class=" container">
-            <h1 class="brand-logo white-text" id="logo">gigFinder</h1>
-            <a href="#bottom" class="center-align"><i class="material-icons white-text downArrow">arrow_downward</i></a>
-        </div>
+                    <div class=" container">
+                        <h1 class="brand-logo white-text" id="logo">gigFinder</h1>
+                        <a href="#bottom" class="center-align"><i class="material-icons white-text downArrow">arrow_downward</i></a>
+                    </div>
 
-    </div>
-</div>
-        <div class="show-on-med-and-down hide-on-large-only">
-            <section class="container">
-                <div class="card-panel center-align loginCard">
-                    <h5 class="center-align white-text">Login</h5>
-
-                    <div th:text="${message}"></div>
-                    <div style="color: red; margin: 15px 0px;" th:text="${error}"></div>
-
-                    <form th:action="@{/login}" th:object="${user}" method="post" class="white-text">
-                        <div class="input-field">
-                            <i class="material-icons prefix">account_circle</i>
-                            <input id="username" type="text" th:field="*{username}" autofocus="autofocus"/>
-                            <label for="username">Username</label>
-
-                        </div>
-                        <div class="input-field">
-                            <i class="material-icons prefix">lock</i>
-
-                            <input id="password" type="password" th:field="*{password}" />
-                            <label for="password">Password</label>
-                        </div>
-                        <button class="waves-effect waves-light btn" type="submit" >Login</button>
-                    </form>
                 </div>
-            </section>
+            </div>
+            <div class="show-on-med-and-down hide-on-large-only">
+                <section class="container">
+                    <div class="card-panel center-align loginCard">
+                        <h5 class="center-align white-text">Login</h5>
 
-        </div>
-    </section>
-    <section class="choice" id="bottom">
-        <div class="row">
-            <div class="col s12 l6" id="musicChoice">
-                <section class="center-align">
-                    <div class="musicText white-text">
-                        <h3>I'm a Musician</h3>
-                        <h5>I'm looking for a gig</h5>
-                        <h5>I want to network with other musicians</h5>
-                        <h5>I need to get my name out there</h5>
-                        <a href="/signup/musician/" class="logBtn">Sign Up</a>
+                        <div th:text="${message}"></div>
+                        <div style="color: red; margin: 15px 0px;" th:text="${error}"></div>
+
+                        <form th:action="@{/login}" th:object="${user}" method="post" class="white-text">
+                            <div class="input-field">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="username" type="text" th:field="*{username}" autofocus="autofocus"/>
+                                <label for="username">Username</label>
+
+                            </div>
+                            <div class="input-field">
+                                <i class="material-icons prefix">lock</i>
+
+                                <input id="password" type="password" th:field="*{password}" />
+                                <label for="password">Password</label>
+                            </div>
+                            <button class="waves-effect waves-light btn" type="submit" >Login</button>
+                        </form>
                     </div>
                 </section>
+
             </div>
-            <div id="compChoice" class="col s12 l6">
-                <section class="center-align">
-                    <div class="compText white-text">
-                        <h3>I Book Musicians</h3>
-                        <h5>I need help booking musicians</h5>
-                        <h5>I need help finding new talent</h5>
-                        <h5>I need to advertise gigs for my venue</h5>
-
-                        <div class="compAction">
-                            <a href="/signup/company/" class="logBtn">Sign Up</a>
-
+        </section>
+        <section class="choice" id="bottom">
+            <div class="row">
+                <div class="col s12 l6" id="musicChoice">
+                    <section class="center-align">
+                        <div class="musicText white-text">
+                            <h3>I'm a Musician</h3>
+                            <h5>I'm looking for a gig</h5>
+                            <h5>I want to network with other musicians</h5>
+                            <h5>I need to get my name out there</h5>
+                            <a href="/signup/musician/" class="logBtn">Sign Up</a>
                         </div>
-                    </div>
-                </section>
-            </div>
+                    </section>
+                </div>
+                <div id="compChoice" class="col s12 l6">
+                    <section class="center-align">
+                        <div class="compText white-text">
+                            <h3>I Book Musicians</h3>
+                            <h5>I need help booking musicians</h5>
+                            <h5>I need help finding new talent</h5>
+                            <h5>I need to advertise gigs for my venue</h5>
 
-        </div>
-    </section>
-</main>
-<div th:include="fragments/footer :: footer"></div>
-<div th:include="fragments/modals :: signupModal"></div>
+                            <div class="compAction">
+                                <a href="/signup/company/" class="logBtn">Sign Up</a>
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    <div th:include="fragments/footer :: footer"></div>
+    <div th:include="fragments/modals :: signupModal"></div>
+</div>
+
 <span th:include="fragments/includes :: js"></span>
 </body>
 </html>

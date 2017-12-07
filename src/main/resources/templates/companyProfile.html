@@ -9,9 +9,13 @@
             <div th:include="fragments/navbar :: navHome"></div>
             <a href="#coverCompanyPic" class="modal-trigger tooltipped" data-position="right" data-delay="50" data-tooltip="Update Cover Image"><i class="coverBanner text-accent-4 material-icons">camera_alt</i></a>
             <div class="hide-on-med-and-down">
-                <div class="white-text bannerBio ">
-                    <h4>[[${companyProfile.companyContactFirstName}]] [[${companyProfile.companyContactLastName}]]</h4>
-                    <h5 > [[${companyProfile.companyName}]]</h5>
+                <div class="details-row white-text">
+                    <div class="row">
+                        <div class="col s6 offset-s5">
+                            <h3>[[${companyProfile.companyContactFirstName}]] [[${companyProfile.companyContactLastName}]] -- <span><small>[[${companyProfile.companyName}]]</small></span></h3>
+
+                        </div>
+                    </div>
 
                 </div>
             </div>

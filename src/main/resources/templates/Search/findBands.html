@@ -4,25 +4,28 @@
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="gradient-background" th:inline="text">
 <div th:include="fragments/navbar :: navHome"></div>
-<main class="container findBand">
-    <h1 class="white-text center-align">Find Musicians</h1>
-    <div class="row">
-        <div th:each="musician : ${musicians}" >
+<div class="page-flexbox-wrapper">
+
+
+    <main class="container findBand">
+        <h1 class="white-text center-align">Find Musicians</h1>
+        <div class="row">
+            <div th:each="musician : ${musicians}" >
 
 
 
                 <div class="col s6 m4 l3  center-align ">
                     <a sec:authorize="hasRole('ROLE_COMPANY')" th:href="'/company/find-bands/' + @{${musician.id}}" >
-                    <div  th:style="'background:url('+ @{${musician.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 41vh; width: 100%'" class="bandInfo hoverable">
-                        <div class="second">
-                            <div class="hiddenText">
-                                <h5 ><b>[[${musician.firstName}]] [[${musician.lastName}]]</b></h5>
-                                <p class="flow-text">[[${musician.musicianInstruments}]]</p>
+                        <div  th:style="'background:url('+ @{${musician.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 41vh; width: 100%'" class="bandInfo hoverable">
+                            <div class="second">
+                                <div class="hiddenText">
+                                    <h5 ><b>[[${musician.firstName}]] [[${musician.lastName}]]</b></h5>
+                                    <p class="flow-text">[[${musician.musicianInstruments}]]</p>
+                                </div>
                             </div>
+
+
                         </div>
-
-
-                    </div>
                     </a>
 
 
@@ -43,12 +46,14 @@
 
 
 
+            </div>
+
         </div>
+    </main>
 
-    </div>
-</main>
+    <div th:include="fragments/footer :: footer"></div>
+</div>
 
-<div th:include="fragments/footer :: footer"></div>
 
 <span th:include="fragments/includes :: js"></span>
 </body>
