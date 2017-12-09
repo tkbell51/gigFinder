@@ -5,7 +5,7 @@
 
 	<groupId>com.tbell</groupId>
 	<artifactId>gigfinder</artifactId>
-	<version>0.0.23-PREDEPLOY</version>
+	<version>0.0.26-PREDEPLOY</version>
 	<packaging>jar</packaging>
 
 	<name>gigfinder</name>

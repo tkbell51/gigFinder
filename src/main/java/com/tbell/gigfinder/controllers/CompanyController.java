@@ -10,6 +10,7 @@ import com.tbell.gigfinder.enums.State;
 import com.tbell.gigfinder.models.*;
 import com.tbell.gigfinder.services.NotificationService;
 import com.tbell.gigfinder.services.SMSservice;
+import com.tbell.gigfinder.storage.StorageService;
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.security.Principal;
@@ -57,6 +59,9 @@ public class CompanyController {
 
     @Autowired
     MessageRepository messageRepo;
+
+    @Autowired
+    private StorageService storageService;
 
 
     @RequestMapping(value = "/company/my-profile", method = RequestMethod.GET)
@@ -112,111 +117,59 @@ public class CompanyController {
         return "redirect:/company/my-profile";
     }
 
-
-    @RequestMapping(value = "/company/create-gig/", method = RequestMethod.GET)
-    public String createGig (Model model, Principal principal){
-        User user = userRepo.findByUsername(principal.getName());
-        model.addAttribute("user", user);
-
-        CompanyProfile companyProfile = compRepo.findByUser(user);
-        model.addAttribute("companyProfile", companyProfile);
-
-        model.addAttribute("gig", new Gig());
-        List<State> stateEnums = Arrays.asList(State.values());
-        model.addAttribute("states", stateEnums);
-        List<GigTypes> gigEnums = Arrays.asList(GigTypes.values());
-        model.addAttribute("gigTypes", gigEnums);
-        return "Create/createGig";
-    }
-
-    @RequestMapping(value = "/company/create-gig/", method = RequestMethod.POST)
-    public String createGig (@RequestParam("locationStreet")String street,
-                             @RequestParam("locationCity") String city,
-                             @RequestParam("locationState") String state,
-                             @RequestParam("locationZip") String zip,
-                             @RequestParam("gigType")String type,
-                             @RequestParam("gigStart") Date start,
-                             @RequestParam("timeStart") String timeStart,
-                             @RequestParam("gigEnd")Date end,
-                             @RequestParam("timeEnd") String timeEnd,
-                             @RequestParam("gigArt")String gigArt,
-                             @RequestParam("gigTitle")String gigTitle,
-                             @RequestParam("gigDescription") String description,
-                             Model model, Principal principal){
-
-
-        String location = street + ", " + city + ", " + state + ", " + zip;
-        User user = userRepo.findByUsername(principal.getName());
-        model.addAttribute("user", user);
-
-        CompanyProfile compUser = compRepo.findByUser(user);
-        model.addAttribute("compUser", compUser);
-        Gig newGig = new Gig();
-        newGig.setGigTitle(gigTitle);
-        newGig.setGigLocation(location);
-        newGig.setGigDescription(description);
-        newGig.setGigType(type);
-        newGig.setGigStart(start);
-        newGig.setTimeStart(timeStart);
-        newGig.setGigEnd(end);
-        newGig.setTimeEnd(timeEnd);
-        newGig.setCompanyProfile(compUser);
-        newGig.setGigArt(gigArt);
-            gigRepo.save(newGig);
-
-
-        return "redirect:/company/my-profile";
-    }
-
-
-
-
-
-    @RequestMapping(value = "/company/find-bands", method = RequestMethod.GET)
-    public String findBands(Model model, Principal principal) {
-        User user = userRepo.findByUsername(principal.getName());
-        model.addAttribute("user", user);
-
-        CompanyProfile companyProfile = compRepo.findByUser(user);
-        model.addAttribute("companyProfile", companyProfile);
-        Iterable<MusicianProfile> allmusicians = musicianRepo.findAll();
-        model.addAttribute("musicians", allmusicians);
-        return "Search/findBands";
-    }
-
-    @RequestMapping(value = "/company/find-bands/{musicianId}", method = RequestMethod.GET)
-    public String musicianDetails(@PathVariable("musicianId")long id,
-                                  Model model, Principal principal) {
+    @RequestMapping(value = "/company/{companyProfileId}/coverPic", method = RequestMethod.POST)
+    public String uploadCompanyCoverPic(@PathVariable("companyProfileId")long id,
+                                        @RequestParam("companyCoverPic") MultipartFile coverPic,
+                                        Model model, Principal principal){
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
 
-        CompanyProfile companyProfile = compRepo.findByUser(user);
-        model.addAttribute("companyProfile", companyProfile);
 
-        MusicianProfile musicianDetail = musicianRepo.findById(id);
-        model.addAttribute("musicianDetail", musicianDetail);
+        if (coverPic == null) {
+            model.addAttribute("user", user);
 
-        Iterable<MediaContent> media = mediaRepo.findByMusicianProfile(musicianDetail);
-        model.addAttribute("media", media);
-
-        Iterable<MusicianApplyGig> hiredGigs = applyRepo.findAllByMusicianProfileAndHired(musicianDetail, true);
-        model.addAttribute("hired", hiredGigs);
-        return "musicianDetails";
+            model.addAttribute("message", "Something went wrong. Please try Again");
+            return "Messages/messagePage";
+        } else {
+            CompanyProfile newComp = compRepo.findById(id);
+            storageService.deleteOne(newComp.getCompanyCoverPic());
+            String fileName = coverPic.getOriginalFilename();
+            newComp.setCompanyCoverPic(fileName);
+            compRepo.save(newComp);
+            storageService.store(coverPic);
+            return "redirect:/company/my-profile";
+        }
     }
 
-
-    @RequestMapping(value = "/company/find-gigs", method = RequestMethod.GET)
-    public String findGigs(Model model, Principal principal) {
+    @RequestMapping(value = "/company/{companyProfileId}/profPic", method = RequestMethod.POST)
+    public String uploadCompanyProfPic(@PathVariable("companyProfileId")long id,
+                                       @RequestParam("companyProfPic") MultipartFile profPic,
+                                       Model model, Principal principal){
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
-        CompanyProfile companyProfile = compRepo.findByUser(user);
-        model.addAttribute("companyProfile", companyProfile);
 
-        Iterable<Gig> allgigs = gigRepo.findAll();
-        model.addAttribute("gig", allgigs);
-        return "Search/findGigs";
+
+        if (profPic == null) {
+            model.addAttribute("user", user);
+
+            model.addAttribute("message", "Something went wrong. Please try Again");
+            return "Messages/messagePage";
+        } else {
+            CompanyProfile newComp = compRepo.findById(id);
+            if(!newComp.getCompanyProfPic().equals("empty-profile-pic.jpg ")){
+                storageService.deleteOne(newComp.getCompanyProfPic());
+            }
+            storageService.store(profPic);
+            String fileName = profPic.getOriginalFilename();
+            newComp.setCompanyProfPic(fileName);
+            compRepo.save(newComp);
+            return "redirect:/company/my-profile";
+        }
     }
+
+
+
 
 }

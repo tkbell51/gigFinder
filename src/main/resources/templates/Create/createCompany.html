@@ -3,7 +3,6 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
 <body th:inline="text" class="signCompany gradient-background">
-<div class="page-flexbox-wrapper">
     <div th:include="fragments/navbar :: navHome"></div>
     <main class="compSignup">
         <div class="background-image hide-on-med-and-down"></div>
@@ -11,14 +10,13 @@
         <div class="card-panel container">
             <div class="row">
                 <div class="col s12 m6  center-align ">
-                    <div class="logoSide">
-                        <h1 class="loginLogo"> <a href="/" >gigFinder</a></h1>
+                    <div class="logo-side">
+                        <h1 class="login-logo"> <a href="/" >gigFinder</a></h1>
                         <h5 class="white-text"> Company Signup</h5>
                     </div>
 
                 </div>
                 <div class="col s12 m6 white compForm">
-                    <div class="compForm">
                         <form th:action="@{/signup/company/}" method="post">
                             <div th:object="${user}">
                                 <div class="row">
@@ -76,6 +74,17 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="file-field input-field">
+                                        <div class="btn">
+                                            <span>File</span>
+                                            <input type="file" th:field="*{companyProfPic}"/>
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text"/>
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
 
@@ -83,7 +92,6 @@
 
                         </form>
 
-                    </div>
                 </div>
             </div>
 
@@ -91,7 +99,6 @@
     </main>
     <div th:include="fragments/footer :: footer"></div>
     <div th:include="fragments/modals :: signupModal"></div>
-</div>
 
 <span th:include="fragments/includes :: js"></span>
 </body>

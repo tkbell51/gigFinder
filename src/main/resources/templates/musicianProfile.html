@@ -3,9 +3,8 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
 <body th:inline="text" class=" grey lighten-1">
-<div class="page-flexbox-wrapper">
     <main >
-        <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{${musicianProfile.coverPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
+        <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/'+ ${musicianProfile.coverPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
             <div th:include="fragments/navbar :: navHome"></div>
             <a href="#coverMusicianPic" class="modal-trigger tooltipped" data-position="right" data-delay="50" data-tooltip="Update Cover Image"><i class="coverBanner text-accent-4 material-icons">camera_alt</i></a>
             <div class="hide-on-med-and-down">
@@ -23,7 +22,7 @@
 
             <div class="show-on-medium-and-down hide-on-large-only">
                 <div class="tab-profile white-text">
-                    <div class="circle tab-profPic profImage" th:style="'background:url('+ @{${musicianProfile.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; width: 200px; height: 200px;'">
+                    <div class="circle tab-profPic profImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${musicianProfile.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; width: 200px; height: 200px;'">
                         <div class="middle">
                             <div  id="hover-content">
                                 <a href="#profMusicianPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>
@@ -43,7 +42,7 @@
                 <div class="row-content">
                     <div class="profile-info">
                         <div class="profCol z-depth-5">
-                            <div class="profImage" th:style="'background:url('+ @{${musicianProfile.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;'">
+                            <div class="profImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${musicianProfile.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;'">
                                 <div class="middle">
                                     <div  id="hover-content">
                                         <a href="#profMusicianPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>
@@ -110,7 +109,8 @@
                                 </td>
                                 <td class="right">
                                     <a class="modal-trigger waves-effect waves-light  btn-flat" th:href="'#mediaUpdate' + ${media.id}">
-                                        <i class="material-icons orange-text text-accent-4 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Music">edit</i>                                    </a>
+                                        <i class="material-icons orange-text text-accent-4 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Music">edit</i>
+                                    </a>
                                 </td>
                                 <td class="right">
                                     <form th:action="'/musician/media/delete/' + ${media.id}" method="post">
@@ -136,12 +136,12 @@
                                 <div class="row"  >
                                     <div class="col s12 m4" th:each="hired : ${hired}">
                                         <div  class="gigCard hoverable">
-                                            <div class="gigImage" th:style="'background:url('+ @{${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                            <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                                                 <div class="dateBox white orange-text text-accent-4 center-align">
                                                     <h4>[[${#dates.format(hired.gig.gigStart,'d')}]]</h4>
                                                     <p>[[${#dates.format(hired.gig.gigStart,'MMMM')}]]</p>
                                                 </div>
-                                                <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
+                                                <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
                                             </div>
                                             <div class="gigInfo white center-align">
@@ -170,12 +170,12 @@
                                 <div class="row"  >
                                     <div class="col s12 m4" th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
                                         <div  class="gigCard hoverable">
-                                            <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                            <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                                                 <div class="dateBox white orange-text text-accent-4 center-align">
                                                     <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
                                                     <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
                                                 </div>
-                                                <a sec:authorize="hasRole('ROLE_MUSICIAN')" class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
+                                                <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
                                             </div>
                                             <div class="gigInfo white center-align">
@@ -200,7 +200,7 @@
                                 <div class="row">
                                     <div class="col s12 m4" th:each="applied : ${applied}" th:if="${applied.gig.gigHired} != true">
                                         <div  class="gigCard hoverable">
-                                            <div class="gigImage" th:style="'background:url('+ @{${applied.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                            <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${applied.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                                                 <div class="dateBox white orange-text text-accent-4 center-align">
                                                     <h4>[[${#dates.format(applied.gig.gigStart,'d')}]]</h4>
                                                     <p>[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>
@@ -310,7 +310,7 @@
                     <div class="row"  >
                         <div class="col s12 m4" th:each="hired : ${hired}">
                             <div  class="gigCard hoverable">
-                                <div class="gigImage" th:style="'background:url('+ @{${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                                     <div class="dateBox white orange-text text-accent-4 center-align">
                                         <h4>[[${#dates.format(hired.gig.gigStart,'d')}]]</h4>
                                         <p>[[${#dates.format(hired.gig.gigStart,'MMMM')}]]</p>
@@ -341,7 +341,7 @@
                     <div class="row"  >
                         <div class="col s12 m4" th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
                             <div  class="gigCard hoverable">
-                                <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                                     <div class="dateBox white orange-text text-accent-4 center-align">
                                         <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
                                         <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
@@ -366,7 +366,7 @@
                     <div class="row">
                         <div class="col s12 m4" th:each="applied : ${applied}" th:if="${applied.gig.gigHired} != true">
                             <div  class="gigCard hoverable">
-                                <div class="gigImage" th:style="'background:url('+ @{${applied.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${applied.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                                     <div class="dateBox white orange-text text-accent-4 center-align">
                                         <h4>[[${#dates.format(applied.gig.gigStart,'d')}]]</h4>
                                         <p>[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>
@@ -395,7 +395,6 @@
     <div th:include="fragments/modals :: createMedia"></div>
 
     <div th:include="fragments/footer :: footer"></div>
-</div>
 
 <span th:include="fragments/includes :: js"></span>
 

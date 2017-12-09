@@ -7,7 +7,6 @@
 <div th:fragment="signupModal">
     <div id="signupModal" class="modal">
         <div class="modal-content">
-            <div class="">
                 <div class="section">
                     <h5 class="center-align">Login</h5>
 
@@ -35,7 +34,6 @@
 
                     </div>
                 </form>
-            </div>
             </div>
         </div>
 
@@ -267,9 +265,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s12">
-                        <label for="imgurl">Image URL</label>
-                        <input type="url"  id="imgurl" th:field="*{gigArt}" placeholder="Image URL"/>
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>File</span>
+                            <input type="file" th:field="*{gigArt}"/>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input id="gigArt" class="file-path validate" type="text" th:value="${gig.gigArt}"/>
+                            <label for="gigArt">Upload Gig Image</label>
+                        </div>
                     </div>
                 </div>
 
@@ -332,14 +336,23 @@
 <div th:fragment="coverMusicianPic">
     <div id="coverMusicianPic" class="modal">
         <div class="modal-content">
-                <form th:action="'/musician/coverPic/' + @{${musicianProfile.id}} + '/'" method="post" th:object="${musicianProfile}">
-                    <div class="row">
-                            <div class="input-field col s12">
-                                <label for="musicianCover">Image URL</label>
-                                <input type="url"  id="musicianCover" th:field="*{coverPicImage}" placeholder="Image URL"/>
-                            </div>
-                        <input class="waves-effect waves-light btn" type="submit" value="Save"/>
+            <h2>Upload Background Banner</h2>
+
+            <form th:action="'/musician/coverPic/' + @{${musicianProfile.id}} + '/'" method="post" th:object="${musicianProfile}" enctype="multipart/form-data">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>File</span>
+                            <input type="file" th:field="*{coverPicImage}"/>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" th:value="${musicianProfile.coverPicImage}"/>
+                        </div>
                     </div>
+                    <div class="modal-footer">
+
+                        <input class="waves-effect waves-light btn right" type="submit" value="Save"/>
+                    </div>
+
                 </form>
         </div>
     </div>
@@ -348,15 +361,23 @@
 <div th:fragment="profMusicianPic">
     <div id="profMusicianPic" class="modal">
         <div class="modal-content">
-            <form th:action="'/musician/profilePic/' + @{${musicianProfile.id}} + '/'" method="post" th:object="${musicianProfile}">
-                <div class="row">
-                    <div class="input-field col s12">
-                        <label for="musicianProf">Image URL</label>
-                        <input type="url"  id="musicianProf" th:field="*{profPicImage}" placeholder="Image URL"/>
-                    </div>
-                    <input class="waves-effect waves-light btn" type="submit" value="Save"/>
+            <h2>Upload Profile Image</h2>
+            <form th:action="'/musician/profilePic/' + @{${musicianProfile.id}} + '/'" method="post" th:object="${musicianProfile}" enctype="multipart/form-data">
 
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" th:field="*{profPicImage}"/>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" th:value="${musicianProfile.profPicImage}"/>
+                    </div>
                 </div>
+                <div class="modal-footer">
+
+                    <input class="waves-effect waves-light btn right" type="submit" value="Save"/>
+                </div>
+
             </form>
         </div>
     </div>
@@ -365,12 +386,23 @@
 <div th:fragment="coverCompanyPic">
     <div id="coverCompanyPic" class="modal">
         <div class="modal-content">
-            <form th:action="'/company/' + @{${companyProfile.id}} + '/coverPic'" method="post" th:object="${companyProfile}">
-                <div class="input-field col s12">
-                    <label for="companyCover">Image URL</label>
-                    <input type="url"  id="companyCover" th:field="*{companyCoverPic}" placeholder="Image URL"/>
+            <h2>Upload Background Bannder</h2>
+
+            <form th:action="'/company/' + @{${companyProfile.id}} + '/coverPic'" method="post" th:object="${companyProfile}" enctype="multipart/form-data">
+
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" th:field="*{companyCoverPic}"/>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" th:value="${companyProfile.companyCoverPic}"/>
+                    </div>
                 </div>
-                <input class="waves-effect waves-light btn" type="submit" value="Save"/>
+                <div class="modal-footer">
+
+                    <input class="waves-effect waves-light btn right" type="submit" value="Save"/>
+                </div>
             </form>
         </div>
     </div>
@@ -379,12 +411,21 @@
 <div th:fragment="profCompanyPic">
     <div id="profCompanyPic" class="modal">
         <div class="modal-content">
-            <form th:action="'/company/' + @{${companyProfile.id}} + '/profPic'" method="post" th:object="${companyProfile}">
-                <div class="input-field col s12">
-                    <label for="companyProf">Image URL</label>
-                    <input type="url"  id="companyProf" th:field="*{companyProfPic}" placeholder="Image URL"/>
+            <h2>Upload Profile Image</h2>
+            <form th:action="'/company/' + @{${companyProfile.id}} + '/profPic'" method="post" th:object="${companyProfile}" enctype="multipart/form-data">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" th:field="*{companyProfPic}"/>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" th:value="${companyProfile.companyProfPic}"/>
+                    </div>
                 </div>
-                <input class="waves-effect waves-light btn" type="submit" value="Save"/>
+                <div class="modal-footer">
+
+                    <input class="waves-effect waves-light btn right" type="submit" value="Save"/>
+                </div>
             </form>
         </div>
     </div>

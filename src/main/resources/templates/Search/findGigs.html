@@ -4,7 +4,6 @@
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="gradient-background">
 <div th:include="fragments/navbar :: navHome"></div>
-<div class="page-flexbox-wrapper">
     <main class="container" th:inline="text">
         <h1 class="white-text center-align">Find gigs</h1>
         <div class="row">
@@ -12,7 +11,7 @@
 
                 <div class="col s12 m6 l3">
                     <div  class="gigCard hoverable">
-                        <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                        <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                             <div class="dateBox white orange-text text-accent-4 center-align">
                                 <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
                                 <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
@@ -35,7 +34,6 @@
     <div th:include="fragments/footer :: footer"></div>
     <div th:include="fragments/modals :: signupModal"></div>
 
-</div>
 
 
 <span th:include="fragments/includes :: js"></span>

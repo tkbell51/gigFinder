@@ -3,7 +3,6 @@
 
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="blue-grey lighten-5">
-<div class="page-flexbox-wrapper">
 
     <main>
         <section class=" top">
@@ -20,7 +19,7 @@
             </div>
             <div class="show-on-med-and-down hide-on-large-only">
                 <section class="container">
-                    <div class="card-panel center-align loginCard">
+                    <div class="card-panel center-align login-card">
                         <h5 class="center-align white-text">Login</h5>
 
                         <div th:text="${message}"></div>
@@ -52,7 +51,7 @@
                     <section class="center-align">
                         <div class="musicText white-text">
                             <h3>I'm a Musician</h3>
-                            <h5>I'm looking for a gig</h5>
+                            <h5>I'm looking for gigs</h5>
                             <h5>I want to network with other musicians</h5>
                             <h5>I need to get my name out there</h5>
                             <a href="/signup/musician/" class="logBtn">Sign Up</a>
@@ -80,7 +79,6 @@
     </main>
     <div th:include="fragments/footer :: footer"></div>
     <div th:include="fragments/modals :: signupModal"></div>
-</div>
 
 <span th:include="fragments/includes :: js"></span>
 </body>

@@ -3,9 +3,8 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="grey lighten-1" th:inline="text">
-<div class="page-flexbox-wrapper">
     <main >
-        <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{${companyProfile.companyCoverPic}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
+        <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${companyProfile.companyCoverPic}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
             <div th:include="fragments/navbar :: navHome"></div>
             <a href="#coverCompanyPic" class="modal-trigger tooltipped" data-position="right" data-delay="50" data-tooltip="Update Cover Image"><i class="coverBanner text-accent-4 material-icons">camera_alt</i></a>
             <div class="hide-on-med-and-down">
@@ -23,7 +22,7 @@
 
             <div class="show-on-medium-and-down hide-on-large-only">
                 <div class="tab-profile white-text">
-                    <div class="circle tab-profPic profImage" th:style="'background:url('+ @{${companyProfile.companyProfPic}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; width: 200px; height: 200px;'">
+                    <div class="circle tab-profPic profImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${companyProfile.companyProfPic}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; width: 200px; height: 200px;'">
                         <div class="middle">
                             <div  id="hover-content">
                                 <a href="#profCompanyPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>
@@ -43,7 +42,7 @@
                 <div class="row-content">
                     <div class="profile-info">
                         <div class="profCol z-depth-5">
-                            <div class="profImage" th:style="'background:url('+ @{${companyProfile.companyProfPic}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;'">
+                            <div class="profImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${companyProfile.companyProfPic}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 400px;'">
                                 <div class="middle">
                                     <div  id="hover-content">
                                         <a href="#profCompanyPic" class=" modal-trigger"><i class=" orange-text text-accent-4 material-icons bannerEdit">edit</i><br/><span class="profMessage white-text">Update Profile Image</span>
@@ -96,7 +95,7 @@
                                     <div  th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
                                         <div class="col s12 m6 l6">
                                             <div  class="gigCard z-depth-2">
-                                                <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                                <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                                                     <div class="dateBox white orange-text text-accent-4 center-align">
                                                         <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
                                                         <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
@@ -124,7 +123,7 @@
                                     <div  th:each="gig : ${gig}" th:if="${gig.gigHired} == true">
                                         <div class="col s12 m6">
                                             <div  class="gigCard z-depth-2">
-                                                <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                                <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                                                     <div class="dateBox white orange-text text-accent-4 center-align">
                                                         <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
                                                         <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
@@ -140,8 +139,8 @@
                                                         <h4 >Hired<i class="checkmark material-icons">check</i></h4>
                                                         <div th:each="hired : ${hired}">
 
-                                                            <a th:href="'/company/find-bands/' + @{${hired.musicianProfile.id}}" >
-                                                                <img th:src="@{${hired.musicianProfile.profPicImage}} " class="cardImage hiredImage circle"/>
+                                                            <a th:href="'/find-bands/' + @{${hired.musicianProfile.id}}" >
+                                                                <img th:src="@{'https://s3.amazonaws.com/s3-gigfinder/' + ${hired.musicianProfile.profPicImage}} " class="cardImage hiredImage circle"/>
                                                                 <h5 class="black-text"><b>[[${hired.musicianProfile.firstName}]] [[${hired.musicianProfile.lastName}]]</b></h5>
 
                                                             </a>
@@ -169,8 +168,8 @@
                                     <div class="row">
                                         <div  th:each="musician : ${musician}" >
                                             <div class="col s4 m4 l4  center-align ">
-                                                <a th:href="'/company/find-bands/' + @{${musician.id}}" >
-                                                    <div  th:style="'background:url('+ @{${musician.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 30vh; width: 100%'" class="bandInfo hoverable">
+                                                <a th:href="'/find-bands/' + @{${musician.id}}" >
+                                                    <div  th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${musician.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 30vh; width: 100%'" class="bandInfo hoverable">
                                                         <div class="second">
                                                             <div class="hiddenText">
                                                                 <h5 ><b>[[${musician.firstName}]] [[${musician.lastName}]]</b></h5>
@@ -241,7 +240,7 @@
                             <div  th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
                                 <div class="col s12 m6 l6">
                                     <div  class="gigCard z-depth-2">
-                                        <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                        <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                                             <div class="dateBox white orange-text text-accent-4 center-align">
                                                 <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
                                                 <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
@@ -269,7 +268,7 @@
                             <div  th:each="gig : ${gig}" th:if="${gig.gigHired} == true">
                                 <div class="col s12 m6">
                                     <div  class="gigCard z-depth-2">
-                                        <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                                        <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                                             <div class="dateBox white orange-text text-accent-4 center-align">
                                                 <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
                                                 <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
@@ -285,8 +284,8 @@
                                                 <h4 >Hired<i class="checkmark material-icons">check</i></h4>
                                                 <div th:each="hired : ${hired}">
 
-                                                    <a th:href="'/company/find-bands/' + @{${hired.musicianProfile.id}}" >
-                                                        <img th:src="@{${hired.musicianProfile.profPicImage}} " class="cardImage hiredImage circle"/>
+                                                    <a th:href="'/find-bands/' + @{${hired.musicianProfile.id}}" >
+                                                        <img th:src="@{'https://s3.amazonaws.com/s3-gigfinder/' + ${hired.musicianProfile.profPicImage}} " class="cardImage hiredImage circle"/>
                                                         <h5 class="black-text"><b>[[${hired.musicianProfile.firstName}]] [[${hired.musicianProfile.lastName}]]</b></h5>
 
                                                     </a>
@@ -314,8 +313,8 @@
                             <div class="row">
                                 <div  th:each="musician : ${musician}" >
                                     <div class="col s6 m4 l3  center-align ">
-                                        <a th:href="'/company/find-bands/' + @{${musician.id}}" >
-                                            <div  th:style="'background:url('+ @{${musician.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 30vh; width: 100%'" class="bandInfo hoverable">
+                                        <a th:href="'/find-bands/' + @{${musician.id}}" >
+                                            <div  th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${musician.profPicImage}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 30vh; width: 100%'" class="bandInfo hoverable">
                                                 <div class="second">
                                                     <div class="hiddenText">
                                                         <h5 ><b>[[${musician.firstName}]] [[${musician.lastName}]]</b></h5>
@@ -346,7 +345,6 @@
 
     <div th:include="fragments/modals :: companyProfileUpdate"></div>
     <div th:include="fragments/footer :: footer"></div>
-</div>
 
 <span th:include="fragments/includes :: js"></span>
 </body>

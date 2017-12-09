@@ -4,7 +4,6 @@
 <head th:include="fragments/includes :: indexHead"></head>
 <body th:inline="text" class="gradient-background">
 <div th:include="fragments/navbar :: navHome"></div>
-<div class="page-flexbox-wrapper">
 
     <main class="success">
 
@@ -20,7 +19,7 @@
                     <a href="/musician/my-profile/" class="waves-effect waves-light btn">Profile</a>
                 </div>
                 <div class="col m6 s12">
-                    <a href="/musician/search/" class="waves-effect waves-light btn">Search Gigs</a>
+                    <a href="/search" class="waves-effect waves-light btn">Search Gigs</a>
 
                 </div>
             </div>
@@ -30,7 +29,6 @@
 
     </main>
     <div th:include="fragments/footer :: footer"></div>
-</div>
 
 <span th:include="fragments/includes :: js"></span>
 

@@ -1,12 +1,14 @@
 package com.tbell.gigfinder;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.tbell.gigfinder.storage.StorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 
 @SpringBootApplication
-public class GigfinderApplication {
+@EnableConfigurationProperties(StorageProperties.class)
+public class GigfinderApplication{
 
 
 	public static void main(String[] args) {

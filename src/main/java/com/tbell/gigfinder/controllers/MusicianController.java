@@ -7,12 +7,14 @@ import com.tbell.gigfinder.googleAPI.GeoCodingResponse;
 import com.tbell.gigfinder.enums.Instruments;
 import com.tbell.gigfinder.enums.State;
 import com.tbell.gigfinder.models.*;
+import com.tbell.gigfinder.storage.StorageService;
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -40,6 +42,9 @@ public class MusicianController {
 
     @Autowired
     MusicianApplyGigRepository applyRepo;
+
+    @Autowired
+    private StorageService storageService;
 
 
     @RequestMapping(value = "/musician/my-profile", method = RequestMethod.GET)
@@ -138,55 +143,55 @@ public class MusicianController {
         return "redirect:/musician/my-profile";
     }
 
-
-
-
-
-    @RequestMapping(value = "/musician/find-bands", method = RequestMethod.GET)
-    public String findBands(Model model, Principal principal) {
+    @RequestMapping(value = "/musician/coverPic/{musicianProfileId}/", method = RequestMethod.POST)
+    public String uploadMusicCoverPic(@PathVariable("musicianProfileId")long id,
+                                      @RequestParam("coverPicImage") MultipartFile coverPic,
+                                      Model model, Principal principal)throws Exception{
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
-        MusicianProfile musicianProfile = musicRepo.findByUser(user);
-        model.addAttribute("musicianProfile", musicianProfile);
 
-        Iterable<MusicianProfile> allmusicians = musicRepo.findAll();
-        model.addAttribute("musicians", allmusicians);
-        return "Search/findBands";
+        if(coverPic == null) {
+            model.addAttribute("user", user);
+
+            model.addAttribute("message", "Something went wrong. Please Try Again");
+            return "Messages/messagePage";
+        } else {
+            MusicianProfile newMusician = musicRepo.findById(id);
+            storageService.deleteOne(newMusician.getCoverPicImage());
+            storageService.store(coverPic);
+            String fileName = coverPic.getOriginalFilename();
+            newMusician.setCoverPicImage(fileName);
+            musicRepo.save(newMusician);
+            return "redirect:/musician/my-profile";
+        }
+
     }
 
-    @RequestMapping(value = "/musician/find-bands/{musicianId}", method = RequestMethod.GET)
-    public String musicianDetails(@PathVariable("musicianId")long id,
-                                  Model model, Principal principal) {
+    @RequestMapping(value = "/musician/profilePic/{musicianProfileId}/", method = RequestMethod.POST)
+    public String uploadMusicProfPic(@PathVariable("musicianProfileId")long id,
+                                     @RequestParam("profPicImage") MultipartFile profPic,
+                                     Model model, Principal principal){
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
-        MusicianProfile musicianProfile = musicRepo.findByUser(user);
-        model.addAttribute("musicianProfile", musicianProfile);
 
-        MusicianProfile musicianDetail = musicRepo.findById(id);
-        model.addAttribute("musicianDetail", musicianDetail);
+        if(profPic == null) {
+            model.addAttribute("user", user);
+            model.addAttribute("message", "Something went wrong. Please Try Again");
+            return "Messages/messagePage";
+        } else {
+            MusicianProfile newMusician = musicRepo.findById(id);
+            if(!newMusician.getProfPicImage().equals("empty-profile-pic.jpg")){
+                storageService.deleteOne(newMusician.getProfPicImage());
+            }
+            storageService.store(profPic);
+            String fileName = profPic.getOriginalFilename();
+            newMusician.setProfPicImage(fileName);
+            musicRepo.save(newMusician);
+            return "redirect:/musician/my-profile";
+        }
 
-        Iterable<MediaContent> mySongs = mediaRepo.findByMusicianProfile(musicianDetail);
-        model.addAttribute("media", mySongs);
-
-        Iterable<MusicianApplyGig> hiredGigs = applyRepo.findAllByMusicianProfileAndHired(musicianDetail, true);
-        model.addAttribute("hired", hiredGigs);
-        return "musicianDetails";
-    }
-
-
-    @RequestMapping(value = "/musician/find-gigs", method = RequestMethod.GET)
-    public String findGigs(Model model, Principal principal) {
-        User user = userRepo.findByUsername(principal.getName());
-        model.addAttribute("user", user);
-
-        MusicianProfile musicianProfile = musicRepo.findByUser(user);
-        model.addAttribute("musicianProfile", musicianProfile);
-
-        Iterable<Gig> allgigs = gigRepo.findAll();
-        model.addAttribute("gig", allgigs);
-        return "Search/findGigs";
     }
 
 

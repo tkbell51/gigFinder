@@ -3,15 +3,13 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="gradient-background">
-<div class="page-flexbox-wrapper">
 
     <main class="login ">
 
         <div class="background-image"></div>
 
         <div class="card-panel container center-align">
-            <h1 class="loginLogo"> <a href="/" >gigFinder</a></h1>
-            <h5 class=" white-text">Login</h5>
+            <h1 class="login-logo"> <a href="/" >gigFinder</a></h1>
             <div th:text="${message}"></div>
             <div style="color: red; margin: 15px 0px; text-align: center;" th:text="${error}"></div>
 
@@ -33,7 +31,6 @@
         </div>
 
     </main>
-</div>
 <span th:include="fragments/includes :: js"></span>
 </body>
 </html>

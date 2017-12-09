@@ -7,11 +7,13 @@ import com.tbell.gigfinder.Repositories.UserRepository;
 import com.tbell.gigfinder.enums.Instruments;
 import com.tbell.gigfinder.enums.State;
 import com.tbell.gigfinder.models.*;
+import com.tbell.gigfinder.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,6 +39,9 @@ public class LoginController {
 
     @Autowired
     MusicianProfileRepository musicRepo;
+
+    @Autowired
+    private StorageService storageService;
 
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -71,6 +76,7 @@ public class LoginController {
                                        @RequestParam("companyName")String companyName,
                                        @RequestParam("companyState") String state,
                                        @RequestParam("companyCity")String city,
+                                       @RequestParam("companyProfPic") MultipartFile profPic,
                                        Model model){
         User user = new User();
         user.setUsername(username);
@@ -92,6 +98,9 @@ public class LoginController {
 
 
         CompanyProfile companyProfile = new CompanyProfile();
+        storageService.store(profPic);
+        String fileName = profPic.getOriginalFilename();
+        companyProfile.setCompanyProfPic(fileName);
         companyProfile.setUser(user);
         companyProfile.setCompanyName(companyName);
         companyProfile.setCompanyContactFirstName(firstName);
@@ -129,6 +138,7 @@ public class LoginController {
                                         @RequestParam("musicianState") String state,
                                         @RequestParam("musicianCity")String city,
                                         @RequestParam("bio")String bio,
+                                        @RequestParam("profPicImage") MultipartFile profPic,
                                         Model model){
         User user = new User();
         user.setUsername(username);
@@ -150,7 +160,9 @@ public class LoginController {
 
 
         MusicianProfile musicianProfile  = new MusicianProfile(user, firstName, lastName, instruments, location, bio);
-
+        storageService.store(profPic);
+        String fileName = profPic.getOriginalFilename();
+        musicianProfile.setProfPicImage(fileName);
         musicRepo.save(musicianProfile);
         model.addAttribute("message", "Thank you for joining! Please login");
         return "redirect:/login";

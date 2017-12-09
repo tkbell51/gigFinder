@@ -1,7 +1,7 @@
 *{
     box-sizing: border-box;
 }
-.page-flexbox-wrapper {
+body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -36,7 +36,7 @@ main {
 }
 
 /* icon prefix focus color */
-.loginCard .input-field .prefix, .loginCard h3{
+.login-card .input-field .prefix, .login-card h3{
     color: #FFF;
 }
 .input-field .prefix.active {
@@ -200,7 +200,7 @@ footer{
     z-index:2;
     border-radius: 10px;
 }
-.loginLogo {
+.login-logo {
     font-family: 'Great Vibes', cursive;
 
 }
@@ -248,27 +248,44 @@ footer{
 @media (max-width: 992px)   {
 
     .top, #musicChoice, #compChoice{
-        height: 60vh;
+        height: 70vh;
     }
-    .top .loginCard{
+    .top .login-card{
         border-radius: 5px;
         padding: 3%;
         margin-top: 70px;
     }
-
 }
 
 /*login page*/
 .login .background-image{
     background: url("/assets/images/pexelsJazz.jpeg");
 }
+.login .card-panel{
+    width: 25%
+}
 
-.loginCard {
+.login-card {
 
-    margin-top: 70px;
+    margin: auto;
+}
+
+@media (max-width: 768px)   {
+
+    .login .card-panel, .login-card{
+        width: 50%
+    }
+
+}
+@media (max-width: 425px)   {
+
+    .login .card-panel, .login-card{
+        width: 100%
+    }
+
 }
 /*Company Signup and Music Signup*/
-.logoSide{
+.logo-side{
 
     display: flex;
     flex-flow: column wrap;
@@ -334,11 +351,11 @@ footer{
     border-radius: 10px;
 }
 
-.card-panel .loginLogo a{
+.card-panel .login-logo a{
     font-size: 4rem;
     color: #FFF;
 }
-.card-panel .loginLogo a:hover{
+.card-panel .login-logo a:hover{
     color: #FD6D22;
 }
 .compForm{
@@ -371,6 +388,10 @@ footer{
     bottom: 0px;
     width: 100%;
     padding-left: 0px;
+
+}
+.profileBanner .details-row h3{
+    line-height: 60%;
 }
 .tab-profile{
     display: flex;
@@ -388,7 +409,9 @@ footer{
 .profile-info{
     margin-right: 10px;
 }
-
+small{
+    font-size: 60%;
+}
 .profCol{
     position: relative;
     bottom: 275px;
@@ -453,7 +476,8 @@ footer{
 }
 
 
-.profImage:hover .middle, .bandInfo:hover .second {
+.profImage:hover .middle,
+.bandInfo:hover .second {
     opacity: 1;
 }
 
@@ -476,15 +500,19 @@ footer{
 .tabs{
     margin: 15px auto;
 }
-
+#tab-bio{
+    font-size: 1.3em;
+}
+#tab-bio i,
+.profCol i {
+    margin-right: 10px;
+}
 
 .musicInfo {
     position: relative;
     top: 80px;
 
 }
-
-
 
 .mediaTitle {
     font-size: 1.3em;
@@ -504,7 +532,8 @@ i.right {
     margin-left: 0px;
 }
 td .btn-flat i, .popup-youtube i{
-    font-size: 2.3rem
+    font-size: 2.3rem;
+    margin-right: 10px;
 }
 table .right a, table .right button{
     top: 10px;
@@ -606,7 +635,7 @@ img.responsive-img {
     width: 100%;
 }
 
-.gigCard p, .dateBox h4{
+.gigCard p, .dateBox h4, .gigTitle{
     margin: 0px;
 }
 
@@ -817,3 +846,4 @@ height: 60px;
     background-size: cover;
     height: 100vh;
 }
+

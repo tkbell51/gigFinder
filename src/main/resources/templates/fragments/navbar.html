@@ -29,9 +29,9 @@
                 <li>
                     <div class="user-view">
                         <div class="background">
-                            <img th:src="@{${companyProfile.companyCoverPic}}" alt=""/>
+                            <img th:src="@{'https://s3.amazonaws.com/s3-gigfinder/' + ${companyProfile.companyCoverPic}}" alt=""/>
                         </div>
-                        <a href="#!user"><img class="circle" th:src="@{${companyProfile.companyProfPic}}"/></a>
+                        <a href="#!user"><img class="circle" th:src="@{'https://s3.amazonaws.com/s3-gigfinder/' + ${companyProfile.companyProfPic}}"/></a>
                         <a href="#!name"><span class="white-text name">[[${user.username}]]</span></a>
                         <a href="#!email"><span class="white-text email">[[${user.email}]]</span></a>
 
@@ -40,26 +40,14 @@
                 <li>
                     <a class="waves-effect waves-light modal-trigger" href="#companyUpdate">Update Profile</a>
                 </li>
-                <li><div class="divider"></div></li>
-
-                <li><a class="waves-effect" th:href="@{/company/find-gigs}">Find a Gig</a></li>
-                <li><a  class="waves-effect" th:href="@{/company/find-bands}">Find a Band</a></li>
-                <li><a class="waves-effect" href="/company/search/">Search Musicians</a></li>
-                <li><div class="divider"></div></li>
-                <li>
-                    <form th:action="@{/logout}" method="post">
-                        <input class="btn-flat" type="submit" value="LOGOUT"/>
-                    </form>
-                </li>
-
             </div>
             <div sec:authorize="hasRole('ROLE_MUSICIAN')">
                 <li>
                     <div class="user-view">
                         <div class="background">
-                            <img th:src="@{${musicianProfile.coverPicImage}}" alt=""/>
+                            <img th:src="@{'https://s3.amazonaws.com/s3-gigfinder/' + ${musicianProfile.coverPicImage}}" alt=""/>
                         </div>
-                        <a href="#!user"><img class="circle" th:src="@{${musicianProfile.profPicImage}}"/></a>
+                        <a href="#!user"><img class="circle" th:src="@{'https://s3.amazonaws.com/s3-gigfinder/' + ${musicianProfile.profPicImage}}"/></a>
                         <a href="#!name"><span class="white-text name">[[${user.username}]]</span></a>
                         <a href="#!email"><span class="white-text email">[[${user.email}]]</span></a>
                     </div>
@@ -67,18 +55,20 @@
                 <li>
                     <a class="waves-effect waves-light modal-trigger" href="#musicUpdate">Update Profile</a>
                 </li>
+            </div>
                 <li><div class="divider"></div></li>
-                <li><a class="waves-effect"  th:href="@{/musician/find-gigs}">Find a Gig</a></li>
-                <li><a class="waves-effect" th:href="@{/musician/find-bands}">Find a Band</a></li>
-                <li><a class="waves-effect" href="/musician/search/">Search Gigs</a></li>
-                <li><div class="divider"></div></li>
+
+                <li><a class="waves-effect" th:href="@{/find-gigs}">Find a Gig</a></li>
+                <li><a  class="waves-effect" th:href="@{/find-bands}">Find a Band</a></li>
+                <li sec:authorize="hasRole('ROLE_COMPANY')"><a class="waves-effect" href="/search">Search Musicians</a></li>
+            <li sec:authorize="hasRole('ROLE_MUSICIAN')"><a class="waves-effect" href="/search">Search Gigs</a></li>
+
+            <li><div class="divider"></div></li>
                 <li>
                     <form th:action="@{/logout}" method="post">
-                        <input class="waves-effect" type="submit" value="Logout"/>
+                        <input class="btn-flat" type="submit" value="LOGOUT"/>
                     </form>
                 </li>
-
-            </div>
         </ul>
 
         <nav>
@@ -92,33 +82,20 @@
 
                 <a sec:authorize="isAuthenticated()" href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    <div sec:authorize="hasRole('ROLE_COMPANY')">
-                        <li><a href="/company/search/">Search</a></li>
-                        <li><a  th:href="@{/company/find-gigs}">Find a Gig</a></li>
-                        <li><a  th:href="@{/company/find-bands}">Find a Band</a></li>
-                        <li>
+                        <li><a href="/search">Search</a></li>
+                        <li><a  th:href="@{/find-gigs}">Find a Gig</a></li>
+                        <li><a  th:href="@{/find-bands}">Find a Band</a></li>
+                        <li sec:authorize="hasRole('ROLE_COMPANY')">
                             <a class="dropdown-button valign-wrapper" href="#!" data-activates="dropdown1" data-constrainwidth="false" th:inline="text">
-                                [[${user.username}]] <img th:src="@{${companyProfile.companyProfPic}} " class="navAvatar circle"/>
+                                [[${user.username}]] <img th:src="@{'https://s3.amazonaws.com/s3-gigfinder/' + ${companyProfile.companyProfPic}} " class="navAvatar circle"/>
                                 <i class="material-icons right">arrow_drop_down</i></a>
                         </li>
-                    </div>
-                    <div sec:authorize="hasRole('ROLE_MUSICIAN')">
-                        <li><a href="/musician/search/">Search</a></li>
-
-                        <li><a  th:href="@{/musician/find-gigs}">Find a Gig</a></li>
-
-                        <li><a th:href="@{/musician/find-bands}">Find a Band</a></li>
-                        <li >
-                            <a class="dropdown-button valign-wrapper" href="#!" data-activates="dropdown1" data-constrainwidth="false" th:inline="text">
-                                [[${user.username}]] <img th:src="@{${musicianProfile.profPicImage}} " class="navAvatar circle"/>
-                                <i class="material-icons right">arrow_drop_down</i></a>
-                        </li>
-                    </div>
-
-
+                    <li sec:authorize="hasRole('ROLE_MUSICIAN')" >
+                        <a class="dropdown-button valign-wrapper" href="#!" data-activates="dropdown1" data-constrainwidth="false" th:inline="text">
+                            [[${user.username}]] <img th:src="@{'https://s3.amazonaws.com/s3-gigfinder/' + ${musicianProfile.profPicImage}} " class="navAvatar circle"/>
+                            <i class="material-icons right">arrow_drop_down</i></a>
+                    </li>
                     <li sec:authorize="!isAuthenticated()"><a  class="modal-trigger logBtn" href="#signupModal" style="margin-right: 0px;">Login</a></li>
-
-
                 </ul>
 
             </div>

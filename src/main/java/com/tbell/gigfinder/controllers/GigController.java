@@ -9,6 +9,7 @@ import com.tbell.gigfinder.googleAPI.GeoCodingResponse;
 import com.tbell.gigfinder.models.*;
 import com.tbell.gigfinder.services.NotificationService;
 import com.tbell.gigfinder.services.SMSservice;
+import com.tbell.gigfinder.storage.StorageService;
 import feign.Feign;
 import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class GigController {
@@ -52,6 +55,65 @@ public class GigController {
     @Autowired
     MessageRepository messageRepo;
 
+    @Autowired
+    private StorageService storageService;
+
+    @RequestMapping(value = "/company/create-gig/", method = RequestMethod.GET)
+    public String createGig (Model model, Principal principal){
+        User user = userRepo.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+
+        CompanyProfile companyProfile = compRepo.findByUser(user);
+        model.addAttribute("companyProfile", companyProfile);
+
+        model.addAttribute("gig", new Gig());
+        List<State> stateEnums = Arrays.asList(State.values());
+        model.addAttribute("states", stateEnums);
+        List<GigTypes> gigEnums = Arrays.asList(GigTypes.values());
+        model.addAttribute("gigTypes", gigEnums);
+        return "Create/createGig";
+    }
+
+    @RequestMapping(value = "/company/create-gig/", method = RequestMethod.POST)
+    public String createGig (@RequestParam("locationStreet")String street,
+                             @RequestParam("locationCity") String city,
+                             @RequestParam("locationState") String state,
+                             @RequestParam("locationZip") String zip,
+                             @RequestParam("gigType")String type,
+                             @RequestParam("gigStart") Date start,
+                             @RequestParam("timeStart") String timeStart,
+                             @RequestParam("gigEnd")Date end,
+                             @RequestParam("timeEnd") String timeEnd,
+                             @RequestParam("gigArt")MultipartFile gigArt,
+                             @RequestParam("gigTitle")String gigTitle,
+                             @RequestParam("gigDescription") String description,
+                             Model model, Principal principal){
+
+
+        String location = street + ", " + city + ", " + state + ", " + zip;
+        User user = userRepo.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+
+        CompanyProfile compUser = compRepo.findByUser(user);
+        model.addAttribute("compUser", compUser);
+        Gig newGig = new Gig();
+        newGig.setGigTitle(gigTitle);
+        newGig.setGigLocation(location);
+        newGig.setGigDescription(description);
+        newGig.setGigType(type);
+        newGig.setGigStart(start);
+        newGig.setTimeStart(timeStart);
+        newGig.setGigEnd(end);
+        newGig.setTimeEnd(timeEnd);
+        newGig.setCompanyProfile(compUser);
+        storageService.store(gigArt);
+        String fileName = gigArt.getOriginalFilename();
+        newGig.setGigArt(fileName);
+        gigRepo.save(newGig);
+
+
+        return "redirect:/company/my-profile";
+    }
 
     @RequestMapping(value = "/gig/{gigId}", method = RequestMethod.GET)
     public String companyGigDetails(@PathVariable("gigId") long id,
@@ -103,7 +165,7 @@ public class GigController {
                             @RequestParam("timeStart") String timeStart,
                             @RequestParam("gigEnd")Date end,
                             @RequestParam("timeEnd") String timeEnd,
-                            @RequestParam("gigArt")String gigArt,
+                            @RequestParam("gigArt")MultipartFile gigArt,
                             @RequestParam("gigTitle")String gigTitle,
                             @RequestParam("gigDescription") String description,
                             Model model, Principal principal){
@@ -123,7 +185,16 @@ public class GigController {
         newGig.setTimeEnd(timeEnd);
         newGig.setGigStart(start);
         newGig.setTimeStart(timeStart);
-        newGig.setGigArt(gigArt);
+
+        String fileName = gigArt.getOriginalFilename();
+        if(newGig.getGigArt().equals("no-image-thumbnail.jpg") ){
+            storageService.store(gigArt);
+            newGig.setGigArt(fileName);
+        }else if(!newGig.getGigArt().equals(fileName)){
+            storageService.deleteOne(newGig.getGigArt());
+            storageService.store(gigArt);
+            newGig.setGigArt(fileName);
+        }
         newGig.setCompanyProfile(compUser);
         gigRepo.save(newGig);
         return "redirect:/company/my-profile";
@@ -131,6 +202,8 @@ public class GigController {
 
     @RequestMapping(value = "/company/gig/{gigId}/delete", method = RequestMethod.POST)
     public String deleteGig(@PathVariable("gigId")long id){
+        Gig deleteGig = gigRepo.findById(id);
+        storageService.deleteOne(deleteGig.getGigArt());
         gigRepo.delete(id);
         return "redirect:/company/my-profile";
     }

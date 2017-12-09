@@ -4,7 +4,6 @@
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="gradient-background hireConfirm " th:inline="text">
 <div th:include="fragments/navbar :: navHome"></div>
-<div class="page-flexbox-wrapper">
 
     <main class="confirmHire">
         <div class="background-image"></div>
@@ -14,7 +13,7 @@
             <div class="row">
                 <div class="col s12 m4">
                     <div class="center-align white-text">
-                        <img th:src="@{${musicianProfile.profPicImage}} " class="confirmPic"/>
+                        <img th:src="@{'https://s3.amazonaws.com/s3-gigfinder/' + ${musicianProfile.profPicImage}} " class="confirmPic"/>
                         <h3>[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]]</h3>
                     </div>
 
@@ -25,7 +24,7 @@
                 </div>
                 <div class="col s12 m4 valign-wrapper">
                     <div  class="gigCard z-depth-2">
-                        <div class="gigImage" th:style="'background:url('+ @{${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
+                        <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
                             <div class="dateBox white orange-text text-accent-4 center-align">
                                 <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
                                 <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
@@ -62,7 +61,6 @@
 
     </main>
     <div th:include="fragments/footer :: footer"></div>
-</div>
 
 <span th:include="fragments/includes :: js"></span>
 </body>

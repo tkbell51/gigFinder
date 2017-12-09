@@ -4,7 +4,6 @@
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="gradient-background" th:inline="text">
 <div th:include="fragments/navbar :: navHome"></div>
-<div class="page-flexbox-wrapper">
 
     <main class="compSignup gigCreate">
         <div class="background-image hide-on-med-and-down"></div>
@@ -13,13 +12,12 @@
             <div class="row">
                 <div class="col s12 m6 center-align ">
                     <div class="logoSide">
-                        <h1 class="loginLogo"> <a href="/" >gigFinder</a></h1>
+                        <h1 class="login-logo"> <a href="/" >gigFinder</a></h1>
                         <h5 class="white-text"> Create Gig</h5>
                     </div>
 
                 </div>
-                <div class="col s12 m6 white">
-                    <div class="compForm">
+                <div class="col s12 m6 white compForm">
                         <form th:action="@{/company/create-gig/}" method="post" th:object="${gig}" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="input-field col s12">
@@ -88,9 +86,15 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="input-field col s12">
-                                    <label for="gigArt">Image URL</label>
-                                    <input type="url"  id="gigArt" th:field="*{gigArt}" placeholder="Image URL"/>
+                                <div class="file-field input-field">
+                                    <div class="btn">
+                                        <span>File</span>
+                                        <input type="file" th:field="*{gigArt}"/>
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input id="gigArt" class="file-path validate" type="text"/>
+                                        <label for="gigArt">Upload Gig Image</label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -98,14 +102,12 @@
 
                         </form>
 
-                    </div>
                 </div>
             </div>
 
         </div>
     </main>
     <div th:include="fragments/footer :: footer"></div>
-</div>
 
 <span th:include="fragments/includes :: js"></span>
 </body>

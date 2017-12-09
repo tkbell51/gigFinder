@@ -40,6 +40,9 @@ public class HomeController {
     @Autowired
     MediaContentRepository mediaRepo;
 
+    @Autowired
+    MusicianApplyGigRepository applyRepo;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String intro(Model model, HttpServletRequest request) {
         model.addAttribute("user", new User());
@@ -60,6 +63,66 @@ public class HomeController {
         }
     }
 
+    @RequestMapping(value = "/find-bands", method = RequestMethod.GET)
+    public String findBands(Model model, Principal principal) {
+
+
+            User user = userRepo.findByUsername(principal.getName());
+            model.addAttribute("user", user);
+
+            CompanyProfile companyProfile = compRepo.findByUser(user);
+            model.addAttribute("companyProfile", companyProfile);
+
+            MusicianProfile musicianProfile = musicianRepo.findByUser(user);
+            model.addAttribute("musicianProfile", musicianProfile);
+
+        Iterable<MusicianProfile> allmusicians = musicianRepo.findAll();
+        model.addAttribute("musicians", allmusicians);
+        return "Search/findBands";
+    }
+
+    @RequestMapping(value = "/find-gigs", method = RequestMethod.GET)
+    public String findGigs(Model model, Principal principal) {
+
+
+            User user = userRepo.findByUsername(principal.getName());
+            model.addAttribute("user", user);
+
+            CompanyProfile companyProfile = compRepo.findByUser(user);
+            model.addAttribute("companyProfile", companyProfile);
+
+            MusicianProfile musicianProfile = musicianRepo.findByUser(user);
+            model.addAttribute("musicianProfile", musicianProfile);
+
+
+        Iterable<Gig> allgigs = gigRepo.findAll();
+        model.addAttribute("gig", allgigs);
+        return "Search/findGigs";
+    }
+
+    @RequestMapping(value = "/find-bands/{musicianId}", method = RequestMethod.GET)
+    public String musicianDetails(@PathVariable("musicianId")long id,
+                                  Model model, Principal principal) {
+
+            User user = userRepo.findByUsername(principal.getName());
+            model.addAttribute("user", user);
+
+            CompanyProfile companyProfile = compRepo.findByUser(user);
+            model.addAttribute("companyProfile", companyProfile);
+
+            MusicianProfile musicianProfile = musicianRepo.findByUser(user);
+            model.addAttribute("musicianProfile", musicianProfile);
+
+        MusicianProfile musicianDetail = musicianRepo.findById(id);
+        model.addAttribute("musicianDetail", musicianDetail);
+
+        Iterable<MediaContent> media = mediaRepo.findByMusicianProfile(musicianDetail);
+        model.addAttribute("media", media);
+
+        Iterable<MusicianApplyGig> hiredGigs = applyRepo.findAllByMusicianProfileAndHired(musicianDetail, true);
+        model.addAttribute("hired", hiredGigs);
+        return "musicianDetails";
+    }
 
 
 }
