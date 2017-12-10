@@ -41,6 +41,10 @@
 <div th:fragment="musicianUpdate">
     <div id="musicUpdate" class="modal">
         <div class="modal-content">
+            <div class="section center-align">
+
+                <h4>Update Profile</h4>
+            </div>
             <form th:action="'/musician/update-profile/'"  method="post">
                 <div th:object="${user}">
 
@@ -89,8 +93,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal-footer">
 
-                <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
+                    <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
+                </div>
             </form>
 
         </div>
@@ -155,6 +161,10 @@
 <div th:fragment="companyProfileUpdate">
     <div id="companyUpdate" class="modal">
         <div class="modal-content">
+            <div class="section center-align">
+
+                <h4>Update Profile</h4>
+            </div>
     <form th:action="'/company/update-profile/'"  method="post" enctype="multipart/form-data">
         <div th:object="${user}">
 
@@ -200,6 +210,10 @@
 <div th:fragment="gigUpdate">
     <div id="gigUpdate" class="modal">
         <div class="modal-content">
+            <div class="section center-align">
+
+                <h4>Update Gig</h4>
+            </div>
             <form th:action="'/company/gig/' +@{${gig.id}} + '/update'" method="post" th:object="${gig}" enctype="multipart/form-data">
                 <div class="row">
                     <div class="input-field col s12">
@@ -336,7 +350,10 @@
 <div th:fragment="coverMusicianPic">
     <div id="coverMusicianPic" class="modal">
         <div class="modal-content">
-            <h2>Upload Background Banner</h2>
+            <div class="section center-align">
+
+                <h4>Upload Background Banner</h4>
+            </div>
 
             <form th:action="'/musician/coverPic/' + @{${musicianProfile.id}} + '/'" method="post" th:object="${musicianProfile}" enctype="multipart/form-data">
                     <div class="file-field input-field">
@@ -361,7 +378,10 @@
 <div th:fragment="profMusicianPic">
     <div id="profMusicianPic" class="modal">
         <div class="modal-content">
-            <h2>Upload Profile Image</h2>
+            <div class="section center-align">
+
+                <h4>Upload Profile Image</h4>
+            </div>
             <form th:action="'/musician/profilePic/' + @{${musicianProfile.id}} + '/'" method="post" th:object="${musicianProfile}" enctype="multipart/form-data">
 
                 <div class="file-field input-field">
@@ -386,7 +406,10 @@
 <div th:fragment="coverCompanyPic">
     <div id="coverCompanyPic" class="modal">
         <div class="modal-content">
-            <h2>Upload Background Bannder</h2>
+            <div class="section center-align">
+
+                <h4>Upload Background Banner</h4>
+            </div>
 
             <form th:action="'/company/' + @{${companyProfile.id}} + '/coverPic'" method="post" th:object="${companyProfile}" enctype="multipart/form-data">
 
@@ -411,7 +434,10 @@
 <div th:fragment="profCompanyPic">
     <div id="profCompanyPic" class="modal">
         <div class="modal-content">
-            <h2>Upload Profile Image</h2>
+            <div class="section center-align">
+
+                <h4>Upload Profile Image</h4>
+            </div>
             <form th:action="'/company/' + @{${companyProfile.id}} + '/profPic'" method="post" th:object="${companyProfile}" enctype="multipart/form-data">
                 <div class="file-field input-field">
                     <div class="btn">

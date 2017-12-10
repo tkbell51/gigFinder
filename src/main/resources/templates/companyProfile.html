@@ -80,16 +80,19 @@
                                 </ul>
                             </div>
                             <div id="gigs" class="col s12">
-                                <h4 class="center-align card-panel">Your Gigs
-                                    <span>
+                                <div class="center-align card-panel">
+
+                                    <h4 >Your Gigs
+                                        <span>
         <a th:href="@{/company/create-gig/}" class="waves-effect waves-light btn-floating tooltipped" data-position="top" data-delay="50" data-tooltip="Create a Gig">
             <i class="material-icons">add</i>
         </a>
 
         </span>
-                                </h4>
-                                <div th:if="${companyProfile.getGigs().isEmpty()}">
-                                    <h5>You haven't created any Gigs</h5>
+                                    </h4>
+                                    <div th:if="${companyProfile.getGigs().isEmpty()}">
+                                        <h5>You haven't created any Gigs</h5>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div  th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
@@ -118,7 +121,10 @@
 
                             </div>
                             <div id="hiredEvents" class="col s12">
-                                <h4 class="center-align card-panel">Your Gigs With Hired Musicians</h4>
+                                <div class="center-align card-panel">
+
+                                    <h4 >Your Gigs With Hired Musicians</h4>
+                                </div>
                                 <div class="row">
                                     <div  th:each="gig : ${gig}" th:if="${gig.gigHired} == true">
                                         <div class="col s12 m6">
@@ -156,13 +162,16 @@
                                 </div>
                             </div>
                             <div id="areaMusicians" class="col s12">
-                                <h4 class="center-align card-panel">Musicians in the Area
-                                    <span>
+                                <div class="center-align card-panel">
+
+                                    <h4 >Musicians in the Area
+                                        <span>
                     <a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Musicians" href="/company/search/"><i class="material-icons">search</i></a>
                 </span>
-                                </h4>
-                                <div th:if="${musician.isEmpty()}">
-                                    <h5>No Musicians are in your area</h5>
+                                    </h4>
+                                    <div th:if="${musician.isEmpty()}">
+                                        <h5>No gigFinder Musicians are in your area</h5>
+                                    </div>
                                 </div>
                                 <div class="findBand">
                                     <div class="row">
@@ -225,16 +234,19 @@
                         </div>
                     </div>
                     <div id="tab-gigs" class="col s12">
-                        <h4 class="center-align card-panel">Your Gigs
-                            <span>
+                        <div class="center-align card-panel">
+
+                            <h4 >Your Gigs
+                                <span>
         <a th:href="@{/company/create-gig/}" class="waves-effect waves-light btn-floating tooltipped" data-position="top" data-delay="50" data-tooltip="Create a Gig">
             <i class="material-icons">add</i>
         </a>
 
         </span>
-                        </h4>
-                        <div th:if="${companyProfile.getGigs().isEmpty()}">
-                            <h5>You haven't created any Gigs</h5>
+                            </h4>
+                            <div th:if="${companyProfile.getGigs().isEmpty()}">
+                                <h5>You haven't created any Gigs</h5>
+                            </div>
                         </div>
                         <div class="row">
                             <div  th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
@@ -263,7 +275,9 @@
 
                     </div>
                     <div id="tab-hiredEvents" class="col s12">
-                        <h4 class="center-align card-panel">Your Gigs With Hired Musicians</h4>
+                        <div class="center-align card-panel">
+                            <h4 >Your Gigs With Hired Musicians</h4>
+                        </div>
                         <div class="row">
                             <div  th:each="gig : ${gig}" th:if="${gig.gigHired} == true">
                                 <div class="col s12 m6">
@@ -301,13 +315,16 @@
                         </div>
                     </div>
                     <div id="tab-areaMusicians" class="col s12">
-                        <h4 class="center-align card-panel">Musicians in the Area
-                            <span>
+                        <div class="center-align card-panel">
+
+                            <h4 >Musicians in the Area
+                                <span>
                     <a class="btn-floating waves-effect waves-light tooltipped" data-position="top" data-delay="50" data-tooltip="Search Musicians" href="/company/search/"><i class="material-icons">search</i></a>
                 </span>
-                        </h4>
-                        <div th:if="${musician.isEmpty()}">
-                            <h5>No Musicians are in your area</h5>
+                            </h4>
+                            <div th:if="${musician.isEmpty()}">
+                                <h5>No gigFinder Musicians are in your area</h5>
+                            </div>
                         </div>
                         <div class="findBand">
                             <div class="row">

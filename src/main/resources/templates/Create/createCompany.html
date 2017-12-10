@@ -17,7 +17,7 @@
 
                 </div>
                 <div class="col s12 m6 white compForm">
-                        <form th:action="@{/signup/company/}" method="post">
+                        <form th:action="@{/signup/company/}" method="post" enctype="multipart/form-data">
                             <div th:object="${user}">
                                 <div class="row">
                                     <div class="input-field col s12 m6">
@@ -81,7 +81,7 @@
                                             <input type="file" th:field="*{companyProfPic}"/>
                                         </div>
                                         <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text"/>
+                                            <input class="file-path validate" type="text" placeholder="Upload Profile Image"/>
                                         </div>
                                     </div>
                                 </div>

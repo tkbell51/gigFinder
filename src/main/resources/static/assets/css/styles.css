@@ -122,7 +122,9 @@ nav, footer{
     margin-top: 64px;
     margin-left: -22px;
 }
-
+.background img{
+    max-width: 100%;
+}
 .tabs .indicator {
     text-decoration: none;
     background-color: #FD6D22 !important;
@@ -475,7 +477,6 @@ small{
     -ms-transform: translate(-50%, -50%)
 }
 
-
 .profImage:hover .middle,
 .bandInfo:hover .second {
     opacity: 1;
@@ -492,7 +493,7 @@ small{
     margin-left: 0px;
 }
 .tab-profile .middle{
-    top: 25%;
+    top: 60%;
 }
 .profile-content{
     margin-right: 10px;
