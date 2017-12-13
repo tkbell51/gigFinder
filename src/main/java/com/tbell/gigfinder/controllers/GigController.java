@@ -16,12 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -58,7 +57,7 @@ public class GigController {
     @Autowired
     private StorageService storageService;
 
-    @RequestMapping(value = "/company/create-gig/", method = RequestMethod.GET)
+    @GetMapping("/company/create-gig/")
     public String createGig (Model model, Principal principal){
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
@@ -74,48 +73,35 @@ public class GigController {
         return "Create/createGig";
     }
 
-    @RequestMapping(value = "/company/create-gig/", method = RequestMethod.POST)
-    public String createGig (@RequestParam("locationStreet")String street,
-                             @RequestParam("locationCity") String city,
-                             @RequestParam("locationState") String state,
-                             @RequestParam("locationZip") String zip,
-                             @RequestParam("gigType")String type,
-                             @RequestParam("gigStart") Date start,
-                             @RequestParam("timeStart") String timeStart,
-                             @RequestParam("gigEnd")Date end,
-                             @RequestParam("timeEnd") String timeEnd,
-                             @RequestParam("gigArt")MultipartFile gigArt,
-                             @RequestParam("gigTitle")String gigTitle,
-                             @RequestParam("gigDescription") String description,
+    @PostMapping("/company/create-gig/")
+    public String createGig (@ModelAttribute @Valid Gig newGig,
+                             BindingResult result,
+                             @RequestParam("gigImage")MultipartFile gigArt,
                              Model model, Principal principal){
 
+        if(result.hasErrors()){
+            return "Create/createGig";
+        }
 
-        String location = street + ", " + city + ", " + state + ", " + zip;
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         CompanyProfile compUser = compRepo.findByUser(user);
         model.addAttribute("compUser", compUser);
-        Gig newGig = new Gig();
-        newGig.setGigTitle(gigTitle);
-        newGig.setGigLocation(location);
-        newGig.setGigDescription(description);
-        newGig.setGigType(type);
-        newGig.setGigStart(start);
-        newGig.setTimeStart(timeStart);
-        newGig.setGigEnd(end);
-        newGig.setTimeEnd(timeEnd);
+
         newGig.setCompanyProfile(compUser);
+        newGig.setGigLocation(newGig.getGigStreet() + ", " + newGig.getGigCity() + ", " + newGig.getGigState() + ", " + newGig.getGigZip());
+
         storageService.store(gigArt);
         String fileName = gigArt.getOriginalFilename();
         newGig.setGigArt(fileName);
+
         gigRepo.save(newGig);
 
-
-        return "redirect:/company/my-profile";
+        return "redirect:/results";
     }
 
-    @RequestMapping(value = "/gig/{gigId}", method = RequestMethod.GET)
+    @GetMapping("/gig/{gigId}")
     public String companyGigDetails(@PathVariable("gigId") long id,
                                     Model model, Principal principal){
         User user = userRepo.findByUsername(principal.getName());
@@ -154,37 +140,36 @@ public class GigController {
         return "gigDetails";
     }
 
-    @RequestMapping(value = "/company/gig/{gigId}/update", method = RequestMethod.POST)
-    public String updateGig(@PathVariable("gigId") long id,
-                            @RequestParam("locationStreet")String street,
-                            @RequestParam("locationCity") String city,
-                            @RequestParam("locationState") String state,
-                            @RequestParam("locationZip") String zip,
-                            @RequestParam("gigType")String type,
-                            @RequestParam("gigStart") Date start,
-                            @RequestParam("timeStart") String timeStart,
-                            @RequestParam("gigEnd")Date end,
-                            @RequestParam("timeEnd") String timeEnd,
-                            @RequestParam("gigArt")MultipartFile gigArt,
-                            @RequestParam("gigTitle")String gigTitle,
-                            @RequestParam("gigDescription") String description,
-                            Model model, Principal principal){
-
-        String location = street + ", " + city + ", " + state + ", " + zip;
+    @GetMapping("/company/gig/{gigId}/update")
+    public String updateGigView(@PathVariable("gigId") long id,
+                                Model model, Principal principal){
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         CompanyProfile compUser = compRepo.findByUser(user);
         model.addAttribute("compUser", compUser);
-        Gig newGig = gigRepo.findById(id);
-        newGig.setGigLocation(location);
-        newGig.setGigTitle(gigTitle);
-        newGig.setGigDescription(description);
-        newGig.setGigType(type);
-        newGig.setGigEnd(end);
-        newGig.setTimeEnd(timeEnd);
-        newGig.setGigStart(start);
-        newGig.setTimeStart(timeStart);
+
+        Gig gig = gigRepo.findById(id);
+        model.addAttribute("gig", gig);
+        return "Create/createGig";
+    }
+
+    @PostMapping("/company/gig/{gigId}/update")
+    public String updateGig(@PathVariable("gigId") long id,
+                            @ModelAttribute @Valid Gig newGig,
+                            BindingResult result,
+                            @RequestParam("gigImage")MultipartFile gigArt,
+                            Model model, Principal principal){
+
+        User user = userRepo.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+
+        CompanyProfile compUser = compRepo.findByUser(user);
+        model.addAttribute("compUser", compUser);
+
+        if(result.hasErrors()){
+            return "Create/createGig";
+        }
 
         String fileName = gigArt.getOriginalFilename();
         if(newGig.getGigArt().equals("no-image-thumbnail.jpg") ){
@@ -200,7 +185,7 @@ public class GigController {
         return "redirect:/company/my-profile";
     }
 
-    @RequestMapping(value = "/company/gig/{gigId}/delete", method = RequestMethod.POST)
+    @PostMapping("/company/gig/{gigId}/delete")
     public String deleteGig(@PathVariable("gigId")long id){
         Gig deleteGig = gigRepo.findById(id);
         storageService.deleteOne(deleteGig.getGigArt());
@@ -208,7 +193,7 @@ public class GigController {
         return "redirect:/company/my-profile";
     }
 
-    @RequestMapping(value = "/company/gig/{gigId}/confirm-hire/musician/{musicianId}", method = RequestMethod.GET)
+    @GetMapping("/company/gig/{gigId}/confirm-hire/musician/{musicianId}")
     public String confirmHire(@PathVariable("gigId")long gigId,
                               @PathVariable("musicianId")long musicianId,
                               Model model, Principal principal){
@@ -227,7 +212,7 @@ public class GigController {
         return "confirmHire";
     }
 
-    @RequestMapping(value = "/company/gig/{gigId}/hire", method = RequestMethod.POST)
+    @PostMapping("/company/gig/{gigId}/hire")
     public String hireMusician(@PathVariable("gigId")long gigId,
                                @RequestParam("musician")long musicianId,
                                Principal principal, Model model){
@@ -306,7 +291,7 @@ public class GigController {
         return "Messages/messagePage";
     }
 
-    @RequestMapping(value = "/musician/gig/{gigId}/apply", method = RequestMethod.POST)
+    @PostMapping("/musician/gig/{gigId}/apply")
     public String gigApply (@PathVariable("gigId")long gigId,
                             Principal principal, Model model){
         User user = userRepo.findByUsername(principal.getName());
@@ -339,7 +324,7 @@ public class GigController {
 
 
 
-    @RequestMapping(value = "/musician/gig/{gigId}/success", method = RequestMethod.GET)
+    @GetMapping("/musician/gig/{gigId}/success")
     public String applySuccess(@PathVariable("gigId") long gigId,
                                Principal principal, Model model){
         User user = userRepo.findByUsername(principal.getName());

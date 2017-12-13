@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="fragments/includes :: indexHead"></head>
+<body th:inline="text" class="gradient-background">
+<div th:include="fragments/navbar :: navHome"></div>
+
+<main class="success">
+
+    <div class="background-image"></div>
+
+    <div class="card-panel container white-text">
+        <div class="container">
+            <table>
+                <tr>
+                    <td>Username: </td>
+                    <td>[[${user.username}]]</td>
+                </tr>
+                <tr>
+                    <td>Email: </td>
+                    <td>[[${user.email}]]</td>
+                </tr>
+                <tr>
+                    <td>Phone Number: </td>
+                    <td>[[${user.phoneNumber}]]</td>
+                </tr>
+            </table>
+            <table th:if="${companyProfile} != null">
+                <tr>
+                    <td>Company Name: </td>
+                    <td>[[${companyProfile.companyName}]]</td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td>[[${companyProfile.companyContactFirstName}]] [[${companyProfile.companyContactLastName}]]</td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td>[[${companyProfile.companyLocation}]]</td>
+                </tr>
+            </table>
+            <table th:if="${musicianProfile} != null">
+                <tr>
+                    <td>Name: </td>
+                    <td>[[${musicianProfile.firstName}]] [[${musicianProfile.lastName}]]</td>
+                </tr>
+                <tr>
+                    <td>Location: </td>
+                    <td>[[${musicianProfile.location}]]</td>
+                </tr>
+                <tr>
+                    <td>Instruments:</td>
+                    <td>[[${musicianProfile.musicianInstruments}]]</td>
+                </tr>
+                <tr>
+                    <td>Bio:</td>
+                    <td>[[${musicianProfile.bio}]]</td>
+                </tr>
+            </table>
+        </div>
+
+
+
+        <div class="center-align">
+            <h3>[[${message}]]</h3>
+                <a href="/login" class="waves-effect waves-light btn">Go to Login</a>
+        </div>
+    </div>
+
+
+
+</main>
+<div th:include="fragments/footer :: footer"></div>
+
+<span th:include="fragments/includes :: js"></span>
+
+</body>
+</html>

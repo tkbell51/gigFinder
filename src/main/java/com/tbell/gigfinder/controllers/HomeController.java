@@ -1,7 +1,5 @@
 package com.tbell.gigfinder.controllers;
 
-
-
 import com.tbell.gigfinder.Repositories.*;
 import com.tbell.gigfinder.config.ClientKey;
 import com.tbell.gigfinder.googleAPI.GeoCodingInterface;
@@ -43,7 +41,7 @@ public class HomeController {
     @Autowired
     MusicianApplyGigRepository applyRepo;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     public String intro(Model model, HttpServletRequest request) {
         model.addAttribute("user", new User());
         try {
@@ -63,7 +61,7 @@ public class HomeController {
         }
     }
 
-    @RequestMapping(value = "/find-bands", method = RequestMethod.GET)
+    @GetMapping("/find-bands")
     public String findBands(Model model, Principal principal) {
 
 
@@ -81,7 +79,7 @@ public class HomeController {
         return "Search/findBands";
     }
 
-    @RequestMapping(value = "/find-gigs", method = RequestMethod.GET)
+    @GetMapping("/find-gigs")
     public String findGigs(Model model, Principal principal) {
 
 
@@ -100,7 +98,7 @@ public class HomeController {
         return "Search/findGigs";
     }
 
-    @RequestMapping(value = "/find-bands/{musicianId}", method = RequestMethod.GET)
+    @GetMapping("/find-bands/{musicianId}")
     public String musicianDetails(@PathVariable("musicianId")long id,
                                   Model model, Principal principal) {
 

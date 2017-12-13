@@ -19,16 +19,18 @@
 
                 </div>
                 <div class="col s12 m6 white compForm">
-                        <form th:action="@{/signup/musician/}" method="post" enctype="multipart/form-data"  >
+                        <form th:action="@{/signup/musician/}" method="post" >
                             <div th:object="${user}">
                                 <div class="row">
                                     <div class="input-field col s12 m6">
                                         <input id="username" type="text" th:field="*{username}" />
                                         <label for="username">Username</label>
+                                        <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
                                     </div>
                                     <div class="input-field col s12 m6">
                                         <label for="password">Password</label>
                                         <input id="password" type="password" th:field="*{password}" />
+                                        <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
 
                                     </div>
 
@@ -38,10 +40,14 @@
                                     <div class="input-field col s12 m6">
                                         <label for="email">Email</label>
                                         <input id="email" type="email" th:field="*{email}"/>
+                                        <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+
                                     </div>
                                     <div class="input-field col s12 m6">
                                         <label for="pNumber">Phone Number</label>
                                         <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
+                                        <div class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</div>
+
                                     </div>
                                 </div>
                             </div>
@@ -50,22 +56,30 @@
                                     <div class="input-field col s12 m6">
                                         <label for="firstName">First Name</label>
                                         <input id="firstName" type="text" th:field="*{firstName}"/>
+                                        <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</div>
+
                                     </div>
                                     <div class="input-field col s12 m6">
                                         <label for="lastName">Last Name</label>
                                         <input id="lastName" type="text" th:field="*{lastName}"/>
+                                        <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</div>
+
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s6 m6">
-                                        <input id="city" type="text" name="musicianCity"/>
+                                        <input id="city" type="text" th:field="*{musicianCity}" class="validate"/>
                                         <label for="city">City</label>
+                                        <div class="error" th:if="${#fields.hasErrors('musicianCity')}" th:errors="*{musicianCity}">City Error</div>
+
                                     </div>
                                     <div class="input-field col s6 m6">
-                                        <select name="musicianState" id="state">
+                                        <select th:field="*{musicianState}" id="state" class="validate">
                                             <option value="" disabled="disabled" selected="selected">State</option>
                                             <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
                                         </select>
+                                        <div class="error" th:if="${#fields.hasErrors('musicianState')}" th:errors="*{musicianState}">State Error</div>
+
                                     </div>
                                 </div>
 
@@ -74,25 +88,15 @@
                                         <option value="" disabled="disabled" selected="selected">Choose Musical Instruments</option>
                                         <option th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
                                     </select>
+                                    <div class="error" th:if="${#fields.hasErrors('musicianInstruments')}" th:errors="*{musicianInstruments}">Musician Instruments Error</div>
+
 
                                 </div>
 
                                 <div class="row">
                                     <div class="input-field col s12 m12">
                                         <label for="bio">Bio</label>
-                                        <input id="bio" type="text" th:field="*{bio}"/>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="file-field input-field">
-                                        <div class="btn">
-                                            <span>File</span>
-                                            <input type="file" th:field="*{profPicImage}"/>
-                                        </div>
-                                        <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text" placeholder="Upload Profile Image"/>
-                                        </div>
+                                        <input id="bio" type="text" th:field="*{bio}" class="validate"/>
                                     </div>
                                 </div>
                             </div>

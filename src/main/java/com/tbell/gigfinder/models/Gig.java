@@ -1,10 +1,9 @@
 package com.tbell.gigfinder.models;
 
-
-
-
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.Set;
@@ -17,29 +16,47 @@ public class Gig {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty(message = "Title must not be empty")
     @Column(name = "gig_title")
     private String gigTitle;
+
+    @NotEmpty
+    private String gigStreet;
+
+    @NotEmpty
+    private String gigCity;
+
+    @NotEmpty
+    private String gigState;
+
+    @NotEmpty
+    private String gigZip;
 
     @Column(name = "gig_location")
     private String gigLocation;
 
-
+    @NotEmpty(message = "Type must not be empty")
     @Column(name = "gig_type")
     private String gigType;
 
+    @NotEmpty(message = "Time must not be empty")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gig_start")
     private Date gigStart;
 
+    @NotEmpty(message = "Time must not be empty")
     @Column(name = "gig_time_start")
     private String timeStart;
 
+    @NotEmpty(message = "Time must not be empty")
     @Column(name = "gig_end")
     private Date gigEnd;
 
+    @NotEmpty(message = "Time must not be empty")
     @Column(name = "gig_time_end")
     private String timeEnd;
 
+    @NotEmpty(message = "Description must not be empty")
     @Column(name = "gig_description")
     private String gigDescription;
 
@@ -73,6 +90,38 @@ public class Gig {
 
     public void setGigTitle(String gigTitle) {
         this.gigTitle = gigTitle;
+    }
+
+    public String getGigStreet() {
+        return gigStreet;
+    }
+
+    public void setGigStreet(String gigStreet) {
+        this.gigStreet = gigStreet;
+    }
+
+    public String getGigCity() {
+        return gigCity;
+    }
+
+    public void setGigCity(String gigCity) {
+        this.gigCity = gigCity;
+    }
+
+    public String getGigState() {
+        return gigState;
+    }
+
+    public void setGigState(String gigState) {
+        this.gigState = gigState;
+    }
+
+    public String getGigZip() {
+        return gigZip;
+    }
+
+    public void setGigZip(String gigZip) {
+        this.gigZip = gigZip;
     }
 
     public String getGigLocation() {
@@ -168,7 +217,7 @@ public class Gig {
     @PrePersist
     void preGigImage(){
         if(this.gigArt == null){
-            this.gigArt = "/assets/images/no-image.gif";
+            this.gigArt = "no-image-thumbnail.jpg";
         }
     }
 }

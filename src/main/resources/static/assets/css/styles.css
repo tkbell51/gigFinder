@@ -10,6 +10,11 @@ body {
 main {
     flex: 1 0 auto;
 }
+.error{
+    color: red;
+    margin: 15px 0px;
+    text-align: center;
+}
 
 .gradient-background{
     background: #23074d;  /* fallback for old browsers */

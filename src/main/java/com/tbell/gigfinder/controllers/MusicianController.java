@@ -13,9 +13,11 @@ import feign.gson.GsonDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 import java.security.Principal;
@@ -47,7 +49,7 @@ public class MusicianController {
     private StorageService storageService;
 
 
-    @RequestMapping(value = "/musician/my-profile", method = RequestMethod.GET)
+    @GetMapping("/musician/my-profile")
     public String musicianProfile(Model model, Principal principal){
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
@@ -76,37 +78,35 @@ public class MusicianController {
 
         return "musicianProfile";
     }
-
-    @RequestMapping(value = "/musician/update-profile", method = RequestMethod.POST)
-    public String musicianProfileUpdate(@RequestParam("phoneNumber")String phoneNumber,
-                                        @RequestParam("email")String email,
-                                        @RequestParam("firstName")String firstName,
-                                        @RequestParam("lastName")String lastName,
-                                        @RequestParam("musicianInstruments")String instruments,
-                                        @RequestParam("location") String location,
-                                        @RequestParam("bio")String bio,
-                                        Model model, Principal principal) throws Exception {
+    @GetMapping("/musician/update-profile")
+    public String musicianProfileUpdateView(Model model, Principal principal){
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
-        user.setEmail(email);
-        user.setPhoneNumber(phoneNumber);
-        userRepo.save(user);
-        if(phoneNumber.substring(0,2) != "+1") {
-            phoneNumber = "+1" + phoneNumber;
-        }
-        instruments = instruments.replaceAll("[,.!?;:]", "$0 ").replaceAll("\\s+", " ");
+
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
-        musicianProfile.setFirstName(firstName);
-        musicianProfile.setLastName(lastName);
-        musicianProfile.setMusicianInstruments(instruments);
-        musicianProfile.setLocation(location);
-        musicianProfile.setBio(bio);
+        model.addAttribute("musicianProfile", musicianProfile);
+
+        return "updateProfile";
+    }
+    @PostMapping("/musician/update-profile")
+    public String musicianProfileUpdate(@ModelAttribute @Valid User user,
+                                        BindingResult bindingResultUser,
+                                        @ModelAttribute @Valid MusicianProfile musicianProfile,
+                                        BindingResult bindingResultMusicianProfile,
+                                        Model model, Principal principal){
+        if(bindingResultUser.hasErrors()){
+            return "updateProfile";
+        }else if(bindingResultMusicianProfile.hasErrors()){
+            return "updateProfile";
+        }
+        userRepo.save(user);
         musicRepo.save(musicianProfile);
+
         return "redirect:/musician/my-profile";
     }
 
 
-    @RequestMapping(value = "/musician/add-media", method = RequestMethod.POST)
+    @PostMapping("/musician/add-media")
     public String createGig (@RequestParam("media_url")String mediaURL,
                              @RequestParam("title")String title,
                              Model model, Principal principal){
@@ -121,7 +121,7 @@ public class MusicianController {
         return "redirect:/musician/my-profile";
     }
 
-    @RequestMapping(value = "/musician/media/{mediaId}/update", method = RequestMethod.POST)
+    @PostMapping("/musician/media/{mediaId}/update")
     public String updateMedia (@PathVariable("mediaId") long id,
                                @RequestParam("media_url")String mediaURL,
                                @RequestParam("title")String title,
@@ -137,26 +137,19 @@ public class MusicianController {
         return "redirect:/musician/my-profile";
     }
 
-    @RequestMapping(value = "/musician/media/delete/{mediaId}", method = RequestMethod.POST)
+    @PostMapping("/musician/media/delete/{mediaId}")
     public String deleteMedia (@PathVariable("mediaId")long id){
         mediaRepo.delete(id);
         return "redirect:/musician/my-profile";
     }
 
-    @RequestMapping(value = "/musician/coverPic/{musicianProfileId}/", method = RequestMethod.POST)
+    @PostMapping("/musician/coverPic/{musicianProfileId}/")
     public String uploadMusicCoverPic(@PathVariable("musicianProfileId")long id,
                                       @RequestParam("coverPicImage") MultipartFile coverPic,
                                       Model model, Principal principal)throws Exception{
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
-
-        if(coverPic == null) {
-            model.addAttribute("user", user);
-
-            model.addAttribute("message", "Something went wrong. Please Try Again");
-            return "Messages/messagePage";
-        } else {
             MusicianProfile newMusician = musicRepo.findById(id);
             storageService.deleteOne(newMusician.getCoverPicImage());
             storageService.store(coverPic);
@@ -166,21 +159,14 @@ public class MusicianController {
             return "redirect:/musician/my-profile";
         }
 
-    }
 
-    @RequestMapping(value = "/musician/profilePic/{musicianProfileId}/", method = RequestMethod.POST)
+    @PostMapping("/musician/profilePic/{musicianProfileId}/")
     public String uploadMusicProfPic(@PathVariable("musicianProfileId")long id,
                                      @RequestParam("profPicImage") MultipartFile profPic,
                                      Model model, Principal principal){
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
-
-        if(profPic == null) {
-            model.addAttribute("user", user);
-            model.addAttribute("message", "Something went wrong. Please Try Again");
-            return "Messages/messagePage";
-        } else {
             MusicianProfile newMusician = musicRepo.findById(id);
             if(!newMusician.getProfPicImage().equals("empty-profile-pic.jpg")){
                 storageService.deleteOne(newMusician.getProfPicImage());
@@ -192,7 +178,7 @@ public class MusicianController {
             return "redirect:/musician/my-profile";
         }
 
-    }
+
 
 
 }

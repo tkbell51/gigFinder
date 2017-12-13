@@ -38,70 +38,6 @@
         </div>
 
     </div>
-<div th:fragment="musicianUpdate">
-    <div id="musicUpdate" class="modal">
-        <div class="modal-content">
-            <div class="section center-align">
-
-                <h4>Update Profile</h4>
-            </div>
-            <form th:action="'/musician/update-profile/'"  method="post">
-                <div th:object="${user}">
-
-                    <div class="row">
-                        <div class="input-field col s12 m6">
-                            <label for="email"> Email</label>
-                            <input id="email" type="email" th:field="*{email}"/>
-                        </div>
-                        <div class="input-field col s12 m6">
-                            <label for="pNumber">Contact Phone Number</label>
-                            <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
-                        </div>
-                    </div>
-
-                </div>
-                <div th:object="${musicianProfile}">
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <label for="firstName">First Name</label>
-                            <input id="firstName" type="text" th:field="*{firstName}"/>
-                        </div>
-                        <div class="input-field col s6">
-                            <label for="lastName">Last Name</label>
-                            <input id="lastName" type="text" th:field="*{lastName}"/>
-                        </div>
-                    </div>
-
-                    <div class="input-field col s12">
-                        <select multiple="multiple" th:field="*{musicianInstruments}">
-                            <option value="" disabled="disabled" selected="selected">Choose Musical Instruments</option>
-                            <option th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
-                        </select>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <label for="location">Location</label>
-                            <input id="location" type="text" th:field="*{location}" class="autocomplete"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <label for="bio">Bio</label>
-                            <input id="bio" type="text" th:field="*{bio}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-
-                    <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
 <div th:fragment="createMedia">
     <div id="addMusicContent"  class="modal">
         <div class="modal-content">
@@ -155,55 +91,6 @@
                     <p>Are you sure?</p>
 
 
-        </div>
-    </div>
-</div>
-<div th:fragment="companyProfileUpdate">
-    <div id="companyUpdate" class="modal">
-        <div class="modal-content">
-            <div class="section center-align">
-
-                <h4>Update Profile</h4>
-            </div>
-    <form th:action="'/company/update-profile/'"  method="post" enctype="multipart/form-data">
-        <div th:object="${user}">
-
-            <div class="row">
-                <div class="input-field col s12 m6">
-                    <label for="email"> Email</label>
-                    <input id="email" type="email" th:field="*{email}"/>
-                </div>
-                <div class="input-field col s12 m6">
-                    <label for="pNumber">Contact Phone Number</label>
-                    <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
-                </div>
-            </div>
-        </div>
-
-        <div th:object="${companyProfile}">
-            <div class="row">
-                <div class="input-field col s12">
-                    <label for="name">Company Name</label>
-                    <input id="name" type="text" th:field="*{companyName}"/>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    <label for="firstName">Contact First Name</label>
-                    <input id="firstName" type="text" th:field="*{companyContactFirstName}"/>
-                </div>
-                <div class="input-field col s6">
-                    <label for="lastName">Contact Last Name</label>
-                    <input id="lastName" type="text" th:field="*{companyContactLastName}"/>
-                </div>
-            </div>
-        </div>
-
-
-        <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
-
-    </form>
         </div>
     </div>
 </div>

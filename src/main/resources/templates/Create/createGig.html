@@ -23,6 +23,7 @@
                                 <div class="input-field col s12">
                                     <label for="title">Title</label>
                                     <input id="title" type="text" th:field="*{gigTitle}" data-length="40"/>
+                                    <span class="error" th:if="${#fields.hasErrors('gigTitle')}" th:errors="*{gigTitle}">Title Error</span>
 
                                 </div>
                             </div>
@@ -30,31 +31,39 @@
                                 <div class="input-field col s12">
                                     <label for="description">Description</label>
                                     <input id="description" type="text" th:field="*{gigDescription}" data-length="140"/>
+                                    <span class="error" th:if="${#fields.hasErrors('gigDescription')}" th:errors="*{gigDescription}">Description Error</span>
 
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s12">
                                     <label for="location">Street</label>
-                                    <input id="location" type="text" name="locationStreet" class="autocomplete"/>
+                                    <input id="location" type="text" th:field="*{gigStreet}" class="autocomplete"/>
+                                    <span class="error" th:if="${#fields.hasErrors('gigStreet')}" th:errors="*{gigStreet}">Street Error</span>
+
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s6">
-                                    <input id="city" type="text" name="locationCity"/>
+                                    <input id="city" type="text" th:field="*{gigCity}"/>
                                     <label for="city">City</label>
+                                    <span class="error" th:if="${#fields.hasErrors('gigCity')}" th:errors="*{gigCity}">City Error</span>
+
                                 </div>
                                 <div class="input-field col s3">
-                                    <select name="locationState" id="state">
+                                    <select th:field="*{gigState}" id="state">
                                         <option value="" disabled="disabled" selected="selected">State</option>
                                         <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
                                     </select>
+                                    <span class="error" th:if="${#fields.hasErrors('gigState')}" th:errors="*{gigState}">State Error</span>
+
                                 </div>
 
                                 <div class="input-field col s3">
-                                    <input id="zip" type="text" name="locationZip" maxlength="5" minlength="5"/>
+                                    <input id="zip" type="text" th:field="*{gigZip}" maxlength="5" minlength="5"/>
                                     <label for="zip">Zip Code</label>
                                 </div>
+                                <span class="error" th:if="${#fields.hasErrors('gigZip')}" th:errors="*{gigZip}">Zip Code Error</span>
 
                             </div>
 
@@ -64,32 +73,42 @@
                                     <option th:each="gigType : ${gigTypes}" th:value="${gigType.type}">[[${gigType.type}]]</option>
                                 </select>
                                 <label for="type">Type of Gig</label>
+                                <span class="error" th:if="${#fields.hasErrors('gigType')}" th:errors="*{gigType}">Gig Type Error</span>
+
                             </div>
                             <div class="row">
                                 <div class="input-field col s6">
                                     <label for="start">Start</label>
                                     <input id="start" type="date" class="datepicker" th:field="*{gigStart}"/>
+                                    <span class="error" th:if="${#fields.hasErrors('gigStart')}" th:errors="*{gigStart}">Gig Start Error</span>
+
                                 </div>
                                 <div class="input-field col s6">
                                     <input id="timeStart" type="text" class="timepicker" th:field="*{timeStart}"/>
                                     <label for="timeStart">Start Time</label>
+                                    <span class="error" th:if="${#fields.hasErrors('timeStart')}" th:errors="*{timeStart}">Time Start Error</span>
+
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s6">
                                     <label for="end">End</label>
                                     <input id="end" type="date" class="datepicker" th:field="*{gigEnd}"/>
+                                    <span class="error" th:if="${#fields.hasErrors('gigEnd')}" th:errors="*{gigEnd}">Gig End Error</span>
+
                                 </div>
                                 <div class="input-field col s6">
                                     <input id="timeEnd" type="text" class="timepicker" th:field="*{timeEnd}"/>
                                     <label for="timeEnd">End Time</label>
+                                    <span class="error" th:if="${#fields.hasErrors('timeEnd')}" th:errors="*{timeEnd}">Time End Error</span>
+
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="file-field input-field">
                                     <div class="btn">
                                         <span>File</span>
-                                        <input type="file" th:field="*{gigArt}"/>
+                                        <input type="file" name="gigImage"/>
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text" placeholder="Upload Gig Image"/>

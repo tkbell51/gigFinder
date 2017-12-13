@@ -1,6 +1,9 @@
 package com.tbell.gigfinder.models;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -11,21 +14,29 @@ public class CompanyProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty(message = "Company Name may not be empty")
     @Column(name = "company_name")
     private String companyName;
 
+    @NotEmpty(message = "First Name may not be empty")
     @Column(name = "contact_first_name")
     private String companyContactFirstName;
 
+    @NotEmpty(message = "Last Name may not be empty")
     @Column(name = "contact_last_name")
     private String companyContactLastName;
-
 
     @Column(name = "company_cover_pic")
     private String companyCoverPic;
 
     @Column(name = "company_prof_pic")
     private String companyProfPic;
+
+    @NotEmpty(message = "Company City may not be empty")
+    private String companyCity;
+
+    @NotEmpty(message = "Company State may not be empty")
+    private String companyState;
 
     @Column(name = "company_location")
     private String companyLocation;
@@ -105,6 +116,22 @@ public class CompanyProfile {
         this.companyProfPic = companyProfPic;
     }
 
+    public String getCompanyCity() {
+        return companyCity;
+    }
+
+    public void setCompanyCity(String companyCity) {
+        this.companyCity = companyCity;
+    }
+
+    public String getCompanyState() {
+        return companyState;
+    }
+
+    public void setCompanyState(String companyState) {
+        this.companyState = companyState;
+    }
+
     public String getCompanyLocation() {
         return companyLocation;
     }
@@ -113,10 +140,20 @@ public class CompanyProfile {
         this.companyLocation = companyLocation;
     }
 
+    @Override
+    public String toString() {
+        return "CompanyProfile{" +
+                "Company Name='" + companyName + '\'' +
+                ", Company Contact First Name='" + companyContactFirstName + '\'' +
+                ", Company Contact Last Name='" + companyContactLastName + '\'' +
+                ", Company Location='" + companyLocation + '\'' +
+                '}';
+    }
+
     @PrePersist
     void preImage(){
         if(this.companyProfPic == null){
-            this.companyProfPic = "/assets/images/empty-profile-pic.jpg";
+            this.companyProfPic = "empty-profile-pic.jpg";
         }
     }
 }

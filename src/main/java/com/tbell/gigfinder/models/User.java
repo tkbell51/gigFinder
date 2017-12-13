@@ -1,13 +1,16 @@
 package com.tbell.gigfinder.models;
 
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
@@ -18,11 +21,16 @@ public class User implements UserDetails{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty(message = "Username may not be empty")
     private String username;
 
+    @NotEmpty(message = "Password may not be empty")
+    @Size(min = 4, message = "Minimum 4 characters")
     @Column(name = "user_password")
     private String password;
 
+    @NotEmpty(message = "Email may not be empty")
+    @Email(message = "Must be valid email")
     @Column(name = "email")
     private String email;
 
@@ -115,7 +123,21 @@ public class User implements UserDetails{
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+
+        if(phoneNumber.substring(0,2) != "+1") {
+            this.phoneNumber = "+1" + phoneNumber;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", signup_date=" + signup_date +
+                '}';
     }
 
     @Override

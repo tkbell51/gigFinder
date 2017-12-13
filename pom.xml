@@ -5,7 +5,7 @@
 
 	<groupId>com.tbell</groupId>
 	<artifactId>gigfinder</artifactId>
-	<version>0.0.27-PREDEPLOY</version>
+	<version>0.0.28-PREDEPLOY</version>
 	<packaging>jar</packaging>
 
 	<name>gigfinder</name>
@@ -56,6 +56,10 @@
 			<groupId>org.webjars.bower</groupId>
 			<artifactId>materialize</artifactId>
 			<version>0.100.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
 		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,11 +1,11 @@
 package com.tbell.gigfinder.models;
 
 
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
+
 import java.util.List;
 import java.util.Set;
 
@@ -17,15 +17,23 @@ public class MusicianProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty(message = "Name must not be empty")
     @Column(name = "first_name")
     private String firstName;
 
+    @NotEmpty(message = "Name must not be empty")
     @Column(name = "last_name")
     private String lastName;
 
-
+    @NotEmpty(message = "Instruments must not be empty")
     @Column(name = "musician_instruments")
     private String musicianInstruments;
+
+    @NotEmpty
+    private String musicianCity;
+
+    @NotEmpty
+    private String musicianState;
 
     @Column(name = "musician_location")
     private String location;
@@ -52,15 +60,6 @@ public class MusicianProfile {
 
     public MusicianProfile() {}
 
-    public MusicianProfile(User user, String firstName, String lastName,  String musicianInstruments, String location, String bio) {
-        this.user = user;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.musicianInstruments = musicianInstruments;
-        this.location = location;
-        this.bio = bio;
-
-    }
 
     public long getId() {
         return id;
@@ -92,7 +91,23 @@ public class MusicianProfile {
     }
 
     public void setMusicianInstruments(String musicianInstruments) {
-        this.musicianInstruments = musicianInstruments;
+        this.musicianInstruments = musicianInstruments.replaceAll("[,.!?;:]", "$0 ").replaceAll("\\s+", " ");
+    }
+
+    public String getMusicianCity() {
+        return musicianCity;
+    }
+
+    public void setMusicianCity(String musicianCity) {
+        this.musicianCity = musicianCity;
+    }
+
+    public String getMusicianState() {
+        return musicianState;
+    }
+
+    public void setMusicianState(String musicianState) {
+        this.musicianState = musicianState;
     }
 
     public String getLocation() {
@@ -151,10 +166,21 @@ public class MusicianProfile {
         this.musicianAppyGigs = musicianAppyGigs;
     }
 
+    @Override
+    public String toString() {
+        return "MusicianProfile{" +
+                "First Name='" + firstName + '\'' +
+                ", Last Name='" + lastName + '\'' +
+                ", Musical Instruments='" + musicianInstruments + '\'' +
+                ", Location='" + location + '\'' +
+                ", Bio='" + bio + '\'' +
+                '}';
+    }
+
     @PrePersist
     void preImage(){
         if(this.profPicImage == null){
-            this.profPicImage = "/assets/images/empty-profile-pic.jpg";
+            this.profPicImage = "empty-profile-pic.jpg";
         }
     }
 }

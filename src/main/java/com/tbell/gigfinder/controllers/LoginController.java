@@ -7,15 +7,15 @@ import com.tbell.gigfinder.Repositories.UserRepository;
 import com.tbell.gigfinder.enums.Instruments;
 import com.tbell.gigfinder.enums.State;
 import com.tbell.gigfinder.models.*;
-import com.tbell.gigfinder.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -40,11 +40,8 @@ public class LoginController {
     @Autowired
     MusicianProfileRepository musicRepo;
 
-    @Autowired
-    private StorageService storageService;
 
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping("/login")
     public String login(Model model, HttpServletRequest request) {
         model.addAttribute("user", new User());
         try {
@@ -57,7 +54,7 @@ public class LoginController {
     }
 
 
-    @RequestMapping(value = "/signup/company/", method = RequestMethod.GET)
+    @GetMapping("/signup/company")
     public String createCompanyProfile(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("companyProfile", new CompanyProfile());
@@ -66,57 +63,42 @@ public class LoginController {
         return "Create/createCompany";
     }
 
-    @RequestMapping(value = "/signup/company/", method = RequestMethod.POST)
-    public String createCompanyProfile(@RequestParam("username")String username,
-                                       @RequestParam("password")String password,
-                                       @RequestParam("email")String email,
-                                       @RequestParam("phoneNumber")String phoneNumber,
-                                       @RequestParam("companyContactFirstName")String firstName,
-                                       @RequestParam("companyContactLastName")String lastName,
-                                       @RequestParam("companyName")String companyName,
-                                       @RequestParam("companyState") String state,
-                                       @RequestParam("companyCity")String city,
-                                       @RequestParam("companyProfPic") MultipartFile profPic,
+    @PostMapping("/signup/company")
+    public String createCompanyProfile(@ModelAttribute @Valid User user,
+                                       BindingResult bindingResultUser,
+                                       @ModelAttribute @Valid CompanyProfile companyProfile,
+                                       BindingResult bindingResultCompanyProfile,
                                        Model model){
-        User user = new User();
-        user.setUsername(username);
-        String encryptedPassword = bCryptPasswordEncoder.encode(password);
-        user.setPassword(encryptedPassword);
-        user.setEmail(email);
 
-        String location = city + ", " + state;
-        if(phoneNumber.substring(0,2) != "+1") {
-            phoneNumber = "+1" + phoneNumber;
+        if(bindingResultUser.hasErrors()){
+            return "Create/createCompany";
+        }else if(bindingResultCompanyProfile.hasErrors()){
+            return "Create/createCompany";
         }
 
-        user.setPhoneNumber(phoneNumber);
+        String encryptedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
+
         user.setSignup_date(new Date(System.currentTimeMillis()));
         user.setActive(true);
         Role companyRole = roleRepo.findByName("ROLE_COMPANY");
         user.setRole(companyRole);
         userRepo.save(user);
 
-
-        CompanyProfile companyProfile = new CompanyProfile();
-        storageService.store(profPic);
-        String fileName = profPic.getOriginalFilename();
-        companyProfile.setCompanyProfPic(fileName);
         companyProfile.setUser(user);
-        companyProfile.setCompanyName(companyName);
-        companyProfile.setCompanyContactFirstName(firstName);
-        companyProfile.setCompanyContactLastName(lastName);
-        companyProfile.setCompanyLocation(location);
+        companyProfile.setCompanyLocation(companyProfile.getCompanyCity() + ", " + companyProfile.getCompanyState());
         compRepo.save(companyProfile);
 
         model.addAttribute("message", "Thank you for joining! Please login");
-
-        return "redirect:/login";
+        model.addAttribute("user", user);
+        model.addAttribute("companyProfile", companyProfile);
+        return "results";
     }
 
 
 
 
-    @RequestMapping(value = "/signup/musician/", method = RequestMethod.GET)
+    @GetMapping("/signup/musician/")
     public String createMusicianProfile(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("musicianProfile", new MusicianProfile());
@@ -127,47 +109,35 @@ public class LoginController {
         return "Create/createMusician";
     }
 
-    @RequestMapping(value = "/signup/musician/", method = RequestMethod.POST)
-    public String createMusicianProfile(@RequestParam("username")String username,
-                                        @RequestParam("password")String password,
-                                        @RequestParam("email")String email,
-                                        @RequestParam("phoneNumber")String phoneNumber,
-                                        @RequestParam("firstName")String firstName,
-                                        @RequestParam("lastName")String lastName,
-                                        @RequestParam("musicianInstruments")String instruments,
-                                        @RequestParam("musicianState") String state,
-                                        @RequestParam("musicianCity")String city,
-                                        @RequestParam("bio")String bio,
-                                        @RequestParam("profPicImage") MultipartFile profPic,
-                                        Model model){
-        User user = new User();
-        user.setUsername(username);
-        String encryptedPassword = bCryptPasswordEncoder.encode(password);
-        user.setPassword(encryptedPassword);
-        user.setEmail(email);
-        if(phoneNumber.substring(0,2) != "+1") {
-            phoneNumber = "+1" + phoneNumber;
+    @PostMapping("/signup/musician/")
+    public String createMusicianProfile(@ModelAttribute @Valid User user,
+                                        BindingResult bindingResultUser,
+                                        @ModelAttribute @Valid MusicianProfile musicianProfile,
+                                        BindingResult bindingResultMusicianProfile,
+                                        Model model ){
+
+        if(bindingResultUser.hasErrors()){
+            return "Create/createMusician";
+        }else if(bindingResultMusicianProfile.hasErrors()){
+            return "Create/createMusician";
         }
-        user.setPhoneNumber(phoneNumber);
+
+        String encryptedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
         user.setSignup_date(new Date(System.currentTimeMillis()));
         user.setActive(true);
         Role musicianRole = roleRepo.findByName("ROLE_MUSICIAN");
         user.setRole(musicianRole);
         userRepo.save(user);
 
-        String location = city + ", " + state;
-        instruments = instruments.replaceAll("[,.!?;:]", "$0 ").replaceAll("\\s+", " ");
-
-
-        MusicianProfile musicianProfile  = new MusicianProfile(user, firstName, lastName, instruments, location, bio);
-        storageService.store(profPic);
-        String fileName = profPic.getOriginalFilename();
-        musicianProfile.setProfPicImage(fileName);
+        musicianProfile.setUser(user);
+        musicianProfile.setLocation(musicianProfile.getMusicianCity() + ", " + musicianProfile.getMusicianState());
         musicRepo.save(musicianProfile);
+
         model.addAttribute("message", "Thank you for joining! Please login");
-        return "redirect:/login";
-
-
+        model.addAttribute("user", user);
+        model.addAttribute("musicianProfile", musicianProfile);
+        return "results";
     }
 
 

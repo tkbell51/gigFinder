@@ -13,10 +13,10 @@
                 </form>
             </li>
             <li sec:authorize="hasRole('ROLE_MUSICIAN')">
-                <a class="waves-effect waves-light modal-trigger" href="#musicUpdate">Update Profile</a>
+                <a class="waves-effect waves-light " href="/musician/update-profile">Update Profile</a>
             </li>
             <li sec:authorize="hasRole('ROLE_COMPANY')">
-                <a class="waves-effect waves-light modal-trigger" href="#companyUpdate">Update Profile</a>
+                <a class="waves-effect waves-light " href="/company/update-profile">Update Profile</a>
 
             </li>
         </ul>
@@ -38,7 +38,7 @@
                     </div>
                 </li>
                 <li>
-                    <a class="waves-effect waves-light modal-trigger" href="#companyUpdate">Update Profile</a>
+                    <a class="waves-effect waves-light" href="/company/update-profile">Update Profile</a>
                 </li>
             </div>
             <div sec:authorize="hasRole('ROLE_MUSICIAN')">
@@ -53,7 +53,7 @@
                     </div>
                 </li>
                 <li>
-                    <a class="waves-effect waves-light modal-trigger" href="#musicUpdate">Update Profile</a>
+                    <a class="waves-effect waves-light " href="/musician/update-profile">Update Profile</a>
                 </li>
             </div>
                 <li><div class="divider"></div></li>
