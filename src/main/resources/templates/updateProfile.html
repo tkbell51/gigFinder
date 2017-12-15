@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
-<body th:inline="text" class="profileUpdate gradient-background">
+<body th:inline="text" class="signCompany gradient-background">
 <div th:include="fragments/navbar :: navHome"></div>
-<main class="updateProfile">
+<main class="compSignup">
     <div class="background-image hide-on-med-and-down"></div>
 
     <div class="card-panel container">
@@ -21,31 +21,35 @@
 
                 <div sec:authorize="hasRole('ROLE_COMPANY')">
                     <form th:action="'/company/update-profile/'"  method="post" enctype="multipart/form-data">
-                        <div th:object="${user}">
+                        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+                        <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</span>
 
+
+                        <div th:object="${user}">
                             <div class="row">
                                 <div class="input-field col s12 m6">
                                     <label for="emailComp"> Email</label>
                                     <input id="emailComp" type="email" th:field="*{email}" th:value="${email}"/>
-                                    <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
 
                                 </div>
                                 <div class="input-field col s12 m6">
                                     <label for="pNumberComp">Contact Phone Number</label>
                                     <input id="pNumberComp" type="text" th:field="*{phoneNumber}" th:value="${phoneNumber}"/>
-                                    <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</span>
 
                                 </div>
                             </div>
                         </div>
 
                         <div th:object="${companyProfile}">
-
+                            <span class="error" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">Company Name Error</span>
+                            <span class="error" th:if="${#fields.hasErrors('companyContactFirstName')}" th:errors="*{companyContactFirstName}">First Name Error</span>
+                            <span class="error" th:if="${#fields.hasErrors('companyContactLastName')}" th:errors="*{companyContactLastName}">Last Name Error</span>
+                            <span class="error" th:if="${#fields.hasErrors('companyCity')}" th:errors="*{companyCity}">City Error</span>
+                            <span class="error" th:if="${#fields.hasErrors('companyState')}" th:errors="*{companyState}">State Error</span>
                             <div class="row">
                                 <div class="input-field col s12">
                                     <label for="nameComp">Company Name</label>
                                     <input id="nameComp" type="text" th:field="*{companyName}" th:value="${companyName}"/>
-                                    <span class="error" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">Company Name Error</span>
 
                                 </div>
 
@@ -54,13 +58,11 @@
                                 <div class="input-field col s12 m6">
                                     <label for="firstNameComp">Contact First Name</label>
                                     <input id="firstNameComp" type="text" th:field="*{companyContactFirstName}" th:value="${companyContactFirstName}"/>
-                                    <span class="error" th:if="${#fields.hasErrors('companyContactFirstName')}" th:errors="*{companyContactFirstName}">First Name Error</span>
 
                                 </div>
                                 <div class="input-field col s12 m6">
                                     <label for="lastNameComp">Contact Last Name</label>
                                     <input id="lastNameComp" type="text" th:field="*{companyContactLastName}" th:value="${companyContactLastName}"/>
-                                    <span class="error" th:if="${#fields.hasErrors('companyContactLastName')}" th:errors="*{companyContactLastName}">Last Name Error</span>
 
                                 </div>
                             </div>
@@ -68,7 +70,6 @@
                                 <div class="input-field col s6">
                                     <input id="cityComp" type="text" th:field="*{companyCity}" class="validate" th:value="${companyCity}"/>
                                     <label for="cityComp">City</label>
-                                    <span class="error" th:if="${#fields.hasErrors('companyCity')}" th:errors="*{companyCity}">City Error</span>
 
                                 </div>
                                 <div class="input-field col s6 m6">
@@ -76,53 +77,51 @@
                                         <option value="" disabled="disabled" selected="selected">State</option>
                                         <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
                                     </select>
-                                    <span class="error" th:if="${#fields.hasErrors('companyState')}" th:errors="*{companyState}">State Error</span>
 
                                 </div>
                             </div>
 
                         </div>
-
-
                         <button class="waves-effect waves-light btn" type="submit" >Update Profile</button>
-
                     </form>
-
                 </div>
                 <div sec:authorize="hasRole('ROLE_MUSICIAN')">
                     <form th:action="'/musician/update-profile/'"  method="post">
                         <div th:object="${user}">
-
+                            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+                            <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</span>
                             <div class="row">
                                 <div class="input-field col s12 m6">
                                     <label for="email"> Email</label>
                                     <input id="email" type="email" th:field="*{email}" th:value="${email}"/>
-                                    <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
 
                                 </div>
 
                                 <div class="input-field col s12 m6">
                                     <label for="pNumber">Contact Phone Number</label>
                                     <input id="pNumber" type="text" th:field="*{phoneNumber}" th:value="${phoneNumber}"/>
-                                    <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</span>
 
                                 </div>
                             </div>
                         </div>
                         <div th:object="${musicianProfile}">
+                            <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</span>
+                            <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
+                            <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span>
+                            <div class="error" th:if="${#fields.hasErrors('musicianCity')}" th:errors="*{musicianCity}">City Error</div>
+                            <div class="error" th:if="${#fields.hasErrors('musicianState')}" th:errors="*{musicianState}">State Error</div>
+                            <div class="error" th:if="${#fields.hasErrors('musicianInstruments')}" th:errors="*{musicianInstruments}">Musician Instruments Error</div>
 
                             <div class="row">
                                 <div class="input-field col s12 m6">
                                     <label for="firstName">First Name</label>
                                     <input id="firstName" type="text" th:field="*{firstName}"/>
-                                    <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
 
 
                                 </div>
                                 <div class="input-field col s12 m6">
                                     <label for="lastName">Last Name</label>
                                     <input id="lastName" type="text" th:field="*{lastName}"/>
-                                    <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span>
 
                                 </div>
                             </div>
@@ -130,7 +129,6 @@
                                 <div class="input-field col s6 m6">
                                     <input id="city" type="text" th:field="*{musicianCity}" class="validate"/>
                                     <label for="city">City</label>
-                                    <div class="error" th:if="${#fields.hasErrors('musicianCity')}" th:errors="*{musicianCity}">City Error</div>
 
                                 </div>
                                 <div class="input-field col s6 m6">
@@ -138,8 +136,6 @@
                                         <option value="" disabled="disabled" selected="selected">State</option>
                                         <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
                                     </select>
-                                    <div class="error" th:if="${#fields.hasErrors('musicianState')}" th:errors="*{musicianState}">State Error</div>
-
                                 </div>
                             </div>
 
@@ -148,9 +144,6 @@
                                     <option value="" disabled="disabled" selected="selected">Choose Musical Instruments</option>
                                     <option th:each="instrument : ${instruments}" th:value="${instrument.name}">[[${instrument.name}]]</option>
                                 </select>
-                                <div class="error" th:if="${#fields.hasErrors('musicianInstruments')}" th:errors="*{musicianInstruments}">Musician Instruments Error</div>
-
-
                             </div>
 
                             <div class="row">

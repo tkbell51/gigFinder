@@ -23,18 +23,21 @@
 
 
                             <div th:object="${user}">
+                                <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>
+                                <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
+                                <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+                                <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</span>
+
                                 <div class="row">
                                     <div class="input-field col s12 m6">
                                         <label for="username">Username</label>
                                         <input id="username" type="text" th:field="*{username}"/>
-                                        <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>
 
                                     </div>
 
                                     <div class="input-field col s12 m6">
                                         <label for="password">Password</label>
                                         <input id="password" type="password" th:field="*{password}"/>
-                                        <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
 
                                     </div>
 
@@ -43,24 +46,26 @@
                                     <div class="input-field col s12 m6">
                                         <label for="email"> Email</label>
                                         <input id="email" type="email" th:field="*{email}"/>
-                                        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
 
                                     </div>
                                     <div class="input-field col s12 m6">
                                         <label for="pNumber">Phone Number</label>
                                         <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
-                                        <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</span>
 
                                     </div>
                                 </div>
                             </div>
                             <div th:object="${companyProfile}">
+                                <span class="error" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">Company Name Error</span>
+                                <span class="error" th:if="${#fields.hasErrors('companyContactFirstName')}" th:errors="*{companyContactFirstName}">First Name Error</span>
+                                <span class="error" th:if="${#fields.hasErrors('companyContactLastName')}" th:errors="*{companyContactLastName}">Last Name Error</span>
+                                <span class="error" th:if="${#fields.hasErrors('companyCity')}" th:errors="*{companyCity}">City Error</span>
+                                <span class="error" th:if="${#fields.hasErrors('companyState')}" th:errors="*{companyState}">State Error</span>
 
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <label for="name">Company Name</label>
                                         <input id="name" type="text" th:field="*{companyName}"/>
-                                        <span class="error" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">Company Name Error</span>
 
                                     </div>
 
@@ -69,13 +74,11 @@
                                     <div class="input-field col s12 m6">
                                         <label for="firstName">Contact First Name</label>
                                         <input id="firstName" type="text" th:field="*{companyContactFirstName}"/>
-                                        <span class="error" th:if="${#fields.hasErrors('companyContactFirstName')}" th:errors="*{companyContactFirstName}">First Name Error</span>
 
                                     </div>
                                     <div class="input-field col s12 m6">
                                         <label for="lastName">Contact Last Name</label>
                                         <input id="lastName" type="text" th:field="*{companyContactLastName}"/>
-                                        <span class="error" th:if="${#fields.hasErrors('companyContactLastName')}" th:errors="*{companyContactLastName}">Last Name Error</span>
 
                                     </div>
                                 </div>
@@ -83,7 +86,6 @@
                                     <div class="input-field col s6">
                                         <input id="city" type="text" th:field="*{companyCity}" class="validate"/>
                                         <label for="city">City</label>
-                                        <span class="error" th:if="${#fields.hasErrors('companyCity')}" th:errors="*{companyCity}">City Error</span>
 
                                     </div>
                                     <div class="input-field col s6 m6">
@@ -91,7 +93,6 @@
                                             <option value="" disabled="disabled" selected="selected">State</option>
                                             <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
                                         </select>
-                                        <span class="error" th:if="${#fields.hasErrors('companyState')}" th:errors="*{companyState}">State Error</span>
 
                                     </div>
                                 </div>

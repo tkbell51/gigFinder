@@ -373,6 +373,13 @@ footer{
     margin: 10px;
 
 }
+/*Signup Results Page*/
+.success table{
+    font-size: 1.5em;
+}
+.success table td {
+   padding: 2px 0px;
+}
 /*Musician Details Page  */
 .music-details .hide-on-med-and-down td{
     padding: 15px 41px;
