@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="gradient-background" th:inline="text">
-<div th:include="fragments/navbar :: navHome"></div>
+<div class="hide-on-med-and-down" th:include="fragments/navbar :: navHome"></div>
 
     <main class="musicSignup">
 
@@ -11,8 +11,8 @@
 
         <div class="card-panel container">
             <div class="row">
-                <div class="col s12 m6 logoSide center-align ">
-                    <div class="logoSide">
+                <div class="col s12 m6  center-align ">
+                    <div class="logo-side">
                         <h1 class="login-logo"> <a href="/" >gigFinder</a></h1>
                         <h5 class="white-text"> Musician Signup</h5>
                     </div>

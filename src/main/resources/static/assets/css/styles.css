@@ -154,17 +154,7 @@ nav, footer{
 
 }
 
-.logBtn{
-    border: 1px solid #FFF;
-    border-radius: 15px;
-    padding: 5px 20px;
-    display: inline;
-}
-.logBtn:hover{
-    border: 1px solid #FD6D22;
-    color: #FD6D22;
 
-}
 footer{
     position: relative;
     z-index: 5;
@@ -178,7 +168,7 @@ footer{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f24000', endColorstr='#5600ed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 .search .card-panel{
-    background-color: rgba(0, 0, 0, 0.68);
+    background-color: rgba(0, 0, 0, 0.40);
 
 }
 .search .select-wrapper input, .search .select-wrapper .caret{
@@ -186,12 +176,28 @@ footer{
 }
 
 /*homepage*/
-#logo {
-    font-size: 6.8em;
-    position: relative;
-    top: 30vh;
-    margin-left: 15px;
+.logo-action{
+    margin-left:20%;
+}
+.logBtn{
+    border-radius: 30px;
+    padding: 5px 20px;
+    display: inline;
+    font-size: 2em;
+    border: 1px solid #FD6D22;
+    border: 1px solid rgba(211, 211, 211, 0.2);
+    color: rgba(253, 109, 34, 0.4);
 
+    background-color: rgba(0, 0, 0, 0.40);
+}
+.logBtn:hover{
+    border: 1px solid #FD6D22;
+    background: #FD6D22;
+    color: #FFF;
+
+}
+#logo {
+    font-size: 12em;
 }
 .top {
 
@@ -199,17 +205,20 @@ footer{
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
 
 }
 .top .card-panel{
-    background-color: rgba(0, 0, 0, 0.68);
+    background-color: rgba(0, 0, 0, 0.40);
     position:relative;
     z-index:2;
     border-radius: 10px;
 }
 .login-logo {
     font-family: 'Great Vibes', cursive;
-
 }
 
 .downArrow {
@@ -230,7 +239,7 @@ footer{
 #musicChoice, #compChoice{
     background-repeat: no-repeat;
     background-size: cover;
-    height: 75vh;
+    height: 90vh;
     display: flex;
 }
 
@@ -238,29 +247,70 @@ footer{
     margin: auto;
 }
 .musicText, .compText{
-    background-color: rgba(0, 0, 0, 0.68);
+    background-color: rgba(0, 0, 0, 0.40);
     border-radius: 5px;
     padding: 3%;
+    font-size: 1.8em;
 
 }
 #musicChoice .logBtn, #compChoice .logBtn{
-    font-size: 1.5em;
     background-color: #FD6D22;
     color: #FFF;
     border-radius: 25px;
     border: 1px solid #FD6D22;
-    margin-top: 5px;
+    font-size: 1em;
+
 
 }
 @media (max-width: 992px)   {
 
-    .top, #musicChoice, #compChoice{
-        height: 70vh;
+    #musicChoice, #compChoice{
+        height: 50vh;
+        font-size: 1.2em;
+        padding: 10px;
     }
-    .top .login-card{
+    #musicChoice h1,
+    #musicChoice p,
+    #compChoice h1,
+    #compChoice p{
+        margin: 3px;
+    }
+    .top{
+        background-position:80% 50%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .top .card-panel{
         border-radius: 5px;
-        padding: 3%;
-        margin-top: 70px;
+        width: 80vw;
+    }
+    .login-logo{
+        font-size: 8em;
+        color: #FFF;
+    }
+    .tab-top .btn{
+        margin-top: 10px;
+        width: 70%;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 425px)   {
+    .top{
+        background-position:75% 50%;
+
+    }
+    .login-logo{
+        font-size: 4.6em;
+    }
+    .musicText, .compText{
+        font-size: 1.1em;
+    }
+    .tab-top .btn{
+        width: 100%;
     }
 }
 
@@ -269,18 +319,14 @@ footer{
     background: url("/assets/images/pexelsJazz.jpeg");
 }
 .login .card-panel{
-    width: 25%
+    width: 50%
 }
 
-.login-card {
-
-    margin: auto;
-}
 
 @media (max-width: 768px)   {
 
     .login .card-panel, .login-card{
-        width: 50%
+        width: 80%
     }
 
 }
@@ -289,7 +335,10 @@ footer{
     .login .card-panel, .login-card{
         width: 100%
     }
+    .login .background-image{
+        background-position:50% 50%;
 
+    }
 }
 /*Company Signup and Music Signup*/
 .logo-side{
@@ -351,7 +400,7 @@ footer{
 .message .card-panel,
 .success .card-panel,
 .login .card-panel{
-    background-color: rgba(0, 0, 0, 0.68);
+    background-color: rgba(0, 0, 0, 0.40);
     margin: auto;
     position:relative;
     z-index:2;
