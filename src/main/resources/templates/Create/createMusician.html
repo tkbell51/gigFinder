@@ -25,14 +25,15 @@
                                 <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
                                 <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
                                 <div class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</div>
+
                                 <div class="row">
                                     <div class="input-field col s12 m6">
-                                        <input id="username" type="text" th:field="*{username}" />
+                                        <input id="username" type="text" th:field="*{username}" class="validate"/>
                                         <label for="username">Username</label>
                                     </div>
                                     <div class="input-field col s12 m6">
                                         <label for="password">Password</label>
-                                        <input id="password" type="password" th:field="*{password}" />
+                                        <input id="password" type="password" th:field="*{password}" class="validate"/>
 
                                     </div>
 
@@ -41,12 +42,12 @@
                                 <div class="row">
                                     <div class="input-field col s12 m6">
                                         <label for="email">Email</label>
-                                        <input id="email" type="email" th:field="*{email}"/>
+                                        <input id="email" type="email" th:field="*{email}" class="validate"/>
 
                                     </div>
                                     <div class="input-field col s12 m6">
                                         <label for="pNumber">Phone Number</label>
-                                        <input id="pNumber" type="text" th:field="*{phoneNumber}"/>
+                                        <input id="pNumber" type="text" th:field="*{phoneNumber}" class="validate"/>
 
                                     </div>
                                 </div>
@@ -60,12 +61,12 @@
                                 <div class="row">
                                     <div class="input-field col s12 m6">
                                         <label for="firstName">First Name</label>
-                                        <input id="firstName" type="text" th:field="*{firstName}"/>
+                                        <input id="firstName" type="text" th:field="*{firstName}" class="validate"/>
 
                                     </div>
                                     <div class="input-field col s12 m6">
                                         <label for="lastName">Last Name</label>
-                                        <input id="lastName" type="text" th:field="*{lastName}"/>
+                                        <input id="lastName" type="text" th:field="*{lastName}" class="validate"/>
 
                                     </div>
                                 </div>
@@ -76,7 +77,7 @@
 
                                     </div>
                                     <div class="input-field col s6 m6">
-                                        <select th:field="*{musicianState}" id="state" class="validate">
+                                        <select th:field="*{musicianState}" id="state">
                                             <option value="" disabled="disabled" selected="selected">State</option>
                                             <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
                                         </select>

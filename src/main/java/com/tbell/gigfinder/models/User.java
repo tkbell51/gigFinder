@@ -124,8 +124,10 @@ public class User implements UserDetails{
 
     public void setPhoneNumber(String phoneNumber) {
 
-        if(phoneNumber.substring(0,2) != "+1") {
+        if(!phoneNumber.substring(0,2).equals("+1")) {
             this.phoneNumber = "+1" + phoneNumber;
+        } else {
+            this.phoneNumber = phoneNumber;
         }
     }
 

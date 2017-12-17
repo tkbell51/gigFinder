@@ -105,7 +105,9 @@ public class CompanyController {
         model.addAttribute("user", user);
 
             CompanyProfile newComp = compRepo.findById(id);
-            storageService.deleteOne(newComp.getCompanyCoverPic());
+            if(newComp.getCompanyCoverPic()!=null){
+                storageService.deleteOne(newComp.getCompanyCoverPic());
+            }
             String fileName = coverPic.getOriginalFilename();
             newComp.setCompanyCoverPic(fileName);
             compRepo.save(newComp);

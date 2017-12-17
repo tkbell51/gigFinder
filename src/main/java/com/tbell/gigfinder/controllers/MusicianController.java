@@ -151,7 +151,10 @@ public class MusicianController {
         model.addAttribute("user", user);
 
             MusicianProfile newMusician = musicRepo.findById(id);
-            storageService.deleteOne(newMusician.getCoverPicImage());
+            if(newMusician.getCoverPicImage()!=null){
+
+                storageService.deleteOne(newMusician.getCoverPicImage());
+            }
             storageService.store(coverPic);
             String fileName = coverPic.getOriginalFilename();
             newMusician.setCoverPicImage(fileName);

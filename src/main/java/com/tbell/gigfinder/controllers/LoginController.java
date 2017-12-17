@@ -69,7 +69,6 @@ public class LoginController {
                                        @ModelAttribute @Valid CompanyProfile companyProfile,
                                        BindingResult bindingResultCompanyProfile,
                                        Model model){
-
         if(bindingResultUser.hasErrors()){
             return "Create/createCompany";
         }else if(bindingResultCompanyProfile.hasErrors()){
