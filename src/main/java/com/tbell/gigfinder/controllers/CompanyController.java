@@ -2,6 +2,7 @@ package com.tbell.gigfinder.controllers;
 
 
 import com.tbell.gigfinder.Repositories.*;
+import com.tbell.gigfinder.enums.State;
 import com.tbell.gigfinder.models.*;
 import com.tbell.gigfinder.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -75,25 +77,37 @@ public class CompanyController {
         CompanyProfile companyProfile = compRepo.findByUser(user);
         model.addAttribute("companyProfile", companyProfile);
 
+        List<State> stateEnum = Arrays.asList(State.values());
+        model.addAttribute("states", stateEnum);
+
         return "updateProfile";
     }
 
     @PostMapping("/company/update-profile")
-    public String updateCompanyProfile(@ModelAttribute @Valid User user,
-                                       BindingResult bindingResultUser,
-                                       @ModelAttribute @Valid CompanyProfile companyProfile,
-                                       BindingResult bindingResultCompanyProfile,
+    public String updateCompanyProfile(@RequestParam("companyContactFirstName")String firstName,
+                                       @RequestParam("companyContactLastName")String lastName,
+                                       @RequestParam("phoneNumber")String phoneNumber,
+                                       @RequestParam("email") String email,
+                                       @RequestParam("companyName")String companyName,
+                                       @RequestParam("companyCity") String city,
+                                       @RequestParam("companyState") String state,
+
                                        Model model, Principal principal) {
+        User user = userRepo.findByUsername(principal.getName());
+        model.addAttribute("user", user);
 
-        if(bindingResultUser.hasErrors()){
-            return "updateProfile";
-        }else if(bindingResultCompanyProfile.hasErrors()){
-            return "updateProfile";
-        }
-
+        user.setPhoneNumber(phoneNumber);
+        user.setEmail(email);
         userRepo.save(user);
-        compRepo.save(companyProfile);
 
+        CompanyProfile companyProfile = compRepo.findByUser(user);
+        companyProfile.setCompanyName(companyName);
+        companyProfile.setCompanyContactFirstName(firstName);
+        companyProfile.setCompanyContactLastName(lastName);
+        companyProfile.setCompanyCity(city);
+        companyProfile.setCompanyState(state);
+        companyProfile.setCompanyLocation(city + ", " + state);
+        compRepo.save(companyProfile);
         return "redirect:/company/my-profile";
     }
 

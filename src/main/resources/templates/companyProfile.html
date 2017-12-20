@@ -4,20 +4,10 @@
 <head th:include="fragments/includes :: indexHead"></head>
 <body class="grey lighten-1" th:inline="text">
     <main >
-        <section class="blue darken-2 profileBanner" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${companyProfile.companyCoverPic}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
+        <section class="indigo darken-4 profileBanner" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${companyProfile.companyCoverPic}}+'); background-size: cover; background-repeat: no-repeat; background-position: center;'">
             <div th:include="fragments/navbar :: navHome"></div>
             <a href="#coverCompanyPic" class="modal-trigger tooltipped" data-position="right" data-delay="50" data-tooltip="Update Cover Image"><i class="coverBanner text-accent-4 material-icons">camera_alt</i></a>
-            <div class="hide-on-med-and-down">
-                <div class="details-row white-text">
-                    <div class="row">
-                        <div class="col s6 offset-s5">
-                            <h3>[[${companyProfile.companyContactFirstName}]] [[${companyProfile.companyContactLastName}]] -- <span><small>[[${companyProfile.companyName}]]</small></span></h3>
 
-                        </div>
-                    </div>
-
-                </div>
-            </div>
 
 
             <div class="show-on-medium-and-down hide-on-large-only">
@@ -51,13 +41,22 @@
                                 </div>
                             </div>
                             <div class="profInfo white">
+
                                 <section >
                                     <div class="section">
-                                        <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">account_circle</i> [[${user.username}]]</p>
-                                        <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">location_on</i> [[${companyProfile.companyLocation}]]</p>
+                                        <h5 class="valign-wrapper">
+                                            <i class="orange-text text-accent-4 material-icons">account_circle</i>
+                                            <b>[[${companyProfile.companyContactFirstName}]] [[${companyProfile.companyContactLastName}]]</b>
+                                        </h5>
+
 
                                     </div>
-
+                                    <div class="divider"></div>
+                                    <div class="section">
+                                        <p class="valign-wrapper"><i
+                                                class="orange-text text-accent-4 material-icons">business_center</i>[[${companyProfile.companyName}]]</p>
+                                        <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">location_on</i> [[${companyProfile.companyLocation}]]</p>
+                                    </div>
                                     <div class="divider"></div>
                                     <div class="section">
                                         <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">email</i> [[${user.email}]]</p>
@@ -173,7 +172,7 @@
                                         <h5>No gigFinder Musicians are in your area</h5>
                                     </div>
                                 </div>
-                                <div class="findBand">
+                                <div class="findBand container">
                                     <div class="row">
                                         <div  th:each="musician : ${musician}" >
                                             <div class="col s4 m4 l4  center-align ">
@@ -209,10 +208,10 @@
                 <div class="row">
                     <div class="col s12">
                         <ul class="tabs tabs-fixed-width z-depth-4">
-                            <li class="tab "><a class="active" href="#tab-bio"><i class="orange-text text-accent-4 material-icons">account_circle</i></a></li>
-                            <li class="tab"><a href="#tab-gigs"><i class="orange-text text-accent-4 material-icons">event</i></a></li>
-                            <li class="tab"><a href="#tab-hiredEvents"><i class="orange-text text-accent-4 material-icons">event_available</i></a></li>
-                            <li class="tab"><a href="#tab-areaMusicians"><i class="orange-text text-accent-4 material-icons">place</i></a></li>
+                            <li class="tab "><a class="active" href="#tab-bio"><i class=" material-icons">account_circle</i></a></li>
+                            <li class="tab"><a href="#tab-gigs"><i class=" material-icons">event</i></a></li>
+                            <li class="tab"><a href="#tab-hiredEvents"><i class=" material-icons">event_available</i></a></li>
+                            <li class="tab"><a href="#tab-areaMusicians"><i class=" material-icons">place</i></a></li>
                         </ul>
                     </div>
                     <div id="tab-bio" class="col s12 container">

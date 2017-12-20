@@ -86,22 +86,40 @@ public class MusicianController {
         MusicianProfile musicianProfile = musicRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
 
+        List<State> stateEnum = Arrays.asList(State.values());
+        model.addAttribute("states", stateEnum);
+
+        List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
+        model.addAttribute("instruments", instrumentEnums);
+
+
         return "updateProfile";
     }
     @PostMapping("/musician/update-profile")
-    public String musicianProfileUpdate(@ModelAttribute @Valid User user,
-                                        BindingResult bindingResultUser,
-                                        @ModelAttribute @Valid MusicianProfile musicianProfile,
-                                        BindingResult bindingResultMusicianProfile,
-                                        Model model, Principal principal){
-        if(bindingResultUser.hasErrors()){
-            return "updateProfile";
-        }else if(bindingResultMusicianProfile.hasErrors()){
-            return "updateProfile";
-        }
+    public String musicianProfileUpdate(@RequestParam("phoneNumber")String phoneNumber,
+                                        @RequestParam("email")String email,
+                                        @RequestParam("firstName")String firstName,
+                                        @RequestParam("lastName")String lastName,
+                                        @RequestParam("musicianInstruments")String instruments,
+                                        @RequestParam("musicianCity") String city,
+                                        @RequestParam("musicianState") String state,
+                                        @RequestParam("bio")String bio,
+                                        Model model, Principal principal) throws Exception {
+        User user = userRepo.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
         userRepo.save(user);
-        musicRepo.save(musicianProfile);
 
+        MusicianProfile musicianProfile = musicRepo.findByUser(user);
+        musicianProfile.setFirstName(firstName);
+        musicianProfile.setLastName(lastName);
+        musicianProfile.setMusicianInstruments(instruments);
+        musicianProfile.setMusicianCity(city);
+        musicianProfile.setMusicianState(state);
+        musicianProfile.setLocation(city + ", " + state);
+        musicianProfile.setBio(bio);
+        musicRepo.save(musicianProfile);
         return "redirect:/musician/my-profile";
     }
 

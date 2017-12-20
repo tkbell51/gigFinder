@@ -87,7 +87,7 @@ public class GigController {
         model.addAttribute("user", user);
 
         CompanyProfile compUser = compRepo.findByUser(user);
-        model.addAttribute("compUser", compUser);
+        model.addAttribute("companyProfile", compUser);
 
         newGig.setCompanyProfile(compUser);
         newGig.setGigLocation(newGig.getGigStreet() + ", " + newGig.getGigCity() + ", " + newGig.getGigState() + ", " + newGig.getGigZip());
@@ -97,8 +97,8 @@ public class GigController {
         newGig.setGigArt(fileName);
 
         gigRepo.save(newGig);
-
-        return "redirect:/results";
+        model.addAttribute("gig", newGig);
+        return "gigResults";
     }
 
     @GetMapping("/gig/{gigId}")
@@ -147,29 +147,56 @@ public class GigController {
         model.addAttribute("user", user);
 
         CompanyProfile compUser = compRepo.findByUser(user);
-        model.addAttribute("compUser", compUser);
+        model.addAttribute("companyProfile", compUser);
 
         Gig gig = gigRepo.findById(id);
         model.addAttribute("gig", gig);
-        return "Create/createGig";
+
+        List<State> stateEnums = Arrays.asList(State.values());
+        model.addAttribute("states", stateEnums);
+
+        List<GigTypes> gigEnums = Arrays.asList(GigTypes.values());
+        model.addAttribute("gigTypes", gigEnums);
+
+        return "updateGig";
     }
 
     @PostMapping("/company/gig/{gigId}/update")
     public String updateGig(@PathVariable("gigId") long id,
-                            @ModelAttribute @Valid Gig newGig,
-                            BindingResult result,
-                            @RequestParam("gigImage")MultipartFile gigArt,
+                            @RequestParam("gigStreet")String street,
+                            @RequestParam("gigCity") String city,
+                            @RequestParam("gigState") String state,
+                            @RequestParam("gigZip") String zip,
+                            @RequestParam("gigType")String type,
+                            @RequestParam("gigStart") Date start,
+                            @RequestParam("timeStart") String timeStart,
+                            @RequestParam("gigEnd")Date end,
+                            @RequestParam("timeEnd") String timeEnd,
+                            @RequestParam("gigTitle")String gigTitle,
+                            @RequestParam("gigDescription") String description,
+                            @RequestParam("gigImage") MultipartFile gigArt,
                             Model model, Principal principal){
 
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
 
         CompanyProfile compUser = compRepo.findByUser(user);
-        model.addAttribute("compUser", compUser);
+        model.addAttribute("companyProfile", compUser);
 
-        if(result.hasErrors()){
-            return "Create/createGig";
-        }
+        Gig newGig = gigRepo.findById(id);
+        newGig.setGigStreet(street);
+        newGig.setGigCity(city);
+        newGig.setGigState(state);
+        newGig.setGigZip(zip);
+        newGig.setGigLocation(street + ", " + city + ", " + state + ", " + zip);
+        newGig.setGigTitle(gigTitle);
+        newGig.setGigDescription(description);
+        newGig.setGigType(type);
+        newGig.setGigEnd(end);
+        newGig.setTimeEnd(timeEnd);
+        newGig.setGigStart(start);
+        newGig.setTimeStart(timeStart);
+
 
         String fileName = gigArt.getOriginalFilename();
         if(newGig.getGigArt().equals("no-image-thumbnail.jpg") ){

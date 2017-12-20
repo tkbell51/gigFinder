@@ -20,16 +20,16 @@ public class Gig {
     @Column(name = "gig_title")
     private String gigTitle;
 
-    @NotEmpty
+    @NotEmpty(message = "Street Name may not be empty")
     private String gigStreet;
 
-    @NotEmpty
+    @NotEmpty(message = "City may not be empty")
     private String gigCity;
 
-    @NotEmpty
+    @NotEmpty(message = "State may not be empty")
     private String gigState;
 
-    @NotEmpty
+    @NotEmpty(message = "Zip Code may not be empty")
     private String gigZip;
 
     @Column(name = "gig_location")
@@ -39,20 +39,20 @@ public class Gig {
     @Column(name = "gig_type")
     private String gigType;
 
-    @NotEmpty(message = "Time must not be empty")
+    @NotNull(message = "Start Date must not be empty")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "gig_start")
     private Date gigStart;
 
-    @NotEmpty(message = "Time must not be empty")
+    @NotEmpty(message = "Start Time must not be empty")
     @Column(name = "gig_time_start")
     private String timeStart;
 
-    @NotEmpty(message = "Time must not be empty")
+    @NotNull(message = "End Date must not be empty")
     @Column(name = "gig_end")
     private Date gigEnd;
 
-    @NotEmpty(message = "Time must not be empty")
+    @NotEmpty(message = "End Time must not be empty")
     @Column(name = "gig_time_end")
     private String timeEnd;
 
@@ -170,7 +170,7 @@ public class Gig {
     }
 
     public void setGigArt(String gigArt) {
-        this.gigArt = gigArt;
+        this.gigArt = gigArt.replaceAll("\\s+","+");
     }
 
 

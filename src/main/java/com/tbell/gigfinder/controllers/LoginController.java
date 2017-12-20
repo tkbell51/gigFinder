@@ -91,7 +91,7 @@ public class LoginController {
         model.addAttribute("message", "Thank you for joining! Please login");
         model.addAttribute("user", user);
         model.addAttribute("companyProfile", companyProfile);
-        return "results";
+        return "userResults";
     }
 
 
@@ -136,7 +136,7 @@ public class LoginController {
         model.addAttribute("message", "Thank you for joining! Please login");
         model.addAttribute("user", user);
         model.addAttribute("musicianProfile", musicianProfile);
-        return "results";
+        return "userResults";
     }
 
 

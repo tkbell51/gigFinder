@@ -7,6 +7,7 @@ body {
     flex-direction: column;
 }
 
+
 main {
     flex: 1 0 auto;
 }
@@ -14,13 +15,16 @@ main {
     color: red;
     margin: 20px 0px;
     text-align: center;
+    font-weight: bold;
 }
 
-.gradient-background{
+.gradient-background
+{
     background: #23074d;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to left, #D13218, #23074d);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #D13218, #23074d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
 .input-field{
     margin-top: 0px;
 }
@@ -130,18 +134,7 @@ nav, footer{
 .background img{
     max-width: 100%;
 }
-.tabs .indicator {
-    text-decoration: none;
-    background-color: #FD6D22 !important;
-}
 
-.tabs .tab a{
-    color: #FD6D22;
-}
-.tabs-fixed-width i {
-    font-size: 2.6rem;
-    margin-top: 5px;
-}
 
 .navAvatar{
     border: 1px solid #FD6D22;
@@ -183,7 +176,7 @@ footer{
     border-radius: 30px;
     padding: 5px 20px;
     display: inline;
-    font-size: 2em;
+    font-size: 1.5em;
     border: 1px solid #FD6D22;
     border: 1px solid rgba(211, 211, 211, 0.2);
     color: rgba(253, 109, 34, 0.4);
@@ -442,25 +435,16 @@ footer{
 }
 
 .profileBanner {
-    height: 400px;
+    height: 550px;
     position: relative;
 }
 
-.profileBanner .details-row {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    padding-left: 0px;
 
-}
-.profileBanner .details-row h3{
-    line-height: 60%;
-}
 .tab-profile{
     display: flex;
     flex-flow: column nowrap;
     align-items:center;
-    margin-top: 40px;
+    margin-top:100px;
 }
 .tab-profile h4, .tab-profile h5{
     margin-top: 0;
@@ -477,7 +461,7 @@ small{
 }
 .profCol{
     position: relative;
-    bottom: 275px;
+    bottom: 400px;
     width: 300px;
 
 }
@@ -554,13 +538,33 @@ small{
     margin-left: 0px;
 }
 .tab-profile .middle{
-    top: 60%;
+    top: 50%;
 }
 .profile-content{
     margin-right: 10px;
+    position: relative;
+    bottom: 48px;
 }
 .tabs{
-    margin: 15px auto;
+    margin: 0;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.24);
+}
+.tabs .indicator {
+    text-decoration: none;
+    background-color: #FD6D22 !important;
+}
+
+.tabs .tab a{
+    color: #FFF;
+}
+.tabs .tab a.active,
+.tabs .tab a:hover{
+    color: #FD6D22;
+}
+.tabs-fixed-width i {
+    font-size: 2.6rem;
+    margin-top: 5px;
 }
 #tab-bio{
     font-size: 1.3em;
@@ -771,18 +775,12 @@ height: 60px;
 }
 /*Gig Details Page*/
 
-.gigDetails{
-    display: flex;
-    justify-content:center;
-    align-items: center;
-}
-.gigDetails .background-image{
-    position: fixed;
+#gig-page .blur{
+    width: 100%;
+    height: 100%;
+    position: absolute;
     left: 0;
     right: 0;
-    z-index: 1;
-    height: 800px;
-    display: block;
 
     -webkit-filter: blur(5px);
     -moz-filter: blur(5px);
@@ -790,33 +788,35 @@ height: 60px;
     -ms-filter: blur(5px);
     filter: blur(5px);
 }
-.gigNav{
-    position: relative;
+#gig-page nav{
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 60;
 }
+
 .gig{
     position: relative;
     left: 0;
     right: 0;
+    bottom: 350px;
     z-index: 50;
+    border: 1px solid lightgray;
 }
 .gig-info{
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
 }
-.gig-left{
-    flex: 1 1 75%;
 
-}
 .gig-map, .gigDescript{
     flex: 1 1 50%;
 }
 
 
-.gig-image, .gig-map, .gigDescript{
-    height: 30vh;
+.gig-image, .time-description, .gig-map{
+    height: 350px;
 }
 .gig-image{
-    flex: 1 1 100%;
     display: flex;
     align-items:flex-end;
 }
@@ -831,30 +831,22 @@ height: 60px;
     flex-flow: row nowrap;
 }
 .gigDescript{
-    padding: 10px;
-}
-.gigDescript .section{
-    padding: 0px
-}
-.hire-right{
-    flex: 1 1 25%;
+    padding: 2%;
     display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-    height:60vh;
+    flex-flow: column nowrap;
+    justify-content: space-between;
 }
+
 .appliedNum{
-    font-size: 1.2em;
+    font-size: 2em;
 }
 .bandApplied{
     width: 100%;
-    height: 11vh;
+    height: 150px;
 }
 .hireBtn{
     background: #FD6D22;
     color: #FFF;
-    padding: 3% 6%;
     text-align: center;
 }
 .hireBtn:hover{
@@ -872,9 +864,12 @@ height: 60px;
 .time-description .row .col, .gig .row .col{
     padding: 0;
 }
-@media (max-width: 768px)   {
+@media (max-width: 425px)   {
     .gig-info, .time-description{
         flex-flow: column nowrap;
+    }
+    .time-description{
+        height: 700px;
     }
     .gig-left,
     .gig-map,

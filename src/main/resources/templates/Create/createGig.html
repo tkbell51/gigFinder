@@ -48,17 +48,17 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <label for="location">Street</label>
-                                    <input id="location" type="text" th:field="*{gigStreet}" class="autocomplete" class="validate"/>
+                                    <input id="location" type="text" th:field="*{gigStreet}" class="autocomplete validate"/>
 
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="input-field col s6">
+                                <div class="input-field col s5">
                                     <input id="city" type="text" th:field="*{gigCity}" class="validate"/>
                                     <label for="city">City</label>
 
                                 </div>
-                                <div class="input-field col s3">
+                                <div class="input-field col s5">
                                     <select th:field="*{gigState}" id="state">
                                         <option value="" disabled="disabled" selected="selected">State</option>
                                         <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
@@ -66,7 +66,7 @@
 
                                 </div>
 
-                                <div class="input-field col s3">
+                                <div class="input-field col s2">
                                     <input id="zip" type="text" th:field="*{gigZip}" maxlength="5" minlength="5" class="validate"/>
                                     <label for="zip">Zip Code</label>
                                 </div>
@@ -84,11 +84,11 @@
                             <div class="row">
                                 <div class="input-field col s6">
                                     <label for="start">Start</label>
-                                    <input id="start" type="date" class="datepicker" th:field="*{gigStart}" class="validate"/>
+                                    <input id="start" type="date" class="datepicker validate" th:field="*{gigStart}" />
 
                                 </div>
                                 <div class="input-field col s6">
-                                    <input id="timeStart" type="text" class="timepicker" th:field="*{timeStart}" class="validate"/>
+                                    <input id="timeStart" type="text" class="timepicker validate" th:field="*{timeStart}"/>
                                     <label for="timeStart">Start Time</label>
 
                                 </div>
@@ -96,11 +96,11 @@
                             <div class="row">
                                 <div class="input-field col s6">
                                     <label for="end">End</label>
-                                    <input id="end" type="date" class="datepicker" th:field="*{gigEnd}" class="validate"/>
+                                    <input id="end" type="date" class="datepicker validate" th:field="*{gigEnd}" />
 
                                 </div>
                                 <div class="input-field col s6">
-                                    <input id="timeEnd" type="text" class="timepicker" th:field="*{timeEnd}" class="validate"/>
+                                    <input id="timeEnd" type="text" class="timepicker validate" th:field="*{timeEnd}" />
                                     <label for="timeEnd">End Time</label>
 
                                 </div>
@@ -112,7 +112,7 @@
                                         <input type="file" name="gigImage"/>
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text" placeholder="Upload Gig Image" class="validate"/>
+                                        <input class="file-path validate" type="text" placeholder="Upload Gig Image"/>
                                     </div>
                                 </div>
                             </div>

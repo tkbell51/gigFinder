@@ -21,9 +21,6 @@
 
                 <div sec:authorize="hasRole('ROLE_COMPANY')">
                     <form th:action="'/company/update-profile/'"  method="post" enctype="multipart/form-data">
-                        <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
-                        <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</span>
-
 
                         <div th:object="${user}">
                             <div class="row">
@@ -41,11 +38,6 @@
                         </div>
 
                         <div th:object="${companyProfile}">
-                            <span class="error" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">Company Name Error</span>
-                            <span class="error" th:if="${#fields.hasErrors('companyContactFirstName')}" th:errors="*{companyContactFirstName}">First Name Error</span>
-                            <span class="error" th:if="${#fields.hasErrors('companyContactLastName')}" th:errors="*{companyContactLastName}">Last Name Error</span>
-                            <span class="error" th:if="${#fields.hasErrors('companyCity')}" th:errors="*{companyCity}">City Error</span>
-                            <span class="error" th:if="${#fields.hasErrors('companyState')}" th:errors="*{companyState}">State Error</span>
                             <div class="row">
                                 <div class="input-field col s12">
                                     <label for="nameComp">Company Name</label>
@@ -88,8 +80,6 @@
                 <div sec:authorize="hasRole('ROLE_MUSICIAN')">
                     <form th:action="'/musician/update-profile/'"  method="post">
                         <div th:object="${user}">
-                            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
-                            <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</span>
                             <div class="row">
                                 <div class="input-field col s12 m6">
                                     <label for="email"> Email</label>
@@ -105,13 +95,6 @@
                             </div>
                         </div>
                         <div th:object="${musicianProfile}">
-                            <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</span>
-                            <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
-                            <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span>
-                            <div class="error" th:if="${#fields.hasErrors('musicianCity')}" th:errors="*{musicianCity}">City Error</div>
-                            <div class="error" th:if="${#fields.hasErrors('musicianState')}" th:errors="*{musicianState}">State Error</div>
-                            <div class="error" th:if="${#fields.hasErrors('musicianInstruments')}" th:errors="*{musicianInstruments}">Musician Instruments Error</div>
-
                             <div class="row">
                                 <div class="input-field col s12 m6">
                                     <label for="firstName">First Name</label>

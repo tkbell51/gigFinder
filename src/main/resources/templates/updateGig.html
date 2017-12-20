@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="fragments/includes :: indexHead"></head>
+<body class="gradient-background" th:inline="text">
+<div th:include="fragments/navbar :: navHome"></div>
+
+<main class="compSignup gigCreate">
+    <div class="background-image hide-on-med-and-down"></div>
+
+    <div class="card-panel container">
+        <div class="row">
+            <div class="col s12 m6 center-align ">
+                <div class="logoSide">
+                    <h1 class="login-logo"> <a href="/" >gigFinder</a></h1>
+                    <h5 class="white-text"> Create Gig</h5>
+                </div>
+
+            </div>
+            <div class="col s12 m6 white compForm">
+                <form th:action="'/company/gig/' +@{${gig.id}} + '/update'" method="post" th:object="${gig}" enctype="multipart/form-data">
+
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="title">Title</label>
+                            <input id="title" type="text" th:field="*{gigTitle}" data-length="40" class="validate"/>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="description">Description</label>
+                            <input id="description" type="text" th:field="*{gigDescription}" data-length="140" class="validate"/>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="location">Street</label>
+                            <input id="location" type="text" th:field="*{gigStreet}" class="autocomplete validate"/>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <input id="city" type="text" th:field="*{gigCity}" class="validate"/>
+                            <label for="city">City</label>
+
+                        </div>
+                        <div class="input-field col s5">
+                            <select th:field="*{gigState}" id="state">
+                                <option value="" disabled="disabled" selected="selected">State</option>
+                                <option th:each="states : ${states}" th:value="${states.abbreviation}">[[${states.name}]] - [[${states.abbreviation}]]</option>
+                            </select>
+
+                        </div>
+
+                        <div class="input-field col s2">
+                            <input id="zip" type="text" th:field="*{gigZip}" maxlength="5" minlength="5" class="validate"/>
+                            <label for="zip">Zip Code</label>
+                        </div>
+
+                    </div>
+
+                    <div class="input-field col s12">
+                        <select th:field="*{gigType}" id="type">
+                            <option value="" disabled="disabled" selected="selected">Type of Gig</option>
+                            <option th:each="gigType : ${gigTypes}" th:value="${gigType.type}">[[${gigType.type}]]</option>
+                        </select>
+                        <label for="type">Type of Gig</label>
+
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="start">Start</label>
+                            <input id="start" type="date" class="datepicker validate" th:field="*{gigStart}" />
+
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="timeStart" type="text" class="timepicker validate" th:field="*{timeStart}"/>
+                            <label for="timeStart">Start Time</label>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="end">End</label>
+                            <input id="end" type="date" class="datepicker validate" th:field="*{gigEnd}" />
+
+                        </div>
+                        <div class="input-field col s6">
+                            <input id="timeEnd" type="text" class="timepicker validate" th:field="*{timeEnd}" />
+                            <label for="timeEnd">End Time</label>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>File</span>
+                                <input type="file" name="gigImage"/>
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Upload Gig Image"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="waves-effect waves-light btn" type="submit" >Create Gig</button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</main>
+<div th:include="fragments/footer :: footer"></div>
+
+<span th:include="fragments/includes :: js"></span>
+</body>
+</html>
