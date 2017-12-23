@@ -15,16 +15,20 @@ import java.util.List;
 @Repository
 public interface GigRepository extends CrudRepository<Gig, Long> {
 
-    List<Gig> findByCompanyProfile (CompanyProfile companyProfile);
+    List<Gig> findByCompanyProfileOrderByGigStartAsc (CompanyProfile companyProfile);
 
-    Iterable<Gig> findByGigLocationContaining(String location);
+    Iterable<Gig> findByGigLocationOrderByGigStartAsc(String location);
+
 
     Gig findById(long id);
 
-    Iterable<Gig> findByGigLocationContainingIgnoreCase(String location);
 
 
-    Iterable<Gig> findByGigTypeContainingIgnoreCase(String type);
+    Iterable<Gig> findByGigTypeContainingIgnoreCaseOrderByGigStartAsc(String type);
+
+    Iterable<Gig> findAllByOrderByGigStartAsc();
+
+    Iterable<Gig> findByGigLocationContainingIgnoreCaseOrderByGigStartAsc(String location);
 
 //    @Modifying
 //    @Transactional

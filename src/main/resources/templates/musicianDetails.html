@@ -105,8 +105,8 @@
                                         <div  class="gigCard hoverable">
                                             <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 200px;'">
                                                 <div class="dateBox    center-align">
-                                                    <p class="date">[[${#dates.format(applied.gig.gigStart,'d')}]]</p>
-                                                    <p class="month">[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>
+                                                    <p class="date">[[${#dates.format(hired.gig.gigStart,'d')}]]</p>
+                                                    <p class="month">[[${#dates.format(hired.gig.gigStart,'MMMM')}]]</p>
                                                 </div>
                                                 <a class="goBtn right waves-effect waves-light btn-floating " th:href="'/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
 

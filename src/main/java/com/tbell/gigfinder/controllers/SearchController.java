@@ -11,9 +11,7 @@ import com.tbell.gigfinder.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Arrays;
@@ -36,7 +34,7 @@ public class SearchController {
 
 
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    @GetMapping("/search")
     public String searchPageCompany(Principal principal, Model model){
         User user = userRepo.findByUsername(principal.getName());
         model.addAttribute("user", user);
@@ -56,7 +54,7 @@ public class SearchController {
     }
 
     //Company Search for musician
-    @RequestMapping(value = "/searchMusician", method = RequestMethod.POST)
+    @PostMapping("/searchMusician")
     public String searchMusician(@RequestParam("search") String search,
                                  Model model, Principal principal){
         User user = userRepo.findByUsername(principal.getName());
@@ -74,7 +72,7 @@ public class SearchController {
 
     }
 
-    @RequestMapping(value = "/searchInstrument", method = RequestMethod.POST)
+    @PostMapping("/searchInstrument")
     public String searchByInstrument(@RequestParam("instrument") String instrument,
                                     Model model, Principal principal) {
         User user = userRepo.findByUsername(principal.getName());
@@ -95,7 +93,7 @@ public class SearchController {
 
 
 
-    @RequestMapping(value = "/searchGigLocation", method = RequestMethod.POST)
+    @PostMapping("/searchGigLocation")
     public String searchGigLocation(@RequestParam("location")String location,
                                     Model model, Principal principal) {
         User user = userRepo.findByUsername(principal.getName());
@@ -104,7 +102,7 @@ public class SearchController {
         MusicianProfile musicianProfile = musicianRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
 
-        Iterable<Gig> searchGig = gigRepo.findByGigLocationContainingIgnoreCase(location);
+        Iterable<Gig> searchGig = gigRepo.findByGigLocationContainingIgnoreCaseOrderByGigStartAsc(location);
         model.addAttribute("gig", searchGig);
 
         List<GigTypes> gigEnums = Arrays.asList(GigTypes.values());
@@ -113,7 +111,7 @@ public class SearchController {
 
     }
 
-    @RequestMapping(value = "/searchGigType", method = RequestMethod.POST)
+    @PostMapping("/searchGigType")
     public String searchGigType(@RequestParam("type")String type,
                                 Model model, Principal principal) {
         User user = userRepo.findByUsername(principal.getName());
@@ -122,7 +120,7 @@ public class SearchController {
         MusicianProfile musicianProfile = musicianRepo.findByUser(user);
         model.addAttribute("musicianProfile", musicianProfile);
 
-        Iterable<Gig> searchGig = gigRepo.findByGigTypeContainingIgnoreCase(type);
+        Iterable<Gig> searchGig = gigRepo.findByGigTypeContainingIgnoreCaseOrderByGigStartAsc(type);
         model.addAttribute("gig", searchGig);
 
         List<GigTypes> gigEnums = Arrays.asList(GigTypes.values());

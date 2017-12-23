@@ -93,7 +93,7 @@ public class HomeController {
             model.addAttribute("musicianProfile", musicianProfile);
 
 
-        Iterable<Gig> allgigs = gigRepo.findAll();
+        Iterable<Gig> allgigs = gigRepo.findAllByOrderByGigStartAsc();
         model.addAttribute("gig", allgigs);
         return "Search/findGigs";
     }
@@ -117,7 +117,7 @@ public class HomeController {
         Iterable<MediaContent> media = mediaRepo.findByMusicianProfile(musicianDetail);
         model.addAttribute("media", media);
 
-        Iterable<MusicianApplyGig> hiredGigs = applyRepo.findAllByMusicianProfileAndHired(musicianDetail, true);
+        Iterable<MusicianApplyGig> hiredGigs = applyRepo.findAllByMusicianProfileAndHiredOrderByDateAppliedAsc(musicianDetail, true);
         model.addAttribute("hired", hiredGigs);
         return "musicianDetails";
     }

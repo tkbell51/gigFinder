@@ -116,10 +116,10 @@ public class GigController {
         Gig gig = gigRepo.findOne(id);
         model.addAttribute("gig", gig);
 
-        Iterable<MusicianApplyGig> applyGig = applyRepo.findAllByGigId(id);
+        Iterable<MusicianApplyGig> applyGig = applyRepo.findAllByGigIdOrderByDateAppliedAsc(id);
         model.addAttribute("applied", applyGig);
 
-        Iterable<MusicianApplyGig> hired = applyRepo.findByGigAndHired(gig, true);
+        Iterable<MusicianApplyGig> hired = applyRepo.findByGigAndHiredOrderByDateAppliedAsc(gig, true);
         model.addAttribute("hired", hired);
 
         Iterable<State> stateEnum = Arrays.asList(State.values());
@@ -260,7 +260,7 @@ public class GigController {
         SimpleDateFormat dt1 = new SimpleDateFormat("EEE, MMM d, ''yy");
         model.addAttribute("message", "Congratulations!\n" + musicianHired.getFirstName() + " " + musicianHired.getLastName() + "\nis hired for the gig\n" + gigApply.getGigTitle() + "\non " + dt1.format(gigApply.getGigStart()));
 
-        Iterable<MusicianApplyGig> gig = applyRepo.findAllByGig(gigApply);
+        Iterable<MusicianApplyGig> gig = applyRepo.findAllByGigOrderByDateAppliedAsc(gigApply);
 
         Gig gigA = null;
         MusicianProfile mp1 = null;
@@ -326,7 +326,7 @@ public class GigController {
 
         Gig gigApply = gigRepo.findById(gigId);
 
-        Iterable<MusicianApplyGig> allApplied = applyRepo.findAllByGigAndMusicianProfile(gigApply, musicianProfile);
+        Iterable<MusicianApplyGig> allApplied = applyRepo.findAllByGigAndMusicianProfileOrderByDateAppliedAsc(gigApply, musicianProfile);
         Gig gigA = null;
         MusicianProfile mp1 = null;
         for(MusicianApplyGig eachApplied : allApplied){

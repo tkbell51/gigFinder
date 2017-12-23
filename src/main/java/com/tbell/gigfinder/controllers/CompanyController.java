@@ -52,13 +52,13 @@ public class CompanyController {
         model.addAttribute("companyProfile", companyProfile);
 
 
-        Iterable<Gig> myGigs = gigRepo.findByCompanyProfile(companyProfile);
+        Iterable<Gig> myGigs = gigRepo.findByCompanyProfileOrderByGigStartAsc(companyProfile);
         model.addAttribute("gig", myGigs);
 
         for(Gig eachGig : myGigs){
-            List<MusicianApplyGig> applyGig = applyRepo.findAllByGig(eachGig);
+            List<MusicianApplyGig> applyGig = applyRepo.findAllByGigOrderByDateAppliedAsc(eachGig);
             model.addAttribute("applied", applyGig);
-            Iterable<MusicianApplyGig> hiredGig = applyRepo.findByGigAndHired(eachGig, true);
+            Iterable<MusicianApplyGig> hiredGig = applyRepo.findByGigAndHiredOrderByDateAppliedAsc(eachGig, true);
             model.addAttribute("hired", hiredGig);
         }
 

@@ -11,20 +11,21 @@ public interface MusicianApplyGigRepository extends CrudRepository<MusicianApply
 
 
 
-    List<MusicianApplyGig> findAllByGigId(long id);
+    List<MusicianApplyGig> findAllByGigIdOrderByDateAppliedAsc(long id);
 
 
-    List<MusicianApplyGig> findAllByGig(Gig eachGig);
+    List<MusicianApplyGig> findAllByGigOrderByDateAppliedAsc(Gig eachGig);
 
 
-    Iterable<MusicianApplyGig> findAllByGigAndMusicianProfile(Gig gig, MusicianProfile musicianProfile);
+    Iterable<MusicianApplyGig> findAllByGigAndMusicianProfileOrderByDateAppliedAsc(Gig gig, MusicianProfile musicianProfile);
 
 
-    Iterable<MusicianApplyGig> findAllByMusicianProfile(MusicianProfile musicianProfile);
+    Iterable<MusicianApplyGig> findAllByMusicianProfileOrderByDateAppliedAsc(MusicianProfile musicianProfile);
 
     MusicianApplyGig findByGigAndMusicianProfile(Gig gigApply, MusicianProfile musicianHired);
 
-    Iterable<MusicianApplyGig> findAllByMusicianProfileAndHired(MusicianProfile musicianProfile, Boolean hired);
+    Iterable<MusicianApplyGig> findAllByMusicianProfileAndHiredOrderByDateAppliedAsc(MusicianProfile musicianProfile, Boolean hired);
 
-    Iterable<MusicianApplyGig> findByGigAndHired(Gig gig, Boolean hired);
+    Iterable<MusicianApplyGig> findByGigAndHiredOrderByDateAppliedAsc(Gig gig, Boolean hired);
+
 }

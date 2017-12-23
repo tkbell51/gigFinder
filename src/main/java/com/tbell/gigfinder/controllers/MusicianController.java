@@ -61,13 +61,13 @@ public class MusicianController {
         Iterable<MediaContent> mediaContents = mediaRepo.findByMusicianProfile(musicianProfile);
         model.addAttribute("media", mediaContents);
 
-        Iterable<Gig>localGigs = gigRepo.findByGigLocationContaining(musicianProfile.getLocation());
+        Iterable<Gig>localGigs = gigRepo.findByGigLocationOrderByGigStartAsc(musicianProfile.getLocation());
         model.addAttribute("gig", localGigs);
 
-        Iterable<MusicianApplyGig> myAppliedGigs = applyRepo.findAllByMusicianProfile(musicianProfile);
+        Iterable<MusicianApplyGig> myAppliedGigs = applyRepo.findAllByMusicianProfileOrderByDateAppliedAsc(musicianProfile);
         model.addAttribute("applied", myAppliedGigs);
 
-        Iterable<MusicianApplyGig> hiredGigs = applyRepo.findAllByMusicianProfileAndHired(musicianProfile, true);
+        Iterable<MusicianApplyGig> hiredGigs = applyRepo.findAllByMusicianProfileAndHiredOrderByDateAppliedAsc(musicianProfile, true);
         model.addAttribute("hired", hiredGigs);
 
         List<Instruments> instrumentEnums = Arrays.asList(Instruments.values());
