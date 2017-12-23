@@ -30,20 +30,20 @@
                             <div class="profInfo white">
                                 <section >
                                     <div class="section">
-                                        <h5 class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">account_circle</i> <b>[[${musicianDetail.firstName}]] [[${musicianDetail.lastName}]]</b></h5>
-                                        <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">location_on</i> [[${musicianDetail.location}]]</p>
+                                        <h5 class="valign-wrapper"><i class="material-icons">account_circle</i> <b>[[${musicianDetail.firstName}]] [[${musicianDetail.lastName}]]</b></h5>
+                                        <p class="valign-wrapper"><i class=" material-icons">location_on</i> [[${musicianDetail.location}]]</p>
 
                                     </div>
                                     <div class="divider"></div>
                                     <div class="section">
-                                        <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianDetail.musicianInstruments}]]</p>
+                                        <p class="valign-wrapper"><i class=" material-icons">star</i> [[${musicianDetail.musicianInstruments}]]</p>
 
                                     </div>
 
                                     <div class="divider"></div>
                                     <div class="section">
-                                        <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianDetail.user.email}]] </p>
-                                        <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianDetail.user.phoneNumber}]]</p>
+                                        <p class="valign-wrapper"><i class=" material-icons">email</i> [[${musicianDetail.user.email}]] </p>
+                                        <p class="valign-wrapper"><i class=" material-icons">local_phone</i> [[${musicianDetail.user.phoneNumber}]]</p>
 
                                     </div>
 
@@ -67,7 +67,7 @@
                                 </ul>
                             </div>
                             <div id="music" class="col s12">
-                                <div class="card-panel center-align">
+                                <div class="card-panel orange-gradient center-align">
                                     <h4 >My Music</h4>
                                     <div th:if="${media.isEmpty()}">
                                         <h5 class="no-media">No Music</h5>
@@ -93,7 +93,7 @@
 
                             </div>
                             <div id="upEvents" class="col s12">
-                                <div class="card-panel center-align">
+                                <div class="card-panel orange-gradient center-align">
                                     <h4 >Upcoming Events</h4>
                                     <div  th:if="${hired.isEmpty()}">
                                         <h5>No Upcoming Events</h5>
@@ -103,12 +103,12 @@
                                 <div class="row"  >
                                     <div class="col s12 m6" th:each="hired : ${hired}">
                                         <div  class="gigCard hoverable">
-                                            <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
-                                                <div class="dateBox white orange-text text-accent-4 center-align">
-                                                    <h4>[[${#dates.format(hired.gig.gigStart,'d')}]]</h4>
-                                                    <p>[[${#dates.format(hired.gig.gigStart,'MMMM')}]]</p>
+                                            <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 200px;'">
+                                                <div class="dateBox    center-align">
+                                                    <p class="date">[[${#dates.format(applied.gig.gigStart,'d')}]]</p>
+                                                    <p class="month">[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>
                                                 </div>
-                                                <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
+                                                <a class="goBtn right waves-effect waves-light btn-floating " th:href="'/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
                                             </div>
                                             <div class="gigInfo white center-align">
@@ -144,14 +144,14 @@
             <div class="card-panel">
                 <section >
                     <div class="section">
-                        <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">star</i> [[${musicianDetail.musicianInstruments}]]</p>
+                        <p class="valign-wrapper"><i class=" material-icons">star</i> [[${musicianDetail.musicianInstruments}]]</p>
 
                     </div>
 
                     <div class="divider"></div>
                     <div class="section">
-                        <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">email</i> [[${musicianDetail.user.email}]] </p>
-                        <p class="valign-wrapper"><i class="orange-text text-accent-4 material-icons">local_phone</i> [[${musicianDetail.user.phoneNumber}]]</p>
+                        <p class="valign-wrapper"><i class=" material-icons">email</i> [[${musicianDetail.user.email}]] </p>
+                        <p class="valign-wrapper"><i class=" material-icons">local_phone</i> [[${musicianDetail.user.phoneNumber}]]</p>
 
                     </div>
 
@@ -165,7 +165,7 @@
             </div>
         </div>
         <div id="tab-music" class="col s12 container">
-            <div class="card-panel center-align">
+            <div class="card-panel orange-gradient center-align">
                 <h4 >My Music
                     <div th:if="${media.isEmpty()}">
                         <h5>No Music</h5>
@@ -179,7 +179,7 @@
                     <td>
                         <h5>
                             <a class="valign-wrapper popup-youtube" th:href="@{${media.media_url}}">
-                                <i class="orange-text text-accent-4 material-icons">play_circle_filled</i>
+                                <i class="material-icons">play_circle_filled</i>
                                 [[${media.title}]]
                             </a>
                         </h5>
@@ -190,7 +190,7 @@
 
         </div>
         <div id="tab-upEvents" class="col s12">
-            <div class="center-align card-panel">
+            <div class="center-align orange-gradient card-panel">
                 <h4 >Upcoming Events</h4>
                 <div th:if="${hired.isEmpty()}">
                     <h5 class="center-align">No Upcoming Events</h5>
@@ -201,11 +201,11 @@
                 <div class="col s12 m4" th:each="hired : ${hired}">
                     <div  class="gigCard hoverable">
                         <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${hired.gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
-                            <div class="dateBox white orange-text text-accent-4 center-align">
-                                <h4>[[${#dates.format(hired.gig.gigStart,'d')}]]</h4>
-                                <p>[[${#dates.format(hired.gig.gigStart,'MMMM')}]]</p>
+                            <div class="dateBox    center-align">
+                                <p class="date">[[${#dates.format(applied.gig.gigStart,'d')}]]</p>
+                                <p class="month">[[${#dates.format(applied.gig.gigStart,'MMMM')}]]</p>
                             </div>
-                            <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
+                            <a class="goBtn right waves-effect waves-light btn-floating " th:href="'/gig/' + @{${hired.gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
                         </div>
                         <div class="gigInfo white center-align">

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
-<body>
+<body th:inline="text">
 
 <div th:fragment="signupModal">
     <div id="signupModal" class="modal">
@@ -55,7 +55,7 @@
                         <label for="url">Add Music</label>
                     </div>
                 </div>
-                <button class="btn orange accent-4" type="submit">Add Media</button>
+                <button class="btn" type="submit">Add Media</button>
             </form>
         </div>
     </div>
@@ -80,7 +80,7 @@
                     </div>
                 </div>
 
-                <button class="btn orange accent-4" type="submit">Update</button>
+                <button class="btn" type="submit">Update</button>
             </form>
         </div>
     </div>

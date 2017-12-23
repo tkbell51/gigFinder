@@ -5,11 +5,32 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    background: #000000;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
 }
 
 
 main {
     flex: 1 0 auto;
+}
+.orange-gradient{
+    background: #fe8c00;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f83600, #fe8c00);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f83600, #fe8c00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: #FFF;
+}
+.orange-gradient-text{
+    background: #fe8c00;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f83600, #fe8c00);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f83600, #fe8c00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.material-icons{
+    font-size: 1.5em;
 }
 .error{
     color: red;
@@ -18,12 +39,6 @@ main {
     font-weight: bold;
 }
 
-.gradient-background
-{
-    background: #23074d;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #D13218, #23074d);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #D13218, #23074d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
 
 .input-field{
     margin-top: 0px;
@@ -49,7 +64,11 @@ main {
     color: #FFF;
 }
 .input-field .prefix.active {
-    color: #FD6D22;
+    background: #fe8c00;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f83600, #fe8c00);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f83600, #fe8c00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .dropdown-content li > span  {
@@ -153,13 +172,7 @@ footer{
     z-index: 5;
 }
 /*search page*/
-.search{
-    background: #f24000; /* Old browsers */
-    background: -moz-linear-gradient(-45deg, #f24000 0%, #6041a8 28%, #9e0cf9 50%, #ff8c19 77%, #5600ed 99%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, #f24000 0%,#6041a8 28%,#9e0cf9 50%,#ff8c19 77%,#5600ed 99%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, #f24000 0%,#6041a8 28%,#9e0cf9 50%,#ff8c19 77%,#5600ed 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f24000', endColorstr='#5600ed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-}
+
 .search .card-panel{
     background-color: rgba(0, 0, 0, 0.40);
 
@@ -184,8 +197,9 @@ footer{
     background-color: rgba(0, 0, 0, 0.40);
 }
 .logBtn:hover{
-    border: 1px solid #FD6D22;
-    background: #FD6D22;
+    background: #fe8c00;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f83600, #fe8c00);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f83600, #fe8c00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     color: #FFF;
 
 }
@@ -247,7 +261,6 @@ footer{
 
 }
 #musicChoice .logBtn, #compChoice .logBtn{
-    background-color: #FD6D22;
     color: #FFF;
     border-radius: 25px;
     border: 1px solid #FD6D22;
@@ -552,15 +565,24 @@ small{
 }
 .tabs .indicator {
     text-decoration: none;
-    background-color: #FD6D22 !important;
+    background: #fe8c00;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f83600, #fe8c00);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f83600, #fe8c00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .tabs .tab a{
     color: #FFF;
 }
+
 .tabs .tab a.active,
-.tabs .tab a:hover{
-    color: #FD6D22;
+.tabs .tab a:hover,
+.tabs .tab a.active i,
+.tabs .tab a:hover i{
+    background: #fe8c00;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f83600, #fe8c00);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f83600, #fe8c00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .tabs-fixed-width i {
     font-size: 2.6rem;
@@ -585,13 +607,27 @@ small{
 }
 
 .gigCard {
-    width: 90%;
+    margin-bottom: 10px;
+    border-radius: 20px;
+}
+.gigCard:hover{
+    z-index: 70;
+    border: 1px solid #FFF;
+    border-radius: 20px;
+}
+.gigCard .gigImage{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.gigCard .gigInfo{
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 
 .goBtn{
     position:relative;
-    top: 50px;
+    top: 125px;
     right: 10px;
 }
 i.right {
@@ -651,6 +687,8 @@ img.responsive-img {
     display: flex;
     flex-direction:column;
     justify-content:flex-end;
+    margin-bottom: 20px;
+    border-radius: 10px;
 }
 .second{
     background-color: rgba(0,0,0,0.41);
@@ -660,9 +698,6 @@ img.responsive-img {
 
 }
 
-.bandInfo h5{
-    margin: 0;
-}
 .bandInfo:hover{
     border: 2px solid #FFF;
 }
@@ -689,17 +724,24 @@ img.responsive-img {
 }
 .dateBox{
     position: relative;
-    left: 20px;
-    top: 20px;
+    left: 10px;
+    top: 10px;
     width: 80px;
-    height: 80px;
+    height: 54px;
     padding-top: 10px;
-    border-radius: 5px;
+    border-radius: 15px;
+    background: #FFF;
+    line-height: 0.9;
 }
-.gigCard{
-    margin: 6px;
-    width: 100%;
+
+.dateBox .date{
+   font-size: 1.5em;
+    font-weight: bold;
 }
+.dateBox .month{
+    font-size: 1em;
+}
+
 
 .gigCard p, .dateBox h4, .gigTitle{
     margin: 0px;
@@ -708,6 +750,15 @@ img.responsive-img {
 
 .gigInfo{
     padding: 15px;
+    background: #000000;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 120px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+
+    color: #FFF;
 }
 
 
@@ -775,34 +826,12 @@ height: 60px;
 }
 /*Gig Details Page*/
 
-#gig-page .blur{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    right: 0;
-
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);
-}
-#gig-page nav{
-    position: absolute;
-    left: 0;
-    right: 0;
-    z-index: 60;
+.gig-nav{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
 }
 
-.gig{
-    position: relative;
-    left: 0;
-    right: 0;
-    bottom: 350px;
-    z-index: 50;
-    border: 1px solid lightgray;
-}
 .gig-info{
     display: flex;
     flex-flow: column nowrap;
@@ -845,7 +874,6 @@ height: 60px;
     height: 150px;
 }
 .hireBtn{
-    background: #FD6D22;
     color: #FFF;
     text-align: center;
 }

@@ -2,24 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="fragments/includes :: indexHead"></head>
-<body class="gradient-background">
+<body th:inline="text" >
 <div th:include="fragments/navbar :: navHome"></div>
     <main class="container" th:inline="text">
         <h1 class="white-text center-align">Find gigs</h1>
         <div class="row">
             <div  th:each="gig : ${gig}" th:if="${gig.gigHired} != true">
 
-                <div class="col s12 m6 l3">
+                <div class="col s12 m6 l4">
                     <div  class="gigCard hoverable">
-                        <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
-                            <div class="dateBox white orange-text text-accent-4 center-align">
-                                <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
-                                <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                        <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 200px;'">
+                            <div class="dateBox    center-align">
+                                <p class="date">[[${#dates.format(gig.gigStart,'d')}]]</p>
+                                <p class="month">[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
                             </div>
-                            <a class="goBtn right waves-effect waves-light white-text orange accent-4 btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
+                            <a class="goBtn right waves-effect waves-light btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
                         </div>
-                        <div class="gigInfo white center-align">
+                        <div class="gigInfo center-align">
                             <p><b>[[${gig.gigTitle}]]</b></p>
                             <p >[[${gig.gigLocation}]]</p>
 

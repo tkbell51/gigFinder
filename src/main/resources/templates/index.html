@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:include="fragments/includes :: indexHead"></head>
-<body class="blue-grey lighten-5">
+<body th:inline="text" class="blue-grey lighten-5">
 
     <main>
         <section class=" top">
@@ -69,7 +69,7 @@
                             <p>I'm looking for gigs</p>
                             <p>I want to network with other musicians</p>
                             <p>I need to get my name out there</p>
-                            <a href="/signup/musician/" class="logBtn">Sign Up</a>
+                            <a href="/signup/musician/" class="hireBtn logBtn">Sign Up</a>
                         </div>
                     </section>
                 </div>
@@ -81,7 +81,7 @@
                             <p>I need help finding new talent</p>
                             <p>I need to advertise gigs for my venue</p>
 
-                            <a href="/signup/company/" class="logBtn">Sign Up</a>
+                            <a href="/signup/company/" class="logBtn hireBtn">Sign Up</a>
 
                         </div>
                     </section>

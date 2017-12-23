@@ -17,12 +17,12 @@
 
                             <div class="section">
                                 <div class="input-field ">
-                                    <i class="orange-text text-accent-4 material-icons prefix">location_on</i>
+                                    <i class=" material-icons prefix">location_on</i>
                                     <input type="text" placeholder="Search by Location" name="location" id="giglocation"/>
                                     <label for="giglocation">Location</label>
                                 </div>
                                 <div class="right">
-                                    <button class="btn orange accent-4" type="submit">Search</button>
+                                    <button class="btn" type="submit">Search</button>
 
                                 </div>
                             </div>
@@ -32,7 +32,7 @@
                         <form th:action="@{/searchGigType}" method="post" class="white-text">
                             <div class="section">
                                 <div class="input-field ">
-                                    <i class="orange-text text-accent-4 material-icons prefix">event_note</i>
+                                    <i class="  material-icons prefix">event_note</i>
 
                                     <select name="type" id="type">
                                         <option value="" disabled="disabled" selected="selected">Search by Gig Type</option>
@@ -42,7 +42,7 @@
                                     <label for="type">Type of Gigs</label>
                                 </div>
                                 <div class="right">
-                                    <button class="btn orange accent-4" type="submit">Search</button>
+                                    <button class="btn  " type="submit">Search</button>
 
                                 </div>
                             </div>
@@ -62,13 +62,13 @@
                     <form th:action="@{/searchMusician}" method="post" class="white-text">
                         <div class="section ">
                             <div class="input-field">
-                                <i class="orange-text text-accent-4 material-icons prefix">location_on</i>
+                                <i class="  material-icons prefix">location_on</i>
 
-                                <input type="text" placeholder="Search" name="search" id="search"/>
+                                <input type="text"  name="search" id="search"/>
                                 <label for="search">Search</label>
                             </div>
                             <div class="right">
-                                <button class="btn orange accent-4" type="submit">Search</button>
+                                <button class="btn  " type="submit">Search</button>
 
                             </div>
                         </div>
@@ -78,7 +78,7 @@
                     <form th:action="@{/searchInstrument}" method="post" class="white-text">
                         <div class="section ">
                             <div class="input-field">
-                                <i class="orange-text text-accent-4 material-icons prefix">star</i>
+                                <i class="  material-icons prefix">star</i>
 
                                 <select multiple="multiple" name="instrument">
                                     <option value="" disabled="disabled" selected="selected">Search by Musical Instruments</option>
@@ -86,7 +86,7 @@
                                 </select>
                             </div>
                             <div class="right">
-                                <button class="btn orange accent-4" type="submit">Search</button>
+                                <button class="btn  " type="submit">Search</button>
 
                             </div>
                         </div>
@@ -98,11 +98,8 @@
 
 
         </div>
-        <div class="divider"></div>
         <section class="searchResult container ">
-            <h1 class="center-align white-text">Search Results</h1>
             <div sec:authorize="hasRole('ROLE_COMPANY')">
-                <div class="findBand">
 
                     <div class="row">
                         <div  th:each="musician : ${musician}">
@@ -122,26 +119,25 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
 
 
             <div sec:authorize="hasRole('ROLE_MUSICIAN')">
                 <div class="row">
-                    <div th:each="gig : ${gig}" class="col s12 m6 l3">
+                    <div th:each="gig : ${gig}" class="col s12 m6 l4">
 
                         <div class="gigCard z-depth-2">
-                            <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 150px;'">
-                                <div class="dateBox white orange-text text-accent-4 center-align">
-                                    <h4>[[${#dates.format(gig.gigStart,'d')}]]</h4>
-                                    <p>[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
+                            <div class="gigImage" th:style="'background:url('+ @{'https://s3.amazonaws.com/s3-gigfinder/' + ${gig.gigArt}}+'); background-size: cover; background-repeat: no-repeat; background-position: center; height: 200px;'">
+                                <div class="dateBox    center-align">
+                                    <p class="date">[[${#dates.format(gig.gigStart,'d')}]]</p>
+                                    <p class="month">[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
                                 </div>
+                                <a class="goBtn right waves-effect waves-light btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
+
                             </div>
                             <div class="gigInfo white center-align">
                                 <p><b>[[${gig.gigTitle}]]</b></p>
                                 <p >[[${gig.gigLocation}]]</p>
-                                <div class="divider"></div>
-                                <a class=" waves-effect waves-light orange-text text-accent-4 hoverable gigApplied " th:href="'/gig/' + @{${gig.id}}">Details</a>
 
                             </div>
                         </div>
