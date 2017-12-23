@@ -132,7 +132,7 @@ nav{
     background-color: rgba(0, 0, 0, 0.24);
 }
 
-nav, footer{
+nav{
     position: relative;
     z-index:8;
 
@@ -212,6 +212,7 @@ footer{
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
+    min-height: 700px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -247,6 +248,8 @@ footer{
     background-repeat: no-repeat;
     background-size: cover;
     height: 90vh;
+    min-height: 500px;
+
     display: flex;
 }
 
@@ -640,20 +643,14 @@ td .btn-flat i, .popup-youtube i{
 table .right a, table .right button{
     top: 10px;
 }
-span.badge {
-    width: 25px;
-    margin-left: 5px;
-    text-align: center;
-    font-size: 1.3em;
-    height: 25px;
-    color: #FD6D22;
+.appliedNum {
+   position: relative;
+    bottom: 60px;
+    right: 10px;
+    font-size: 3em;
     float: right;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    background: #FFF;
-    border-radius: 50%;
-    line-height: 25px;
-    min-width: 0px;
+
+
 }
 
 .media.waves-effect {
@@ -716,12 +713,12 @@ img.responsive-img {
     min-width: 80%;
 }
 
-.gigApplied{
-    border: 1px solid #FD6D22;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-}
+/*.gigApplied{*/
+    /*border: 1px solid #FD6D22;*/
+    /*border-radius: 5px;*/
+    /*padding: 10px;*/
+    /*margin-top: 10px;*/
+/*}*/
 .dateBox{
     position: relative;
     left: 10px;
@@ -829,9 +826,16 @@ height: 60px;
 .gig-nav{
     display: flex;
     flex-flow: row nowrap;
-    justify-content: center;
+    justify-content: space-evenly;
 }
+.gig-nav .btn{
+    width: 100%;
+    margin-left: 5px;
+}
+.gig-nav .btn i{
+    font-size: 24px;
 
+}
 .gig-info{
     display: flex;
     flex-flow: column nowrap;
@@ -865,10 +869,12 @@ height: 60px;
     flex-flow: column nowrap;
     justify-content: space-between;
 }
+.gigDescript i{
+    font-size: 2.5em;
+    margin-right: 1%
 
-.appliedNum{
-    font-size: 2em;
 }
+
 .bandApplied{
     width: 100%;
     height: 150px;

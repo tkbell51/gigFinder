@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="profInfo ">
+                            <div class="profInfo white">
 
                                 <section >
                                     <div class="section">
@@ -102,10 +102,10 @@
                                                         <p class="date">[[${#dates.format(gig.gigStart,'d')}]]</p>
                                                         <p class="month">[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
                                                     </div>
+                                                    <p class="appliedNum tooltipped" data-position="left" data-delay="50" data-tooltip="Musicians Applied">[[${gig.getMusicianApplyGigs().size()}]]</p>
                                                     <a class="goBtn right waves-effect waves-light white-text btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
                                                 </div>
-                                                <a class=" waves-effect waves-light orange-gradient  hoverable gigApplied " th:href="'/gig/' + @{${gig.id}}">Musicians Applied <span class="badge">[[${gig.getMusicianApplyGigs().size()}]]</span></a>
 
                                                 <div class="gigInfo white center-align">
                                                     <p><b>[[${gig.gigTitle}]]</b></p>
@@ -254,13 +254,14 @@
                                                 <p class="date">[[${#dates.format(gig.gigStart,'d')}]]</p>
                                                 <p class="month">[[${#dates.format(gig.gigStart,'MMMM')}]]</p>
                                             </div>
+                                            <p class="appliedNum tooltipped" data-position="left" data-delay="50" data-tooltip="Musicians Applied">[[${gig.getMusicianApplyGigs().size()}]]</p>
+
                                             <a class="goBtn right waves-effect waves-light    btn-floating " th:href="'/gig/' + @{${gig.id}}"><i class="material-icons">arrow_forward</i></a>
 
                                         </div>
                                         <div class="gigInfo white center-align">
                                             <p><b>[[${gig.gigTitle}]]</b></p>
                                             <p >[[${gig.gigLocation}]]</p>
-                                            <a class=" waves-effect waves-light    hoverable gigApplied " th:href="'/gig/' + @{${gig.id}}">Musicians Applied <span class="badge">[[${gig.getMusicianApplyGigs().size()}]]</span></a>
 
                                         </div>
                                     </div>

@@ -44,7 +44,7 @@
                 <section class="time-description">
 
                     <section class="gigDescript white">
-                        <p class="gigType">[[${gig.gigType}]]</p>
+                        <p class="gigType valign-wrapper"><i class=" material-icons">assignment</i>[[${gig.gigType}]]</p>
 
                         <div class="divider"></div>
                         <p class="valign-wrapper"><i class=" material-icons">event</i>
@@ -96,7 +96,7 @@
                     </div>
                     <div th:if="${gig.gigHired} != true">
                         <div class="section">
-                            <p class="center-align appliedNum"><span class="orange-text text-accent-4">[[${gig.getMusicianApplyGigs().size()}]]</span> Musicians Applied </p>
+                            <h3 class="center-align"><span class="orange-gradient-text">[[${gig.getMusicianApplyGigs().size()}]]</span> Musicians Applied </h3>
                         </div>
                         <div class="section ">
                             <div class="row">
@@ -167,7 +167,7 @@
             <section class="time-description">
 
                 <section class="gigDescript white">
-                    <p class="gigType">[[${gig.gigType}]]</p>
+                    <p class="gigType valign-wrapper"><i class=" material-icons">assignment</i>[[${gig.gigType}]]</p>
 
                     <div class="divider"></div>
                     <p class="valign-wrapper"><i class=" material-icons">event</i>
@@ -182,8 +182,19 @@
 
                     <p>[[${gig.gigDescription}]]</p>
 
+<div class="divider"></div>
+                    <div th:if="${gig.companyProfile.user.username == user.username}" class="gig-nav">
+
+                        <a class="waves-effect waves-light btn" th:href="'/company/gig/' + @{${gig.id}} + '/update'">
+                            <i class="material-icons  tooltipped" data-position="top" data-delay="50" data-tooltip="Update Gig">edit</i>
+                        </a>
+
+                        <a class="waves-effect waves-light btn modal-trigger" href="#gigDelete">
+                            <i class="material-icons  tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Gig">delete</i>
+                        </a>
 
 
+                    </div>
 
                 </section>
 
@@ -204,18 +215,7 @@
 
 
             </section>
-            <div th:if="${gig.companyProfile.user.username == user.username}" class="gig-nav">
 
-                            <a class="waves-effect waves-light btn" th:href="'/company/gig/' + @{${gig.id}} + '/update'">
-                                <i class="material-icons  tooltipped" data-position="top" data-delay="50" data-tooltip="Update Gig">edit</i>
-                            </a>
-
-                            <a class="waves-effect waves-light btn modal-trigger" href="#gigDelete">
-                                <i class="material-icons  tooltipped" data-position="top" data-delay="50" data-tooltip="Delete Gig">delete</i>
-                            </a>
-
-
-            </div>
             <div class="hire-right grey lighten-3">
                 <div th:if="${gig.gigHired} == true" >
                     <div class="center-align">
@@ -231,7 +231,7 @@
                 </div>
                 <div th:if="${gig.gigHired} != true">
                     <div class="section">
-                        <p class="center-align appliedNum"><span class="orange-text text-accent-4">[[${gig.getMusicianApplyGigs().size()}]]</span> Musicians Applied </p>
+                        <h3 class="center-align"><span class="orange-gradient-text">[[${gig.getMusicianApplyGigs().size()}]]</span> Musicians Applied </h3>
                     </div>
                     <div class="section ">
                         <div class="row">
