@@ -482,12 +482,11 @@ small{
 
 }
 .profInfo p{
-    font-size: 1.3em;
     margin: 0;
     margin-bottom: 10px;
 }
 .profInfo{
-    padding: 25px;
+    padding: 15px;
 }
 .coverBanner {
     position: absolute;
@@ -559,6 +558,7 @@ small{
 .profile-content{
     margin-right: 10px;
     position: relative;
+    width: 100%;
     bottom: 48px;
 }
 .tabs{
@@ -587,6 +587,7 @@ small{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 .tabs-fixed-width i {
     font-size: 2.6rem;
     margin-top: 5px;
@@ -649,8 +650,6 @@ table .right a, table .right button{
     right: 10px;
     font-size: 3em;
     float: right;
-
-
 }
 
 .media.waves-effect {
